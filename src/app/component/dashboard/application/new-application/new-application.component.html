@@ -1,0 +1,82 @@
+<div class="pd-20 grey lighten-5">
+    <span class="heading">Intern Application</span>
+    <mat-icon class="right green-text font-30" *ngIf="application.isOpen">how_to_reg</mat-icon>
+    <mat-icon class="right red-text font-30" *ngIf="!application.isOpen">person_add_disabled</mat-icon>
+</div>
+<app-spinner *ngIf="loading"></app-spinner>
+<div class="center row">
+    <br>
+    <div class="col s7">
+        <table class="highlight">
+            <tbody>
+                <tr>
+                    <td>Status </td>
+                    <td>{{ application.isOpen }}</td>
+                </tr>
+                <tr>
+                    <td>Opening date </td>
+                    <td>{{application.Start | date:shortDate}}</td>
+                </tr>
+                <tr>
+                    <td>Closing date </td>
+                    <td>{{application.end | date:shortDate}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="col s5">
+        <img src="/assets/application.svg" width="200px" height="auto">
+    </div>
+    <br>
+    <button (click)="closeApplication(application._id)" class="col s12 red white-text" mat-button
+        *ngIf="application.isOpen">
+        Close Application
+    </button>
+    <div class="row" *ngIf="!application.isOpen">
+        <div class="sub-heading left-align col s12 pdb-30">
+            Allow Application
+            <div class="right">
+                <mat-icon class="pointer" matTooltip="Add Domain" *ngIf="!form" (click)="showForm()">add</mat-icon>
+                <mat-icon class="pointer" *ngIf="form" (click)="showForm()">clear</mat-icon>
+            </div>
+        </div>
+        <mat-form-field class="col s12" *ngIf="form">
+            <mat-label>Domain Name</mat-label>
+            <mat-icon matPrefix class="pink-text font-30">local_library</mat-icon>
+            <input matInput [(ngModel)]="inputDomain" placeholder="title to be displayed" required>
+        </mat-form-field>
+        <button *ngIf="form" mat-raised-button class="indigo white-text col s6 offset-s3" (click)=addDomain(inputDomain)>
+            Add domain
+        </button>
+    </div>
+    <div class="col s12" *ngIf="!form">
+        <mat-horizontal-stepper *ngIf="!application.isOpen">
+            <mat-step class="row" label="Ending Date of Application">
+                <mat-form-field class="col s12">
+                    <mat-label>Ending Date</mat-label>
+                    <input matInput [matDatepicker]="picker" #date placeholder="5/06/2019" required>
+                    <button mat-mini-fab id="margin-left" type="button" 
+                    matSuffix class="indigo lighten-1" (click)="picker.open()">
+                        <mat-icon>date_range</mat-icon>
+                    </button>
+                    <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+            </mat-step>
+            <mat-step label="Domains Visible">
+                <div class="center">
+                    <mat-chip-list>
+                        <mat-chip *ngFor="let domain of domains" class="google" id="{{domain._id}}">{{domain.title | titlecase}}
+                            <mat-icon matChipRemove class="red-text" (click)="deleteDomain(domain._id)">cancel
+                            </mat-icon>
+                        </mat-chip>
+                    </mat-chip-list>
+                </div>
+            </mat-step>
+            <mat-step class="row" label="Open Registeration form">
+                <button class="col s12 green white-text" mat-raised-button (click)="openApplication(date.value)">
+                    <span id="submitText">Open Applications</span>
+                </button>
+            </mat-step>
+        </mat-horizontal-stepper>
+    </div>
+</div>

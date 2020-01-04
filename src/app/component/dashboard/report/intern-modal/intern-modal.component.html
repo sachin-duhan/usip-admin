@@ -1,0 +1,27 @@
+<div class="row pd-20">
+    <div class="col m8 s12">
+        <div class="row">
+            <h2 class="mat-h2 mgb-0 col s12">
+                {{intern.name | titlecase}}
+                <span class="right">{{intern.branch | uppercase}}</span>
+                <br>
+                <div class="small-font-12 grey-text lighten-1">{{intern.rollNo | uppercase}}</div>
+            </h2>
+            <br>
+            <p class="lead left-border col s12">
+                <span>Summary</span> <br> {{data.description}}
+            </p>
+            <div class="col pd-10 s6 blue-grey-text text-darken-3">
+                Date of Submission : {{ data.date | date:shortDate }}
+            </div>
+        </div>
+    </div>
+    <!-- image and report details zone -->
+    <div class="center-align col m4 s12">
+        <i class="fa fa-file-pdf-o pointer red-text fa-5x pdt-20"></i>
+        <div class="grey-text text-darken-1 pdt-20">Deployment No. {{ data.intern.depNo }}</div>
+        <span class="mat-h3">{{data.start | date:shortDate}} - {{data.end | date:shortDate}}</span>
+    </div>
+    <button mat-button class="col s12 grey lighten-3 blue-grey-text text-darken-3">Download Report</button>
+</div>
+<app-spinner *ngIf="loading"></app-spinner>

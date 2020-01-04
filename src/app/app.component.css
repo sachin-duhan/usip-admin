@@ -1,0 +1,5 @@
+.hide {
+    transition: 300ms;
+    transform: translateX(-100%);
+    display: none;
+}

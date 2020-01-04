@@ -1,0 +1,37 @@
+<div class="lighten-5">
+    <section class="login-back">
+        <app-spinner *ngIf="loading"></app-spinner>
+        <br>
+        <br>
+        <br>
+        <br>
+        <div class="container row">
+            <mat-card class="card background-shade shadow-lg col s12 l6 m8 center offset-l3 offset-m2">
+                <br>
+                <mat-card-title>
+                    <h3>Admin Login</h3>
+                </mat-card-title>
+                <!-- <mat-card-subtitle>This is access is only for the qualified interns</mat-card-subtitle> -->
+                <mat-card-content>
+                    <form class="row pd-20 center" (submit)="submit()" [formGroup]="loginForm">
+                        <mat-form-field appearance="outline" class="col m10 offset-m1 s12">
+                            <mat-label>Enter Username</mat-label>
+                            <mat-icon matPrefix class="blue-text text-accent-2">person</mat-icon>
+                            <input matInput formControlName="userName" placeholder="Username" type="text" required />
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline" class="col m10 offset-m1 s12">
+                            <mat-label>Enter Password</mat-label>
+                            <mat-icon matPrefix class="blue-text text-accent-2">vpn_key</mat-icon>
+                            <input matInput formControlName="password" placeholder="Password" [type]="hide ? 'password' : 'text'" required>
+                            <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}
+                            </mat-icon>
+                        </mat-form-field>
+
+                        <button type="submit" class="indigo darken-1 white-text col s4 offset-s4" mat-button [disabled]="!loginForm.valid">Login</button>
+                    </form>
+                </mat-card-content>
+            </mat-card>
+        </div>
+    </section>
+</div>

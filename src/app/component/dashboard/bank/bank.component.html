@@ -1,0 +1,67 @@
+<div class="container">
+    <h1 class="mat-h1">Bank Details
+        <sup id="chip" class="indigo white-text">{{dataSource2.length}}</sup>
+    </h1>
+
+    <div class="mat-elevation-z8 mg-10 col s12 white" *ngIf="dataSource2.length> 0;else noData">
+        <table mat-table matSort [dataSource]="dataSource2">
+            <ng-container matColumnDef="depNo">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Deployemnt No.</th>
+                <td mat-cell *matCellDef="let element"> {{element.depNo}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="name">
+                <th mat-header-cell *matHeaderCellDef>Name</th>
+                <td mat-cell *matCellDef="let element"> {{element.pInfo.name | titlecase}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="rollNo">
+                <th mat-header-cell *matHeaderCellDef>Bank Account</th>
+                <td mat-cell *matCellDef="let element">
+                    <span *ngIf="element.bankAc == element.pInfo._id" class="red-text">Not filled</span>
+                    <span *ngIf="element.bankAc != element.pInfo._id">{{element.bankAc | uppercase}}</span>
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="bank">
+                <th mat-header-cell *matHeaderCellDef>Bank Name</th>
+                <td mat-cell *matCellDef="let element">
+                    <span *ngIf="element.bankAc == element.pInfo._id" class="red-text">Not filled</span>
+                    <span *ngIf="element.bankAc != element.pInfo._id">{{element.bankName | uppercase}}</span>
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="officer">
+                <th mat-header-cell *matHeaderCellDef>IFSC</th>
+                <td mat-cell *matCellDef="let element">
+                    <span *ngIf="element.bankAc == element.pInfo._id" class="red-text">Not filled</span>
+                    <span *ngIf="element.bankAc != element.pInfo._id">{{element.ifsc | uppercase}}</span>
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="end">
+                <th mat-header-cell *matHeaderCellDef>End of Tenure</th>
+                <td mat-cell *matCellDef="let element">{{ element.end | date:shortDate }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="update">
+                <th mat-header-cell *matHeaderCellDef></th>
+                <td mat-cell *matCellDef="let element">
+                    <mat-icon (click)="updateBankDetails(element)" class="pointer">edit</mat-icon>
+                </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
+        </table>
+
+        <mat-paginator [pageSizeOptions]="[10,20,50,100]" showFirstLastButtons></mat-paginator>
+
+    </div>
+    <ng-template #noData>
+        <div class="pd-20 white center">
+            <h5 class="pd-20">No Bank Details found!</h5>
+        </div>
+    </ng-template>
+
+</div>

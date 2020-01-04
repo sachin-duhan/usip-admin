@@ -1,0 +1,25 @@
+textarea {
+    border-bottom: grey 1px solid;
+}
+
+textarea:focus {
+    border-bottom: rgb(255, 0, 234) 1px solid;
+}
+
+.padding-top {
+    padding-top: 20px;
+}
+
+.Padding {
+    padding: 20px;
+}
+
+b {
+    font-weight: 500;
+}
+
+mat-icon {
+    transform: translateY(-14px);
+    margin-right: 8px;
+    transform: scale(1.2);
+}

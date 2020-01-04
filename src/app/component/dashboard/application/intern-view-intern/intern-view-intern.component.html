@@ -1,0 +1,87 @@
+<form action="#" class="row" (Submit)="submitForm" [formGroup]="internForm">
+    <app-spinner *ngIf="loading"></app-spinner>
+    <div class="row">
+        <div class="col s12 grey Padding lighten-5">
+            <span class="mat-h2">
+      {{applicant.name | titlecase}}
+      </span>
+            <span class="right">
+        <mat-icon color="primary">person</mat-icon>
+      </span>
+        </div>
+        <div class="col s12 m6">
+            <table>
+                <tbody>
+                    <tr>
+                        <td>CGPA</td>
+                        <td>{{applicant.marks}}</td>
+                    </tr>
+                    <tr>
+                        <td>Roll No</td>
+                        <td>{{applicant.rollNo}}</td>
+                    </tr>
+                    <tr>
+                        <td>Branch</td>
+                        <td>{{applicant.branch}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col s12 m6">
+            <table>
+                <tbody>
+                    <tr>
+                        <td>Email</td>
+                        <td>{{applicant.email}}</td>
+                    </tr>
+                    <tr>
+                        <td>phone</td>
+                        <td>{{applicant.phone}}</td>
+                    </tr>
+                    <tr>
+                        <td>Domains</td>
+                        <td>{{applicant.domain}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col m8 s12 padding-top">
+            <b>About : </b> {{applicant.exp}}
+        </div>
+        <div class="col s12 m4 padding-top">
+            <b>Status</b> : <span class="grey-text"><span *ngIf="!applicant.isSelected">Not</span> Selected</span> <br>
+            <b>Marks : </b> {{applicant.interview_marks}} <br>
+            <b>Review : </b> {{applicant.interview_comment}} <br>
+            <b>Interview : </b> <span class="grey-text"><span *ngIf="!applicant.interview_attendence && !applicant.interview">Upcoming</span>
+            <span *ngIf="applicant.interview && !applicant.interview_attendence" class="red-text">Absent</span>
+            <span *ngIf="applicant.interview && applicant.interview_attendence" class="indigo-text">Present</span></span>
+        </div>
+    </div>
+
+    <mat-radio-group formControlName="interview_attendence" class="col s12">
+        <mat-radio-button class="pd-10" value="false">Absent</mat-radio-button>
+        <mat-radio-button class="pd-10" value="true" color="primary">Present</mat-radio-button>
+    </mat-radio-group>
+
+    <mat-form-field class="col s12 m4">
+        <mat-label>Interview Marks</mat-label>
+        <input matInput placeholder="Enter marks" type="number" required formControlName="marks">
+        <mat-icon matPrefix class="indigo-text">bubble_chart</mat-icon>
+    </mat-form-field>
+
+    <mat-form-field class="col s12 m8">
+        <mat-label>Interview review</mat-label>
+        <input matInput formControlName="comment" required placeholder="Leave a comment">
+        <mat-icon matPrefix class="indigo-text">local_library</mat-icon>
+    </mat-form-field>
+
+    <mat-radio-group formControlName="isSelected" class="left col s12">
+        <mat-radio-button class="pd-10" value="false" checked>Not Selected</mat-radio-button>
+        <mat-radio-button class="pd-10" value="true" color="primary">Selected</mat-radio-button>
+    </mat-radio-group>
+
+    <div class="col s12">
+        <button mat-raised-button (click)="submitForm()" class="red col right s4 white-text" [disabled]="!internForm.valid">Submit</button>
+        <button mat-button cdkFocusInitial class="right col s2" (click)="close()">Close</button>
+    </div>
+</form>

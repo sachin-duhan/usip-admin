@@ -1,0 +1,111 @@
+<app-spinner *ngIf="loading">
+</app-spinner>
+<div>
+    <div class="grid-container" id="dash-content">
+
+        <mat-grid-list cols="4" rowHeight="160px">
+
+            <mat-grid-tile *ngFor="let box of sCards" [colspan]="box.cols" [rowspan]="box.rows">
+                <mat-card [class]="box.style" routerLink="{{box.url}}">
+                    <mat-card-content>
+                        <div class="row mg-0 pd-0">
+                            <span class="left font-20">{{box.title}}</span>
+                            <div [class]="box.color" id="display-dash-icon">
+                                <mat-icon class="small-font">{{box.icon}}</mat-icon>
+                            </div>
+                        </div>
+                        <h5 class="pdt-20 mg-0">{{box.count}}</h5>
+                        <div class="pd-5"></div>
+                        <div class="left">
+                            <mat-icon class="small-font-12 left-align grey-text">timer</mat-icon>
+                            <span class="grey-text left-align small-font-10 text-lighten-1">Updated now</span>
+                        </div>
+                    </mat-card-content>
+                </mat-card>
+            </mat-grid-tile>
+        </mat-grid-list>
+
+        <mat-grid-list cols="2" rowHeight="400px">
+
+            <mat-grid-tile *ngFor="let card of cards" [colspan]="card.cols" [rowspan]="card.rows">
+                <mat-card class="dashboard-card">
+                    <mat-card-header>
+                        <mat-card-title>
+                            {{card.title}}
+                        </mat-card-title>
+                        <button mat-icon-button id="dashboard-right">
+                <mat-icon class="blue-text text-accent-3">apps</mat-icon>
+              </button>
+                    </mat-card-header>
+                    <mat-card-content class="dashboard-card-content">
+                        <table *ngIf="card.title == 'Interns Reports'" class="highlight table-margin pd-20">
+                            <tbody *ngIf="internReport.length > 0;else noData">
+                                <tr *ngFor="let report of internReport;let i = index ">
+                                    <td *ngIf="i<5" class="truncate text-truncate">Dep. No : {{report.intern.depNo}}</td>
+                                    <td *ngIf="i<5">{{report.start|date:shortDate}} - {{report.end | date:shortDate}}</td>
+                                    <td *ngIf="i<5">{{report.date | date:shortDate}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <table *ngIf="card.title == 'Applications'" class="highlight">
+                            <tbody *ngIf="applications.length > 0;else noData">
+                                <tr *ngFor="let application of applications; let i=index">
+                                    <td *ngIf="i<5">{{i+1}}.</td>
+                                    <td *ngIf="i<5">{{application.name | titlecase}}</td>
+                                    <td *ngIf="i<5">{{application.rollNo | uppercase}}</td>
+                                    <td *ngIf="i<5">{{application.branch | uppercase}}</td>
+                                    <td *ngIf="i<5">{{application.domain}}</td>
+                                    <td *ngIf="i<5">{{application.phone}}</td>
+                                    <td *ngIf="i<5" class="grey-text">{{application.date|date:shortDate}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <table *ngIf="card.title == 'Bank details'" class="highlight">
+                            <tbody *ngIf="bankDetails.length > 0;else noData">
+                                <tr *ngFor="let bank of bankDetails; let i=index">
+                                    <td *ngIf="i<12">{{bank.depNo}}.</td>
+                                    <td *ngIf="i<12">{{bank.pInfo.name | titlecase}}</td>
+                                    <td *ngIf="i<12">{{bank.pInfo.phone}}</td>
+                                    <td *ngIf="i<12">{{bank.bankAc | uppercase}}</td>
+                                </tr>
+                            </tbody>
+
+                        </table>
+
+                        <table *ngIf="card.title == 'Officers'" class="highlight">
+                            <tbody *ngIf="officer.length > 0;else noData">
+                                <tr *ngFor="let officer of officer;let i = index">
+                                    <td *ngIf="i<6">{{i+1}}.</td>
+                                    <td *ngIf="i<6">{{officer.name}}</td>
+                                    <td *ngIf="i<6">{{officer.deptt}}</td>
+                                    <td *ngIf="i<6">{{officer.phone}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <table *ngIf="card.title == 'Notification'" class="highlight">
+                            <tbody>
+                                <tr *ngFor="let noti of notification; let i=index">
+                                    <td *ngIf="i<3">{{i+1}}.</td>
+                                    <td *ngIf="i<3">{{noti.title | lowercase}}</td>
+                                    <td *ngIf="i<3 && noti.visiblity">Public</td>
+                                    <td *ngIf="i<3" class="grey-text">{{noti.date | date:shortDate}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="right" id="load-more">
+                            <button mat-button [routerLink]="[card.url]">Load more</button>
+                        </div>
+                    </mat-card-content>
+                    <ng-template #noData>
+                        <div class="white center pd-20">
+                            <h5>No Data found!!</h5>
+                        </div>
+                    </ng-template>
+                </mat-card>
+            </mat-grid-tile>
+        </mat-grid-list>
+    </div>
+    <!--all content above this only!-->
+</div>

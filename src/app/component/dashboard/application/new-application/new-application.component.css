@@ -1,0 +1,29 @@
+.pd-20{
+    padding: 20px;
+}
+.heading{
+    font-size: 22px;
+    font-weight: 450;
+}
+
+.sub-heading{
+    font-size: 18px;
+    font-weight: 450;
+}
+.pdb-30{
+    padding-bottom: 25px;
+}
+.hide{
+    display: none;
+}
+#submitText{
+    font-size: 16px;
+    font-stretch: expanded;
+}
+#margin-left{
+    transform: translatex(10px);
+}
+.font-30{
+    font-size: 28px;
+    margin: 5px;
+}

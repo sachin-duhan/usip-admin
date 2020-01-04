@@ -1,0 +1,28 @@
+.pd-20{
+    padding: 20px;
+}
+.mat-h1{
+    font-size: 24px;
+    font-weight: 450;
+}
+.mat-h2{
+    color: rgb(82, 82, 82);
+    font-weight: 450;
+}
+mat-icon{
+    font-size: 28px;
+}
+b{
+    font-weight: 450;
+}
+mat-select{
+    border-bottom: rgb(0, 132, 255) 1px solid;
+    padding: 7px;
+}
+sup mat-chip{
+    font-size: 10px;
+    margin-left: 10px;
+}
+mat-form-field button{
+    margin-left: 10px;
+}

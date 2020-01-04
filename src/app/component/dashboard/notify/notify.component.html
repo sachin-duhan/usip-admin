@@ -1,0 +1,78 @@
+<div class="container">
+    <h4>Notification</h4>
+    <app-spinner *ngIf="loading"></app-spinner>
+    <br class="hide-on-small-and-down">
+    <mat-tab-group class="pd-20 white" mat-align-tabs="center" mat-stretch-tabs>
+        <mat-tab label="Create Notification">
+            <mat-card class="white grey-text text-darken-4">
+                <br>
+                <form class="row pd-20 center" (submit)="submitForm()" [formGroup]="notificationForm">
+
+                    <mat-form-field appearance="outline" class="col s12">
+                        <mat-label>Notification</mat-label>
+                        <input matInput placeholder="Notification title" required formControlName="title">
+                        <mat-icon matPrefix>notifications_none</mat-icon>
+                    </mat-form-field>
+
+                    <div class="col m12 l12 s12 pdb-0 mgb-0">
+                        <mat-radio-group color="primary" formControlName="public" class="left" required>
+                            <mat-radio-button class="radio-button" color="accent" value="false">
+                                Intern
+                            </mat-radio-button>
+                            <mat-radio-button value="true" color="primary" class="radio-button">
+                                Public
+                            </mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+                    <button [disabled]="!notificationForm.valid" type="submit" class="col s4 m3 l3 red white-text right" mat-button>Submit</button>
+                </form>
+            </mat-card>
+        </mat-tab>
+        <mat-tab label="Public Notification">
+            <div class="pd-20 card medium">
+                <table class="highlight">
+                    <tbody>
+                        <tr *ngFor="let item of publicNotification; let i=index" id="{{item._id}}">
+                            <td>{{i+1}}. {{item.title}}</td>
+                            <td>{{item.date | date:shortDate}}</td>
+                            <td class="pointer" (click)="deleteNotification(item._id)">
+                                <mat-icon class="red-text pdt-10">delete</mat-icon>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </mat-tab>
+        <mat-tab label="Private Notifications">
+            <div class="pd-20 card medium">
+                <table class="highlight">
+                    <tbody>
+                        <tr *ngFor="let item of privateNotification; let i=index">
+                            <td>{{i+1}}. {{item.title}}</td>
+                            <td>{{item.date | date:shortDate}}</td>
+                            <td class="pointer" (click)="deleteNotification(item._id)">
+                                <mat-icon class="red-text pdt-10">delete</mat-icon>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </mat-tab>
+    </mat-tab-group>
+    <!--main container ends here!-->
+    <div class="push_bottom-right" id="addStyle">
+        <button mat-fab class="indigo darken-3 white-text" (click)="openSettings()">
+        <mat-icon class="white-text scale-transition">settings</mat-icon>
+      </button>
+        <div *ngIf="showSettings" class="setting-buttons-div1">
+            <button class="indigo white-text scale-transition scale-in" (click)="updateApplication()" mat-mini-fab matTooltip="Allow Intern Applications" matTooltipPosition="left">
+          <mat-icon class="small-font">description</mat-icon>
+        </button>
+        </div>
+        <div *ngIf="showSettings" class="setting-buttons-div2">
+            <button mat-mini-fab (click)="updateBank()" class="indigo white-text scale-transition scale-in" matTooltip="Allow Bank Details" matTooltipPosition="left">
+          <mat-icon class="small-font">account_balance</mat-icon>
+        </button>
+        </div>
+    </div>
+</div>
