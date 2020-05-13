@@ -14,32 +14,39 @@ import { AccessComponent } from './component/dashboard/login/login.component';
 import { SuggestionComponent } from './component/dashboard/suggestion/suggestion.component';
 import { RoleGuardService as AdminGuard } from './role-guard.service';
 
+import { InterviewComponent } from "./component/dashboard/interview/interview.component";
+import { TasksComponent } from "./component/dashboard/tasks/tasks.component";
+import { InterviewScheduleComponent } from "./component/dashboard/interview-schedule/interview-schedule.component";
+
 const routes: Routes = [
-  { path: '', component: LoginComponent },
-  {
-    path: 'admin', component: DashNavComponent,
-    children: [
-      { canActivate: [AdminGuard], path: 'dashboard', component: DashComponent },
-      { canActivate: [AdminGuard], path: 'notify', component: NotifyComponent },
-      { canActivate: [AdminGuard], path: 'application', component: ApplicationComponent },
-      { canActivate: [AdminGuard], path: 'bank', component: BankComponent },
-      { canActivate: [AdminGuard], path: 'intern', component: IntersComponent },
-      { canActivate: [AdminGuard], path: 'report', component: ReportComponent },
-      { canActivate: [AdminGuard], path: 'officer', component: OfficerComponent },
-      { canActivate: [AdminGuard], path: 'restricted', component: AccessComponent },
-      { canActivate: [AdminGuard], path: 'suggestion', component: SuggestionComponent }
-    ]
-  },
-  // not found URL!
-  { path: '**', redirectTo: '' },
+    { path: '', component: LoginComponent },
+    {
+        path: 'admin', component: DashNavComponent,
+        children: [
+            { canActivate: [AdminGuard], path: 'dashboard', component: DashComponent },
+            { canActivate: [AdminGuard], path: 'notify', component: NotifyComponent },
+            { canActivate: [AdminGuard], path: 'application', component: ApplicationComponent },
+            { canActivate: [AdminGuard], path: 'bank', component: BankComponent },
+            { canActivate: [AdminGuard], path: 'intern', component: IntersComponent },
+            { canActivate: [AdminGuard], path: 'report', component: ReportComponent },
+            { canActivate: [AdminGuard], path: 'interview', component: InterviewComponent },
+            { canActivate: [AdminGuard], path: 'tasks', component: TasksComponent },
+            { canActivate: [AdminGuard], path: 'schedule', component: InterviewScheduleComponent },
+            { canActivate: [AdminGuard], path: 'officer', component: OfficerComponent },
+            { canActivate: [AdminGuard], path: 'restricted', component: AccessComponent },
+            { canActivate: [AdminGuard], path: 'suggestion', component: SuggestionComponent }
+        ]
+    },
+    // not found URL!
+    { path: '**', redirectTo: '' },
 ];
 
 
 @NgModule({
-  exports: [RouterModule],
-  imports: [
-    RouterModule.forRoot(routes)
-  ]
+    exports: [RouterModule],
+    imports: [
+        RouterModule.forRoot(routes)
+    ]
 })
 
 export class AppRoutingModule { }

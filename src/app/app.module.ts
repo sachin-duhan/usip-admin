@@ -48,6 +48,11 @@ import { SuggestionComponent } from './component/dashboard/suggestion/suggestion
 import { TasksService } from './service/tasks.service';
 import { RoleGuardService } from './role-guard.service';
 import { BankDetailsFormComponent } from "./component/utility/bank-details-form/bank-details-form.component";
+import { InterviewComponent } from './component/dashboard/interview/interview.component';
+import { TasksComponent } from './component/dashboard/tasks/tasks.component';
+import { PeriodControllerComponent } from './component/dashboard/period-controller/period-controller.component';
+import { DomainComponent } from './component/dashboard/domain/domain.component';
+import { InterviewScheduleComponent } from './component/dashboard/interview-schedule/interview-schedule.component';
 
 @NgModule({
   declarations: [
@@ -71,6 +76,11 @@ import { BankDetailsFormComponent } from "./component/utility/bank-details-form/
     BankDetailsComponent,
     BankComponent,
     SuggestionComponent,
+    InterviewComponent,
+    TasksComponent,
+    PeriodControllerComponent,
+    DomainComponent,
+    InterviewScheduleComponent,
   ],
   imports: [
     HttpClientModule,

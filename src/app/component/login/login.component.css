@@ -1,32 +1,38 @@
-mat-form-field input, mat-form-field:focus,mat-form-field:active{
+mat-form-field input,
+mat-form-field:focus,
+mat-form-field:active {
     border: none;
     outline: none;
     padding-left: 5px;
 }
-input:not(.browser-default):focus:not([readonly]){
+
+input:not(.browser-default):focus:not([readonly]) {
     border: none;
     outline: none;
 }
-#home-button{
+
+#home-button {
     margin-left: 150px;
 }
-mat-form-field mat-icon{
+
+mat-form-field mat-icon {
     transform: translateY(-10px);
     font-size: 28px;
     margin-right: 7px;
 }
-#shadow{
-    box-shadow: 3px 0px 24px rgba(0, 0, 0, 0.3),
-                1px 0px 80px rgba(0, 0, 0, 0.1);
+
+#shadow {
+    box-shadow: 3px 0px 24px rgba(0, 0, 0, 0.3), 1px 0px 80px rgba(0, 0, 0, 0.1);
 }
 
-.login-back{
-    background-image: url('/assets/login.svg');
+.login-back {
+    /* background-image: url('/assets/login.svg'); */
+    background: linear-gradient(111.27747562847537deg, rgba(65, 65, 65, 1) 5.911420204978038%, rgba(0, 0, 0, 1) 95.95534407027817%);
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
 }
-.background-shade{
-    box-shadow: 3px 0px 30px rgba(0, 0, 0, 0.3),
-                1px 0px 80px rgba(0, 0, 0, 0.1);
+
+.background-shade {
+    box-shadow: 3px 0px 30px rgba(0, 0, 0, 0.3), 1px 0px 80px rgba(0, 0, 0, 0.1);
 }

@@ -1,50 +1,16 @@
 <mat-sidenav-container class="sidenav-container blue-grey lighten-5 background-laptop-white">
     <mat-sidenav #drawer class="sidenav background-color white-text" fixedInViewport="true" [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'" [mode]="(isHandset$ | async) ? 'over' : 'side'" [opened]="!(isHandset$ | async)">
-        <mat-toolbar id="sidenav-menu" class="white-text">Menu
-            <div class="spacer"></div>
-            <mat-icon color="accent">dashboard</mat-icon>
-        </mat-toolbar>
         <mat-nav-list class="blue-grey-text text-darken-4">
-            <div class="divider"></div>
-            <div class="pd-5"></div>
-            <a mat-list-item [routerLink]="['/admin/dashboard']" class="white-text">Home<div class="spacer"></div>
-        <mat-icon class="blue-text text-accent-2">home</mat-icon>
-      </a>
-            <a mat-list-item [routerLink]="['/admin/notify']" routerLinkActive="router-link-active" class="white-text">Notification<div class="spacer"></div>
-        <mat-icon class="light-green-text text-accent-4">add_alert</mat-icon>
-      </a>
-            <a mat-list-item routerLink="/admin/intern" class="white-text">Interns<div class="spacer"></div>
-        <mat-icon class="purple-text text-accent-2">school</mat-icon>
-      </a>
 
-            <a mat-list-item routerLink="/admin/report" class="white-text">Reports <div class="spacer"></div>
-        <mat-icon class="yellow-text text-accent-2">description</mat-icon>
-      </a>
+            <a mat-list-item *ngFor="let item of navigation" [routerLink]="item.url" class="white-text">
+                {{item.title | titlecase}}
+                <div class="spacer"></div>
+                <mat-icon [class]="item.style"></mat-icon>
+            </a>
 
-            <a mat-list-item routerLink="/admin/application" class="white-text">Application<div class="spacer"></div>
-        <mat-icon class="teal-text text-accent-2">people</mat-icon>
-      </a>
-            <a mat-list-item routerLink="/admin/suggestion" class="white-text">Feedback<div class="spacer"></div>
-        <mat-icon class="pink-text">feedback</mat-icon>
-      </a>
-            <a mat-list-item routerLink="/admin/officer" class="white-text">Officer<div class="spacer"></div>
-        <mat-icon class="green-text text-accent-3 fa fa-lg fa-university"></mat-icon>
-      </a>
-            <a mat-list-item routerLink="/admin/bank" class="white-text">Bank Details<div class="spacer"></div>
-        <mat-icon class="blue-text text-accent-3 fa fa-lg fa-money"></mat-icon>
-      </a>
-
-            <div class="pd-5"></div>
-            <div class="divider"></div>
-
-            <a mat-list-item routerLink="/admin/restricted" class="white-text">Access Zone<div class="spacer"></div>
-        <mat-icon class="teal-text text-accent-2">lock</mat-icon>
-      </a>
-
-            <a mat-list-item class="bottom" (click)="logout()" class="white-text">logout<div class="spacer"></div>
-        <mat-icon class="red-text text-accent-2">vpn_lock</mat-icon>
-      </a>
-
+            <a mat-list-item (click)="logout()" class="white-text">logout<div class="spacer"></div>
+                <mat-icon class="red-text text-accent-2 fa fa-sign-out"></mat-icon>
+            </a>
         </mat-nav-list>
     </mat-sidenav>
 
@@ -53,8 +19,8 @@
             <span class="pointer" routerLink="/admin/dashboard">Welcome to Dashboard</span>
             <div class="spacer"></div>
             <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()">
-        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
-      </button>
+                <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+            </button>
         </mat-toolbar>
         <router-outlet></router-outlet>
     </mat-sidenav-content>
