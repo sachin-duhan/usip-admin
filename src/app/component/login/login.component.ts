@@ -21,8 +21,9 @@ export class LoginComponent implements OnInit {
     private router: Router) { }
 
   ngOnInit() {
-    if(this._login.loggedIn())this.router.navigate['/'];
-   }
+    if (this._login.loggedIn()) this.router.navigate(['/admin/dashboard']);
+  }
+
   // tslint:disable-next-line: member-ordering
   loginForm = this.fb.group({
     userName: [''],

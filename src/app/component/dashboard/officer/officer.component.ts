@@ -53,6 +53,7 @@ export class OfficerComponent implements OnInit {
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
+  
   openAddOfficer(data): void {
     const dialogRef = this.dialog.open(AddOfficerComponent, {
       width: '60%',
@@ -77,6 +78,7 @@ export class OfficerComponent implements OnInit {
       }
     });
   }
+
   delete(data): void {
    const r = confirm('Are you sure');
     if (r) {

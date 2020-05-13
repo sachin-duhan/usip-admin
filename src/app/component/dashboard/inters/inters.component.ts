@@ -17,17 +17,20 @@ export class IntersComponent implements OnInit {
     private dialog: MatDialog,
     private _toast: ToastrService) { }
 
-  private input: Boolean = true;
-  private loading: Boolean = false;
+  input: Boolean = true;
+  loading: Boolean = false;
 
-  displayedColumns: string[] = ['name', 'branch', 'rollNo', 'phone', 'update'];
-  displayedColumns2: string[] = ['depNo', 'name', 'rollNo', 'officer', 'end', 'update'];
+  displayedColumns: string[] = ['name', 'branch', 'rollNo', 'phone', 'domain', 'update'];
+  displayedColumns2: string[] = ['depNo', 'name', 'rollNo', 'officer', 'start', 'end', 'update'];
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
   dataSource = new MatTableDataSource();
   dataSource2 = new MatTableDataSource();
+
+  done_processing: Boolean = false;
+
   toggle(): void {
     this.input = !this.input;
   }
@@ -36,33 +39,31 @@ export class IntersComponent implements OnInit {
     this.dataSource.sort = this.sort;
     this.dataSource2.sort = this.sort;
 
-    this.loading = !this.loading;
+    this.loading = true;
     this._internService.showRegisterIntern().subscribe(
-      res => {
-        this.dataSource2 = res.interns;
-      },
-      err => {
-        console.log(err);
-        this._toast.error(err.message, 'Something went wrong!');
-      }
+      res => { this.dataSource2.data = res.interns; this.get_intern_with_officer(); },
+      err => { this._toast.error(err.message, 'Something went wrong!'); this.loading = false; }
     );
+  }
+
+  get_intern_with_officer() {
     this._internService.showIntern()
       .subscribe(
         data => {
           this.dataSource.data = data.interns;
-          this.loading = !this.loading;
+          this.loading = false;
         },
         err => {
           console.log(err);
           this._toast.error(err.message, 'Something went wrong!');
-          this.loading = !this.loading;
+          this.loading = false;
         });
   }
+
   openInternDetails(data): void {
-    //console.log(data);
     const dialogRef = this.dialog.open(InternDetailsComponent, {
-      width: '85%',
-      height: '95%',
+      width: '90%',
+      height: '98%',
       data: data
     });
 

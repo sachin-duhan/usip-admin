@@ -11,39 +11,35 @@ import { ToastrService, Toast } from 'ngx-toastr';
 })
 export class InternDetailsComponent implements OnInit {
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: any,
+  constructor(
+    @Inject(MAT_DIALOG_DATA) public data: any,
     private _officer: OfficerService,
     private toast: ToastrService,
-    public dialogRef: MatDialogRef<InternDetailsComponent>) { }
-  public officers = [];
+    public dialogRef: MatDialogRef<InternDetailsComponent>
+  ) { }
+
+  public officers = []; 
   private loading: Boolean = false;
-  // public selectedValue: string;
-  // public internForm = {};
+
   ngOnInit() {
-    console.log(this.data);
     this.loading = !this.loading;
     this._officer.getOfficers().subscribe(
       res => {
-        //console.log(res);
         this.officers = res.officers;
-        this.loading = !this.loading;
-        //console.log(this.officers);
+        this.loading  = false;
       },
       err => {
         console.log(err);
-        this.loading = !this.loading;
-
+        this.loading = false;
         this.toast.error('Officers not found!!', err.error);
       }
     );
   }
-  addOfficer(details): void {
-    //console.log(details);
-    this.loading = !this.loading;
 
+  addOfficer(details): void {
+    this.loading = true;
     if (details === undefined) {
       this.toast.error('Kindly choose an Officer', 'Not Allowed');
-      //alert('Kindly select the officer!');
     } else {
       const intern_id = this.data._id;
       const intern_data = {
@@ -58,11 +54,11 @@ export class InternDetailsComponent implements OnInit {
           console.log(res);
           if (res.message === "intern updated") {
             window.localStorage.setItem('update', 'ok');
-            this.loading = !this.loading;
+            this.loading = false;
             this.dialogRef.close();
           } else {
             console.log(res);
-            this.loading = !this.loading;
+            this.loading = false;
             this.toast.warning(res.message, 'Try again later');
           }
         },

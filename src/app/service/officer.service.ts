@@ -6,6 +6,7 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
+
 export class OfficerService {
 
 /************************************************
@@ -65,11 +66,8 @@ export class OfficerService {
 
   // adding an intern to an officer
   pushIntern(data,id): Observable<any> {
-    // id id for the intern ID
-    console.log(data);
-    // data includes the officer data
     const url = this._urlOfficer + '/add/' + id;
-    return this.http.put<any>(url, data, {
+    return this.http.post<any>(url, data, {
       headers: this.headers
     });
   }

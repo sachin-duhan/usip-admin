@@ -48,6 +48,7 @@ import { SuggestionComponent } from './component/dashboard/suggestion/suggestion
 import { TasksService } from './service/tasks.service';
 import { RoleGuardService } from './role-guard.service';
 import { BankDetailsFormComponent } from "./component/utility/bank-details-form/bank-details-form.component";
+
 @NgModule({
   declarations: [
     AppComponent,
