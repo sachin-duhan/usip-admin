@@ -17,7 +17,7 @@ import { RoleGuardService as AdminGuard } from './role-guard.service';
 import { InterviewComponent } from "./component/dashboard/interview/interview.component";
 import { TasksComponent } from "./component/dashboard/tasks/tasks.component";
 import { InterviewScheduleComponent } from "./component/dashboard/interview-schedule/interview-schedule.component";
-
+import { PeriodControllerComponent } from "./component/dashboard/period-controller/period-controller.component";
 const routes: Routes = [
     { path: '', component: LoginComponent },
     {
@@ -30,6 +30,7 @@ const routes: Routes = [
             { canActivate: [AdminGuard], path: 'intern', component: IntersComponent },
             { canActivate: [AdminGuard], path: 'report', component: ReportComponent },
             { canActivate: [AdminGuard], path: 'interview', component: InterviewComponent },
+            { canActivate: [AdminGuard], path: 'period', component: PeriodControllerComponent },
             { canActivate: [AdminGuard], path: 'tasks', component: TasksComponent },
             { canActivate: [AdminGuard], path: 'schedule', component: InterviewScheduleComponent },
             { canActivate: [AdminGuard], path: 'officer', component: OfficerComponent },

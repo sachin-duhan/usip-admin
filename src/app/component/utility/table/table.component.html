@@ -1,0 +1,24 @@
+<div class="container">
+    <h1 class="mat-h1 pdb-0 mgb-0 row">
+        {{title | titlecase}}
+        <button mat-button class="right" (click)="download()">Download Excel File</button>
+        <span id="chip" class="indigo white-text">Total - {{data.length}}</span>
+    </h1>
+    <br>
+    <div class="mat-elevation-z8" *ngIf="data.length > 0; else noData">
+        <table mat-table [dataSource]="data">
+            <ng-container *ngFor="let item of display_val;let i=index" [matColumnDef]="displayedColumns[i]">
+                <th mat-header-cell *matHeaderCellDef>{{item}}</th>
+                <td mat-cell *matCellDef="let element"> {{element[displayedColumns[i]]}} </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+    </div>
+    <ng-template #noData>
+        <div class="white pd-20 center">
+            <h5 class="pd-20">No Records Found...</h5>
+        </div>
+    </ng-template>
+</div>

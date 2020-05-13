@@ -1,6 +1,6 @@
 <div class="container">
     <h1 class="mat-h1">Bank Details
-        <sup id="chip" class="indigo white-text">{{dataSource2.length}}</sup>
+        <sup id="chip" class="indigo white-text">{{dataSource2.length ? dataSource2.length : 0}}</sup>
     </h1>
 
     <div class="mat-elevation-z8 mg-10 col s12 white" *ngIf="dataSource2.length> 0;else noData">

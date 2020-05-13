@@ -53,6 +53,7 @@ import { TasksComponent } from './component/dashboard/tasks/tasks.component';
 import { PeriodControllerComponent } from './component/dashboard/period-controller/period-controller.component';
 import { DomainComponent } from './component/dashboard/domain/domain.component';
 import { InterviewScheduleComponent } from './component/dashboard/interview-schedule/interview-schedule.component';
+import { TableComponent } from './component/utility/table/table.component';
 
 @NgModule({
   declarations: [
@@ -81,6 +82,7 @@ import { InterviewScheduleComponent } from './component/dashboard/interview-sche
     PeriodControllerComponent,
     DomainComponent,
     InterviewScheduleComponent,
+    TableComponent,
   ],
   imports: [
     HttpClientModule,
