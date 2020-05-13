@@ -1,11 +1,11 @@
+<app-spinner *ngIf="loading"></app-spinner>
 <div class="container">
-    <app-spinner *ngIf="loading"></app-spinner>
     <h1 class="mat-h1">
         Officer Details
         <sup id="chip" class="indigo white-text">{{ fetchData.length ? fetchData.length : 0 }}</sup>
         <div class="right">
             <button (click)="openAddOfficer(new)" mat-button class="grey-text text-darken-3 center">
-          <span class="mat-h3">Add Officer</span></button>
+                    <span class="mat-h3">Add Officer</span></button>
         </div>
     </h1>
 

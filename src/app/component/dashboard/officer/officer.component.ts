@@ -35,7 +35,7 @@ export class OfficerComponent implements OnInit {
         this.loading = !this.loading;
         this._officer.getOfficers().subscribe(
             res => {
-                this.fetchData = res.body;
+                this.fetchData = res.officers;
                 this.dataSource = new MatTableDataSource(this.fetchData);
                 this.loading = !this.loading;
             },
@@ -54,21 +54,6 @@ export class OfficerComponent implements OnInit {
             autoFocus: true,
             disableClose: false,
             data: data
-        });
-
-        dialogRef.afterClosed().subscribe(result => {
-            if (window.localStorage.getItem('created')) {
-                if (window.localStorage.getItem('created') === 'ok') {
-                    this._toast.success('Officer Data added!', 'Success');
-                    window.localStorage.removeItem('created');
-                } else if (window.localStorage.getItem('created') === 'bug') {
-                    this._toast.error('Bad request!! conact developer', 'Officer not added!');
-                    window.localStorage.removeItem('created');
-                } else {
-                    this._toast.error('Bad request!!', 'Officer not added');
-                    window.localStorage.removeItem('created');
-                }
-            }
         });
     }
 

@@ -36,27 +36,29 @@ export class AddOfficerComponent implements OnInit {
             deptt: this.officerForm.get('deptt').value,
             email: this.officerForm.get('email').value
         };
-        if (this.data.method === 'post') {
-            this._officerService.createOfficer(officer).subscribe(
-                res => {
-                    setTimeout(() => {
-                        this._toast.success("Officer created successfully");
-                    }, 100);
-                    this.loading = !this.loading;
-                    this.dialogRef.close();
-                },
-                err => {
-                    console.log(err);
-                    this.loading = !this.loading;
-                    this._toast.error(err.error.message, 'Bad request');
-                }
-            );
-        } else {
-            console.log('update kro');
-        }
+
+        if (this.data.method === 'post') this.create_a_new_officer(officer);
+        else this.update_officer(officer);
+    }
+
+    create_a_new_officer(officer) {
+        this._officerService.createOfficer(officer).subscribe(
+            res => {
+                setTimeout(() => {
+                    this._toast.success("Officer created successfully");
+                }, 100);
+                this.loading = !this.loading;
+                this.dialogRef.close();
+            },
+            err => {
+                console.log(err);
+                this.loading = !this.loading;
+                this._toast.error(err.error.message, 'Bad request');
+            }
+        );
     }
 
     update_officer(officer) {
-
+        console.log(officer);
     }
 }
