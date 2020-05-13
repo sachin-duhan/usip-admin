@@ -1,25 +1,18 @@
-<form class="row" (submit)="submitForm()" [formGroup]="officerForm">
 <app-spinner *ngIf="loading"></app-spinner>
-  <mat-form-field class="col s12">
-    <input matInput formControlName="name" placeholder="Name" type="text" required>
-  </mat-form-field>
-  
-  <mat-form-field class="col s12 m6">
-    <input matInput placeholder="Phone Number" formControlName="phone" type="number" required>
-  </mat-form-field>
-  
-  <mat-form-field class="col s12 m6">
-    <input matInput placeholder="Email" formControlName="email" type="email" required>
-  </mat-form-field>
-  
-  <mat-form-field class="col s12">
-      <input matInput type="text" formControlName="deptt" placeholder="Department" required>
-  </mat-form-field>
-  
-  <mat-checkbox color="primary" formControlName="checked" class="left col s12 pd-10">I have checked details</mat-checkbox>
-  
-  <button mat-raised-button 
-  [disabled]="!officerForm.valid"
-  type="submit" class="red white-text col s4 right">Submit</button>
-
+<form class="row" (submit)="submitForm()" [formGroup]="officerForm">
+    <mat-form-field class="col s12">
+        <input matInput formControlName="name" placeholder="Name" type="text" required>
+    </mat-form-field>
+    <mat-form-field class="col s12 m6">
+        <input matInput placeholder="Phone Number" formControlName="phone" type="number" required>
+    </mat-form-field>
+    <mat-form-field class="col s12 m6">
+        <input matInput placeholder="Email" formControlName="email" type="email" required>
+    </mat-form-field>
+    <mat-form-field class="col s12">
+        <input matInput type="text" formControlName="deptt" placeholder="Department" required>
+    </mat-form-field>
+    <mat-checkbox color="primary" formControlName="checked" class="left col s12 pd-10">I have checked details
+    </mat-checkbox>
+    <button mat-raised-button [disabled]="!officerForm.valid" type="submit" class="red white-text col s4 right">Submit</button>
 </form>

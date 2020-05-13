@@ -50,9 +50,7 @@ export class OfficerService {
     const url = this._urlOfficer + '/create';
     //console.log(data);
     return this.http.post<any>(url, data, {
-      headers: this.headers,
-      reportProgress: true,
-      observe: 'body'
+      headers: this.headers
     });
   }
 
