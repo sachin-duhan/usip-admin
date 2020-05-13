@@ -1,3 +1,51 @@
 <app-spinner *ngIf="loading"></app-spinner>
+<div class="container" *ngIf="!loading">
+    <h3 class="mat-h2">USIP Intership Application
+        <mat-slide-toggle class="right" [(ngModel)]="show_table" color="primary">Qualify</mat-slide-toggle>
+    </h3>
+    <!--Table view of the data-->
+    <mat-tab-group class="white pd-20" mat-align-tabs="center" *ngIf="!show_table" mat-stretch-tabs>
+        <mat-tab label="All Applications">
+            <app-table [title]="'List of All Applications'" [data]="all_applications" [displayedColumns]="displayedColumns" [display_val]="display_val"></app-table>
+        </mat-tab>
+        <mat-tab label="Show Qualified Interns">
+            <app-table [title]="'List of Qualified Applications'" [data]="qulified_applications" [displayedColumns]="displayedColumns" [display_val]="display_val"></app-table>
+        </mat-tab>
+    </mat-tab-group>
 
-<app-table [title]="'List of Applications'" [data]="fetchData" [displayedColumns]="displayedColumns" [display_val]="display_val"></app-table>
+    <!--Edit mode of the data-->
+    <mat-tab-group class="white pd-20" mat-align-tabs="center" *ngIf="show_table" mat-stretch-tabs>
+        <mat-tab label="Select More Interns for Interview">
+            <br>
+            <div class="row">
+                <span class="left">Options selected: {{selectedInterns.length}} | Total -
+                    {{not_qualified_applications.length}}</span>
+                <button mat-button class="right" (click)="selectedInterns = []">Reset</button>
+                <button (click)="update_interns()" mat-button class="indigo white-text right">
+                    Click to Qualify {{selectedInterns.length}} Application</button>
+            </div>
+            <mat-selection-list class="white" *ngIf="show_table" [(ngModel)]="selectedInterns">
+                <mat-list-option *ngFor="let item of not_qualified_applications" [value]="item._id">
+                    {{item.name}} - ({{item.rollNo}}), CGPA {{item.marks}} works on {{item.domain}}
+                </mat-list-option>
+            </mat-selection-list>
+        </mat-tab>
+        <mat-tab label="Review Selected Interns">
+            <mat-accordion>
+                <mat-expansion-panel *ngFor="let item of qulified_applications; let i=index">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            <strong>{{item.name}}</strong> - {{item.rollNo}}
+                        </mat-panel-title>
+                        <mat-panel-description>
+                            CGPA - {{item.marks}} | {{item.domain}}
+                        </mat-panel-description>
+                    </mat-expansion-panel-header>
+                    <p> {{item.exp}} </p>
+                    <button mat-button (click)="disqualify_intern(item._id,i)" class="red white-text right">Disqualify
+                        Intern</button>
+                </mat-expansion-panel>
+            </mat-accordion>
+        </mat-tab>
+    </mat-tab-group>
+</div>

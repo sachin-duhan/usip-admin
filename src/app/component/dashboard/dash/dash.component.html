@@ -1,10 +1,7 @@
-<app-spinner *ngIf="loading">
-</app-spinner>
+<app-spinner *ngIf="loading"></app-spinner>
 <div>
     <div class="grid-container" id="dash-content">
-
         <mat-grid-list cols="4" rowHeight="160px">
-
             <mat-grid-tile *ngFor="let box of sCards" [colspan]="box.cols" [rowspan]="box.rows">
                 <mat-card [class]="box.style" routerLink="{{box.url}}">
                     <mat-card-content>
@@ -56,7 +53,7 @@
                                     <td *ngIf="i<5">{{application.branch | uppercase}}</td>
                                     <td *ngIf="i<5">{{application.domain}}</td>
                                     <td *ngIf="i<5">{{application.phone}}</td>
-                                    <td *ngIf="i<5" class="grey-text">{{application.date|date:shortDate}}</td>
+                                    <td *ngIf="i<5" class="grey-text">{{application.date | date:shortDate}}</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -85,7 +82,7 @@
                         </table>
 
                         <table *ngIf="card.title == 'Notification'" class="highlight">
-                            <tbody>
+                            <tbody *ngIf="notification.length > 0;else noData">
                                 <tr *ngFor="let noti of notification; let i=index">
                                     <td *ngIf="i<3">{{i+1}}.</td>
                                     <td *ngIf="i<3">{{noti.title | lowercase}}</td>
@@ -100,7 +97,7 @@
                     </mat-card-content>
                     <ng-template #noData>
                         <div class="white center pd-20">
-                            <h5>No Data found!!</h5>
+                            <h5 class="mat-h3">No Records found!!</h5>
                         </div>
                     </ng-template>
                 </mat-card>

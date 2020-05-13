@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatDialog, MatPaginator, MatTableDataSource, MatDialogRef } from '@angular/material';
+import { MatDialog, MatPaginator, MatTableDataSource } from '@angular/material';
 import { InternViewInternComponent } from '../application/intern-view-intern/intern-view-intern.component';
 
 import { RegisterService } from '../.././../service/register.service';
@@ -20,24 +20,22 @@ export class InterviewComponent implements OnInit {
         private _toast: ToastrService
     ) { }
 
-    private input: Boolean = true;
     public fetchData: Array<any> = [];
     private loading: Boolean = false;
 
-    displayedColumns: string[] = ['name', 'rollNo', 'phone', 'domain', 'interview', 'update'];
+    displayedColumns: Array<string> = ['name', 'rollNo', 'phone', 'domain', 'interview', 'update'];
 
     @ViewChild(MatPaginator) paginator: MatPaginator;
-    dataSource = new MatTableDataSource();
-
-    toggle(): void {
-        this.input = !this.input;
-    }
+    dataSource = new MatTableDataSource(this.fetchData);
 
     ngOnInit() {
         this.loading = !this.loading;
         this._registerService.showRegisterations().subscribe(
             res => {
-                this.dataSource = res.body;
+                this.fetchData = res.body;
+                console.log(this.fetchData);
+                this.dataSource.data = this.fetchData;
+                setTimeout(() => this.dataSource.paginator = this.paginator);
                 this.loading = !this.loading;
             },
             err => {
@@ -45,14 +43,8 @@ export class InterviewComponent implements OnInit {
                 this.loading = !this.loading;
             }
         );
-        this.dataSource.paginator = this.paginator;
     }
 
-    applyFilter(filterValue: string) {
-        this.dataSource.filter = filterValue.trim().toLowerCase();
-    }
-
-    // opening the intern result form!!
     public Openform(data): void {
         const dialogRef = this.dialog.open(InternViewInternComponent, {
             width: "98%",
@@ -73,6 +65,21 @@ export class InterviewComponent implements OnInit {
             window.localStorage.removeItem('interview');
         });
     }
+
+    // openInternDetails(data): void {
+    //     const dialogRef = this.dialog.open(InternDetailsComponent, {
+    //         width: '90%',
+    //         height: '98%',
+    //         data: data
+    //     });
+
+    //     dialogRef.afterClosed().subscribe(result => {
+    //         if (window.localStorage.getItem('update') === 'ok') {
+    //             this._toast.success('Intern updated successfully!', 'Congratulations!');
+    //             window.localStorage.removeItem('update');
+    //         }
+    //     });
+    // }
 
     delete_application(data): void {
         let v = confirm('Are you sure! ' + data.name + ' will be deleted');

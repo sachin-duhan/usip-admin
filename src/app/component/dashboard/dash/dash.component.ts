@@ -25,11 +25,11 @@ export class DashComponent implements OnInit {
     private loading: Boolean = false;
     private handler = new http_handler(null).handle_response;
     // data for reports!!
-    public internReport = [];
-    public bankDetails = [];
-    public officer = [];
-    public applications = [];
-    public notification = [];
+    public internReport: Array<any> = [];
+    public bankDetails: Array<any> = [];
+    public officer: Array<any> = [];
+    public applications: Array<any> = [];
+    public notification: Array<any> = [];
 
     constructor(
         private _internService: InternService,
@@ -76,38 +76,9 @@ export class DashComponent implements OnInit {
 
         this.loading = !this.loading;
         // interns only!!
-        this._officerservice.getOfficers().subscribe(
-            res => {
-                this.officer = res.officers;
-                this.sCards[3].count = this.officer.length;
-            }, err => {
-                console.log(err);
-            });
-        this._internService.showIntern().subscribe(res => {
-            this.sCards[1].count = res.interns.length;
-        }, err => {
-            console.log(err);
-        });
-        this._internService.showRegisterIntern().subscribe(res => {
-            this.bankDetails = res.interns;
-        }, err => {
-            console.log(err);
-        });
-        this._notifyService.publicNotification().subscribe(res => {
-            this.notification = res.notifications;
-        }, err => {
-            console.log(err);
-        });
-        this._reportService.getAllReport().subscribe(res => {
-            this.internReport = res.reports;
-            this.sCards[2].count = this.internReport.length;
-        }, err => {
-            console.log(err);
-        });
-
         this._registerService.showRegisterations().subscribe(
             res => {
-                this.applications = res.application;
+                this.applications = res.body;
                 this.sCards[0].count = this.applications.length;
                 this.loading = !this.loading;
             }, err => {
@@ -115,5 +86,4 @@ export class DashComponent implements OnInit {
                 this.loading = !this.loading;
             });
     }
-
 }

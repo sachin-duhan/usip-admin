@@ -1,15 +1,16 @@
 <mat-sidenav-container class="sidenav-container blue-grey lighten-5 background-laptop-white">
     <mat-sidenav #drawer class="sidenav background-color white-text" fixedInViewport="true" [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'" [mode]="(isHandset$ | async) ? 'over' : 'side'" [opened]="!(isHandset$ | async)">
-        <mat-nav-list class="blue-grey-text text-darken-4">
 
-            <a mat-list-item *ngFor="let item of navigation" [routerLink]="item.url" class="white-text">
-                {{item.title | titlecase}}
+        <mat-toolbar id="sidenav-menu" class="white-text">Menu
+            <div class="spacer"></div>
+            <mat-icon color="accent">dashboard</mat-icon>
+        </mat-toolbar>
+        <div class="divider"></div>
+        <mat-nav-list class="blue-grey-text text-darken-4">
+            <a mat-list-item *ngFor="let item of navigation" [routerLink]="item.url" routerLinkActive="black" class="white-text">
+                {{item.title}}
                 <div class="spacer"></div>
                 <mat-icon [class]="item.style"></mat-icon>
-            </a>
-
-            <a mat-list-item (click)="logout()" class="white-text">Logout<div class="spacer"></div>
-                <mat-icon class="red-text text-accent-2 fa fa-sign-out"></mat-icon>
             </a>
         </mat-nav-list>
     </mat-sidenav>
@@ -18,10 +19,17 @@
         <mat-toolbar color="primary" class="transparent blue-grey-text text-darken-4">
             <span class="pointer" routerLink="/admin/dashboard">Welcome to Dashboard</span>
             <div class="spacer"></div>
+            <button mat-button [routerLink]="['/admin/suggestion']" routerLinkActive="indigo white-text">Feedback</button>
+            <button mat-button [routerLink]="['/admin/notify']" routerLinkActive="indigo white-text">Notifications</button>
+            <button mat-button (click)="logout()">Logout</button>
             <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()">
                 <mat-icon aria-label="Side nav toggle icon" class="fa fa-bars fa-lg"></mat-icon>
             </button>
         </mat-toolbar>
-        <router-outlet></router-outlet>
+        <router-outlet>
+            <button mat-fab (click)="moveToTop()" class="indigo white-text bottom_push">
+                <mat-icon>keyboard_arrow_up</mat-icon>
+            </button>
+        </router-outlet>
     </mat-sidenav-content>
 </mat-sidenav-container>
