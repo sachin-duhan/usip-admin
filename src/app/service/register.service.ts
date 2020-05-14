@@ -37,6 +37,12 @@ export class RegisterService {
         }).pipe(retry(2));
     }
 
+    get_all_qualified_applications(): Observable<any> {
+        return this.http.get<any>(this._urlRegsiter + '/qualified', {
+            headers: this.headers
+        }).pipe(retry(2));
+    }
+
     // get a specfic intern
     getSpecificIntern(data): Observable<any> {
         const url = this._urlRegsiter + '/' + data;

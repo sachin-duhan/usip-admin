@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { RegisterService } from "../../../service/register.service";
 import { ToastrService } from 'ngx-toastr';
+import { FormBuilder } from '@angular/forms';
 
 @Component({
     selector: 'app-interview-schedule',
@@ -9,7 +10,13 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class InterviewScheduleComponent implements OnInit {
     loading: Boolean = false;
-    constructor(private _registerationService: RegisterService, private _toast: ToastrService) { }
+    show_form: Boolean = false;
+
+    constructor(
+        private _registerationService: RegisterService, private _toast: ToastrService,
+        private fb: FormBuilder,
+    ) { }
+
     qualified_applications: Array<any> = [];
     displayedColumns: Array<String> = ['name', 'rollNo', 'marks', 'phone', 'domain'];
     display_val: Array<String> = ["Name", "Roll No.", "CGPA", 'Phone', "Domain"];
@@ -20,10 +27,9 @@ export class InterviewScheduleComponent implements OnInit {
 
     get_qualified() {
         this.loading = true;
-        this._registerationService.showRegisterations()
+        this._registerationService.get_all_qualified_applications()
             .subscribe(res => { this.qualified_applications = res.body; this.loading = false; });
     }
-
 
     /** selected interns */
     selected_applications: Array<String> = [];
@@ -37,4 +43,20 @@ export class InterviewScheduleComponent implements OnInit {
         if (res.success) this._toast.success("Intern updated Successfully", "Success");
         else this._toast.warning(res.message, msg);
     }
+
+    interviewScheduleForm = this.fb.group({
+        venue: [''],
+        slot: [''],
+        date: [Date.now()]
+    });
+
+    submitForm(): void {
+        const interview_data = {
+            venue_details: this.interviewScheduleForm.get('venue').value,
+            slot_details: this.interviewScheduleForm.get('slot').value,
+            interview_date: this.interviewScheduleForm.get('date').value,
+        };
+        console.log(interview_data);
+    }
+
 }

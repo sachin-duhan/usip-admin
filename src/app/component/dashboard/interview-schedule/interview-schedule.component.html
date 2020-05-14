@@ -1,16 +1,50 @@
 <app-spinner *ngIf="loading"></app-spinner>
 <div class="container" *ngIf="!loading">
-    <br>
     <div class="row">
-        <span class="left">Options selected: {{selected_applications.length}} | Total -
-            {{qualified_applications.length}}</span>
-        <button mat-button class="right" (click)="selected_applications = []">Reset</button>
-        <button (click)="update_interns()" mat-button class="indigo white-text right">
-            Click to Schedule {{selected_applications.length}} Application</button>
+        <div class="col s12">
+            <span class="left">Options selected: {{selected_applications.length}} | Total -
+                {{qualified_applications.length}}</span>
+            <button mat-button class="right" *ngIf="!show_form" (click)="selected_applications = []">Reset</button>
+            <button mat-button (click)="show_form = !show_form" class="indigo white-text right">
+                {{!show_form ? "Click to Schedule " + selected_applications.length +  " Application" : "Hide Form"}}
+            </button>
+        </div>
+        <!-- INTERVIEW SCHEDULE FORM -->
+        <div class="col l5" *ngIf="show_form">
+            <mat-card>
+                <mat-card-header>
+                    <mat-card-title>Interview Schedule</mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
+                    <form class="row pd-20 center" (submit)="submitForm()" [formGroup]="interviewScheduleForm">
+                        <mat-form-field class="col s12">
+                            <mat-label>Venue Details</mat-label>
+                            <input matInput placeholder="Example TW3-GF1, Mechanical Block" required formControlName="venue">
+                        </mat-form-field>
+                        <mat-form-field class="col s12">
+                            <mat-label>Slot Details</mat-label>
+                            <input matInput placeholder="Example 12:00 pm - 3 pm" required formControlName="slot">
+                        </mat-form-field>
+                        <mat-form-field class="col s12">
+                            <mat-label>Choose a date</mat-label>
+                            <input matInput required formControlName="date" [matDatepicker]="picker">
+                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-datepicker #picker></mat-datepicker>
+                        </mat-form-field>
+                        <button [disabled]="!interviewScheduleForm.valid" type="submit" class="col s12 red white-text" mat-button>
+                            Submit All Selected Application
+                        </button>
+                    </form>
+                </mat-card-content>
+            </mat-card>
+        </div>
+        <!--APPLICATIONS LISTS-->
+        <div class="col s12" [class.l7]="show_form">
+            <mat-selection-list class="white" [(ngModel)]="selected_applications">
+                <mat-list-option *ngFor="let item of qualified_applications" [value]="item._id">
+                    {{item.name}} - ({{item.rollNo}}) | CGPA {{item.marks}} {{ !show_form ? "works on " + item.domain : ""}}
+                </mat-list-option>
+            </mat-selection-list>
+        </div>
     </div>
-    <mat-selection-list class="white" [(ngModel)]="selected_applications">
-        <mat-list-option *ngFor="let item of qualified_applications" [value]="item._id">
-            {{item.name}} - ({{item.rollNo}}), CGPA {{item.marks}} works on {{item.domain}}
-        </mat-list-option>
-    </mat-selection-list>
 </div>

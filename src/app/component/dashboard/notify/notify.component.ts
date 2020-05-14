@@ -43,7 +43,7 @@ export class NotifyComponent implements OnInit {
     // getting the public notification
     this._notificationService.publicNotification().subscribe(
       res => {
-        this.publicNotification = res.notifications;
+        this.publicNotification = res.body;
         this.loading != this.loading;
       }, err => {
         console.log(err);
@@ -75,9 +75,10 @@ export class NotifyComponent implements OnInit {
     },
       err => {
         console.log(err);
-        this._toast.error(err.error.message, 'BAD REQUEST');
+        this._toast.error(err.message, 'BAD REQUEST');
       });
   }
+
   updateBank(): void {
     this.openSettings();
     this.dialog.open(BankDetailsComponent, {
@@ -100,7 +101,7 @@ export class NotifyComponent implements OnInit {
           document.getElementById(data).classList.add('hide');
         }, err => {
           console.log(err);
-          this._toast.error(err.error.message, "BAD REQUEST");
+          this._toast.error(err.message, "BAD REQUEST");
         }
       );
     }

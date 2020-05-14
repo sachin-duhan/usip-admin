@@ -35,13 +35,12 @@ export class OfficerComponent implements OnInit {
         this.loading = !this.loading;
         this._officer.getOfficers().subscribe(
             res => {
-                this.fetchData = res.officers;
+                this.fetchData = res.body;
                 this.dataSource = new MatTableDataSource(this.fetchData);
                 this.loading = !this.loading;
             },
             err => {
-                console.log(err);
-                this._toast.error('error in loading data', 'API Bug');
+                this._toast.error(err.message, 'Error');
                 this.loading = !this.loading;
             }
         );
