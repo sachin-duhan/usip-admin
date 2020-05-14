@@ -12,11 +12,13 @@ import { ToastrService } from 'ngx-toastr';
 export class ApplicationComponent implements OnInit {
 
     show_table: Boolean = false;
+    private loading: Boolean = false;
+
     constructor(private _registerService: RegisterService, private _toast: ToastrService) { }
+
     public all_applications: Array<any> = [];
     public qulified_applications: Array<any> = [];
     public not_qualified_applications: Array<any> = [];
-    private loading: Boolean = false;
     displayedColumns: Array<String> = ['name', 'rollNo', 'marks', 'phone', 'domain', 'isQualified'];
     display_val: Array<String> = ["Name", "Roll No.", "CGPA", 'Phone', "Domain", "Qualified"];
 

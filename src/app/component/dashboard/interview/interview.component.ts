@@ -33,7 +33,6 @@ export class InterviewComponent implements OnInit {
         this._registerService.showRegisterations().subscribe(
             res => {
                 this.fetchData = res.body;
-                console.log(this.fetchData);
                 this.dataSource.data = this.fetchData;
                 setTimeout(() => this.dataSource.paginator = this.paginator);
                 this.loading = !this.loading;

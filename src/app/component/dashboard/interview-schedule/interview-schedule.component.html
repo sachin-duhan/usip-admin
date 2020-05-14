@@ -1,6 +1,6 @@
 <app-spinner *ngIf="loading"></app-spinner>
 <div class="container" *ngIf="!loading">
-    <div class="row">
+    <div *ngIf="is_creating_inteviews" class="row">
         <div class="col s12">
             <span class="left">Options selected: {{selected_applications.length}} | Total -
                 {{show_applications_on_frontend.length}}</span>
@@ -63,4 +63,5 @@
             </div>
         </div>
     </div>
+    <app-table *ngIf="!is_creating_inteviews && !loading" [title]="'List of Upcoming Interviews'" [data]="upcoming_interviews" [displayedColumns]="displayedColumns" [display_val]="display_val"></app-table>
 </div>

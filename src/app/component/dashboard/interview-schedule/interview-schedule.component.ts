@@ -14,6 +14,7 @@ export class InterviewScheduleComponent implements OnInit {
     loading: Boolean = false;
     show_form: Boolean = false;
     is_updating_scheduled_interviews: Boolean = false;
+    is_creating_inteviews: Boolean = false;
 
     constructor(
         private _registerationService: RegisterService, private _toast: ToastrService,
@@ -21,15 +22,39 @@ export class InterviewScheduleComponent implements OnInit {
         private _interviewService: InterviewService
     ) { }
 
+    /**data holder for display*/
     qualified_applications: Array<any> = [];
     show_applications_on_frontend: Array<any> = []; // this will be used to display values!!
     scheduled_inetrview: Array<any> = [];
+    /**end of data holder for display*/
 
-    displayedColumns: Array<String> = ['name', 'rollNo', 'marks', 'phone', 'domain'];
-    display_val: Array<String> = ["Name", "Roll No.", "CGPA", 'Phone', "Domain"];
+    /**data for the table here!! */
+    upcoming_interviews: Array<any> = [];
+    displayedColumns: Array<String> = ['name','marks' ,'rollNo', 'interview_date', 'venue_details', 'slot_details'];
+    display_val: Array<String> = ["Name", 'CGPA',"Roll Number", "Interview Date", 'Venue', "Slot"];
+    /**end of the data table!!*/
 
     ngOnInit() {
+        this.get_upcoming_interviews();
         this.get_qualified();
+    }
+
+    get_upcoming_interviews() {
+        this.loading = true;
+        this._interviewService.get_all_upcoming_interviews().subscribe(
+            res => {
+                this.upcoming_interviews = res.body;
+                // processing data for proper display in table!!
+                this.upcoming_interviews.forEach(el => {
+                    el.name = el.pInfo.name;
+                    el.rollNo = el.pInfo.rollNo;
+                    el.marks = el.pInfo.marks;
+                    el.interview_date = el.interview_date.substring(0, 10);
+                    el.interview_date = el.interview_date.split('-').reverse().join('/');
+                });
+                this.loading = false;
+            }
+        )
     }
 
     get_qualified() {
@@ -91,7 +116,6 @@ export class InterviewScheduleComponent implements OnInit {
             interns: this.selected_applications
         };
 
-        window.alert('Is bulk ready in backend?? you might get error');
         if (this.is_updating_scheduled_interviews) this.update_interviews(interview_data);
         else this._interviewService.schedule_interview_in_BULK(interview_data).subscribe(
             res => this.handle_response(res, true),

@@ -10,7 +10,7 @@ import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
 
 export class TableComponent implements OnInit {
 
-    @Input() data: any;
+    @Input() data: Array<any>;
     @Input() displayedColumns: Array<String>;
     @Input() display_val: Array<String>;
     @Input() title: String = "loading...";
@@ -19,7 +19,7 @@ export class TableComponent implements OnInit {
     @ViewChild(MatPaginator) paginator: MatPaginator;
     @ViewChild(MatSort) sort: MatSort;
 
-    constructor() { }
+    constructor() {    }
 
     ngOnInit() {
         this.dataSource.data = this.data;
