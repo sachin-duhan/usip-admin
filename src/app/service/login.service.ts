@@ -10,8 +10,7 @@ import { ToastrService } from 'ngx-toastr';
 })
 
 export class LoginService {
-  constructor(private http: HttpClient,
-    private toast: ToastrService) { }
+  constructor(private http: HttpClient) { }
 
 /********************************************
 

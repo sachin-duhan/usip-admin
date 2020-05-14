@@ -3,14 +3,22 @@
     <div class="row">
         <div class="col s12">
             <span class="left">Options selected: {{selected_applications.length}} | Total -
-                {{qualified_applications.length}}</span>
+                {{show_applications_on_frontend.length}}</span>
+            <button mat-button class="indigo white-text right" [matMenuTriggerFor]="menu">Menu</button>
+            <mat-menu #menu="matMenu">
+                <button mat-menu-item (click)="show_form = !show_form" class="right indigo-text">
+                    {{!show_form ? "Click to Schedule " + selected_applications.length +  " Application" : "Hide Form"}}
+                </button>
+                <button mat-menu-item (click)="update_click_handler()">
+                    Update Scheduled Interviews
+                </button>
+            </mat-menu>
             <button mat-button class="right" *ngIf="!show_form" (click)="selected_applications = []">Reset</button>
-            <button mat-button (click)="show_form = !show_form" class="indigo white-text right">
-                {{!show_form ? "Click to Schedule " + selected_applications.length +  " Application" : "Hide Form"}}
-            </button>
         </div>
+
         <!-- INTERVIEW SCHEDULE FORM -->
         <div class="col l5" *ngIf="show_form">
+            <br>
             <mat-card>
                 <mat-card-header>
                     <mat-card-title>Interview Schedule</mat-card-title>
@@ -27,7 +35,7 @@
                         </mat-form-field>
                         <mat-form-field class="col s12">
                             <mat-label>Choose a date</mat-label>
-                            <input matInput required formControlName="date" [matDatepicker]="picker">
+                            <input matInput formControlName="date" [matDatepicker]="picker">
                             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                             <mat-datepicker #picker></mat-datepicker>
                         </mat-form-field>
@@ -40,11 +48,19 @@
         </div>
         <!--APPLICATIONS LISTS-->
         <div class="col s12" [class.l7]="show_form">
-            <mat-selection-list class="white" [(ngModel)]="selected_applications">
-                <mat-list-option *ngFor="let item of qualified_applications" [value]="item._id">
+            <br>
+            <h3 class="mat-h2">
+                {{is_updating_scheduled_interviews ? "Updating Scheduled Interviews" : "Preparing Interview Schedule"}}
+            </h3>
+            <mat-selection-list *ngIf="show_applications_on_frontend.length > 0" class="white" [(ngModel)]="selected_applications">
+                <mat-list-option *ngFor="let item of show_applications_on_frontend" [value]="item._id">
                     {{item.name}} - ({{item.rollNo}}) | CGPA {{item.marks}} {{ !show_form ? "works on " + item.domain : ""}}
                 </mat-list-option>
             </mat-selection-list>
+            <!-- if no data is there for showcase!!-->
+            <div class="pd-20 row white center" *ngIf="show_applications_on_frontend.length == 0">
+                <h4 class="grey-text">No Records found!</h4>
+            </div>
         </div>
     </div>
 </div>
