@@ -19,10 +19,10 @@ export class TableComponent implements OnInit {
     @ViewChild(MatPaginator) paginator: MatPaginator;
     @ViewChild(MatSort) sort: MatSort;
 
-    constructor() {    }
+    constructor() { }
 
     ngOnInit() {
-        this.dataSource.data = this.data;
+        setTimeout(()=>this.dataSource.data = this.data);
         setTimeout(() => this.dataSource.sort = this.sort);
         setTimeout(() => this.dataSource.paginator = this.paginator);
     }

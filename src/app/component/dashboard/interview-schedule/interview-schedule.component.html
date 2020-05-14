@@ -1,21 +1,13 @@
 <app-spinner *ngIf="loading"></app-spinner>
 <div class="container" *ngIf="!loading">
-    <div *ngIf="is_creating_inteviews" class="row">
-        <div class="col s12">
-            <span class="left">Options selected: {{selected_applications.length}} | Total -
-                {{show_applications_on_frontend.length}}</span>
-            <button mat-button class="indigo white-text right" [matMenuTriggerFor]="menu">Menu</button>
-            <mat-menu #menu="matMenu">
-                <button mat-menu-item (click)="show_form = !show_form" class="right indigo-text">
-                    {{!show_form ? "Click to Schedule " + selected_applications.length +  " Application" : "Hide Form"}}
-                </button>
-                <button mat-menu-item (click)="update_click_handler()">
-                    Update Scheduled Interviews
-                </button>
-            </mat-menu>
-            <button mat-button class="right" *ngIf="!show_form" (click)="selected_applications = []">Reset</button>
-        </div>
+    <h3 class="mat-h1">
+        USIP - Interview Schedule
+        <button mat-icon-button class="right" [matMenuTriggerFor]="menu">
+            <mat-icon>more_vert</mat-icon>
+        </button>
+    </h3>
 
+    <div *ngIf="is_creating_inteviews" class="row">
         <!-- INTERVIEW SCHEDULE FORM -->
         <div class="col l5" *ngIf="show_form">
             <br>
@@ -54,7 +46,10 @@
             </h3>
             <mat-selection-list *ngIf="show_applications_on_frontend.length > 0" class="white" [(ngModel)]="selected_applications">
                 <mat-list-option *ngFor="let item of show_applications_on_frontend" [value]="item._id">
-                    {{item.name}} - ({{item.rollNo}}) | CGPA {{item.marks}} {{ !show_form ? "works on " + item.domain : ""}}
+                    <span *ngIf="!is_updating_scheduled_interviews">{{item.name}} - ({{item.rollNo}}) | CGPA
+                        {{item.marks}} {{ !show_form ? "works on " + item.domain : ""}}</span>
+                    <span *ngIf="is_updating_scheduled_interviews">{{item.name}} - ({{item.rollNo}}) with CGPA
+                        {{item.marks}} {{ !show_form ? "will be on " + item.interview_date : ""}}</span>
                 </mat-list-option>
             </mat-selection-list>
             <!-- if no data is there for showcase!!-->
@@ -63,5 +58,28 @@
             </div>
         </div>
     </div>
+    <!--display of the upcoming interviews-->
     <app-table *ngIf="!is_creating_inteviews && !loading" [title]="'List of Upcoming Interviews'" [data]="upcoming_interviews" [displayedColumns]="displayedColumns" [display_val]="display_val"></app-table>
 </div>
+
+<!--Menu-->
+<mat-menu #menu="matMenu">
+    <button mat-menu-item (click)="is_creating_inteviews = !is_creating_inteviews">
+        <mat-icon>{{!is_creating_inteviews ? "edit" : "remove_red_eye"}}</mat-icon>
+        <span>{{!is_creating_inteviews ? "Schedule More Interviews" : "View Upcoming Interviews"}}</span>
+    </button>
+    <button mat-menu-item *ngIf="is_creating_inteviews" (click)="show_form = !show_form" class="right indigo-text">
+        <mat-icon>done_all</mat-icon>
+        <span>
+            {{!show_form ? "Click to Schedule " + selected_applications.length +  " Application" : "Hide Form"}}
+        </span>
+    </button>
+    <button mat-menu-item class="right" *ngIf="!show_form && is_creating_inteviews &&selected_applications.length > 0" (click)="selected_applications = []">
+        <mat-icon class="red-text">touch_app</mat-icon>
+        <span>Reset Selected item</span>
+    </button>
+    <button mat-menu-item *ngIf="is_creating_inteviews" (click)="update_click_handler()">
+        <mat-icon>update</mat-icon>
+        <span>{{!is_updating_scheduled_interviews ? "Update Scheduled Interviews" : "Schedule New Interview"}}</span>
+    </button>
+</mat-menu>

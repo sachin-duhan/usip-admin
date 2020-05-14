@@ -25,13 +25,12 @@ export class InterviewScheduleComponent implements OnInit {
     /**data holder for display*/
     qualified_applications: Array<any> = [];
     show_applications_on_frontend: Array<any> = []; // this will be used to display values!!
-    scheduled_inetrview: Array<any> = [];
     /**end of data holder for display*/
 
     /**data for the table here!! */
     upcoming_interviews: Array<any> = [];
-    displayedColumns: Array<String> = ['name','marks' ,'rollNo', 'interview_date', 'venue_details', 'slot_details'];
-    display_val: Array<String> = ["Name", 'CGPA',"Roll Number", "Interview Date", 'Venue', "Slot"];
+    displayedColumns: Array<String> = ['name', 'marks', 'rollNo', 'interview_date', 'venue_details', 'slot_details'];
+    display_val: Array<String> = ["Name", 'CGPA', "Roll Number", "Interview Date", 'Venue', "Slot"];
     /**end of the data table!!*/
 
     ngOnInit() {
@@ -49,6 +48,7 @@ export class InterviewScheduleComponent implements OnInit {
                     el.name = el.pInfo.name;
                     el.rollNo = el.pInfo.rollNo;
                     el.marks = el.pInfo.marks;
+                    el.domain = el.pInfo.domain;
                     el.interview_date = el.interview_date.substring(0, 10);
                     el.interview_date = el.interview_date.split('-').reverse().join('/');
                 });
@@ -73,17 +73,8 @@ export class InterviewScheduleComponent implements OnInit {
             this.is_updating_scheduled_interviews = false;
         }
         else {
-            this.loading = true;
-            this._interviewService.get_all_upcoming_interviews().subscribe(
-                res => {
-                    console.log(res);
-                    this.scheduled_inetrview = res.body || [];
-                    this.loading = false;
-                    this.show_applications_on_frontend = this.scheduled_inetrview;
-                    this.is_updating_scheduled_interviews = true;
-                },
-                err => this.handle_response(err, false)
-            )
+            this.show_applications_on_frontend = this.upcoming_interviews;
+            this.is_updating_scheduled_interviews = true;
         }
     }
 
@@ -91,6 +82,9 @@ export class InterviewScheduleComponent implements OnInit {
     selected_applications: Array<String> = [];
     // contains all selected list of the applications!!
     update_interviews(data) {
+        console.log('updating things!');
+        console.log(data);
+        return;
         this._interviewService.update_interviews_in_bulk(data).subscribe(
             res => this.handle_response(res, true),
             err => this.handle_response(err, false)
@@ -125,7 +119,7 @@ export class InterviewScheduleComponent implements OnInit {
 
     handle_response(res, error: Boolean) {
         let msg = error ? "Error" : "Warning";
-        if (res.success) this._toast.success("Intern updated Successfully", "Success");
+        if (res.success) this._toast.success(res.message, "Success");
         else this._toast.warning(res.message, msg);
     }
 
