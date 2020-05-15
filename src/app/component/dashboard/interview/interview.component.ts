@@ -13,17 +13,26 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class InterviewComponent implements OnInit {
 
-    private showDeleteButton: Boolean = false;
+    showDeleteButton: Boolean = false;
+    minimum_marks: number = 70;
+    show_marks_update_form: Boolean = true;
+    temp_minimum_marks: number = this.minimum_marks;
+    conducting_interview: Boolean = true;
+
     constructor(
         private dialog: MatDialog,
         private _registerService: RegisterService,
         private _toast: ToastrService,
-        private _interviewService:InterviewService
+        private _interviewService: InterviewService
     ) { }
 
     private loading: Boolean = false;
 
-    displayedColumns: Array<string> = ['name', 'rollNo', 'phone', 'domain', 'interview', 'update'];
+    displayedColumns: Array<string> = ['name', 'rollNo', 'marks', 'domain', 'interview', 'update'];
+
+
+    qualified_applicants_above_set_marks: Array<any> = [];
+    all_upcoming_interviews: Array<any> = [];
 
     @ViewChild(MatPaginator) paginator: MatPaginator;
     dataSource = new MatTableDataSource([]);
@@ -32,6 +41,7 @@ export class InterviewComponent implements OnInit {
         this.loading = !this.loading;
         this._interviewService.get_all_upcoming_interviews().subscribe(
             res => {
+                this.all_upcoming_interviews = res.body;
                 this.dataSource = new MatTableDataSource(res.body);
                 setTimeout(() => this.dataSource.paginator = this.paginator);
                 this.loading = !this.loading;
@@ -53,20 +63,19 @@ export class InterviewComponent implements OnInit {
         });
     }
 
-    // openInternDetails(data): void {
-    //     const dialogRef = this.dialog.open(InternDetailsComponent, {
-    //         width: '90%',
-    //         height: '98%',
-    //         data: data
-    //     });
-
-    //     dialogRef.afterClosed().subscribe(result => {
-    //         if (window.localStorage.getItem('update') === 'ok') {
-    //             this._toast.success('Intern updated successfully!', 'Congratulations!');
-    //             window.localStorage.removeItem('update');
-    //         }
-    //     });
-    // }
+    conducting_interview_handler(update: Boolean) {
+        this.qualified_applicants_above_set_marks = [];
+        if (this.conducting_interview) {
+            this.all_upcoming_interviews.forEach(el => {
+                if (el.interview_marks >= this.minimum_marks)
+                    this.qualified_applicants_above_set_marks.push(el);
+            });
+            this.dataSource = new MatTableDataSource(this.qualified_applicants_above_set_marks);
+        }
+        else this.dataSource = new MatTableDataSource(this.all_upcoming_interviews);
+        if (update)
+            this.conducting_interview = !this.conducting_interview;
+    }
 
     delete_application(data): void {
         let v = confirm('Are you sure! ' + data.name + ' will be deleted');

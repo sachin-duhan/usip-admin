@@ -10,24 +10,26 @@ export class TasksService {
 
   constructor(private http:HttpClient) { }
 
-  private _url = environment.apiBaseURL + '/task';
+  private _url = environment.apiBaseURL + '/tasks';
   
   public headers = new HttpHeaders({
     'Content-Type':  'application/json',
     'Authorization': 'my-auth-token'
   });
 
-  get_all_task_for_admin(): Observable<any>{
+  get_all_task(): Observable<any>{
     return this.http.get<any>(this._url,{
       headers:this.headers
     });
   }
+
   get_intern_task(id):Observable<any>{
     const url = this._url+`/${id}`;
     return this.http.get(url,{
       headers:this.headers
     });
   }
+
   add_new_task(data):Observable<any>{
     return this.http.post(this._url,data,{
       headers:this.headers

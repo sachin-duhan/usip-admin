@@ -1,11 +1,34 @@
 <app-spinner *ngIf="loading"></app-spinner>
 <div class="container">
-    <h1 class="mat-h1 pdb-0 mgb-0 row">
-        Qualified Interns
-        <sup id="chip" class="indigo white-text">{{dataSource.data.length | number}}</sup>
-        <button mat-button class="right" (click)="showDeleteButton = !showDeleteButton">Show Delete Buttons</button>
+    <!--header area-->
+    <h1 class="mat-h1 pdb-0 mgb-0 row" style="margin-bottom: 10px;">
+        <!--title on the left-->
+        <div class="col s12 m5">
+            Qualified Applications
+            <sup id="chip" class="indigo white-text">{{dataSource.data.length | number}}</sup>
+        </div>
+        <!--update form -->
+        <div *ngIf="show_marks_update_form" class="col s8 m6 m pd-20 pointer">
+            <div class="row" *ngIf="!conducting_interview">
+                <mat-slider thumbLabel class="col s6" [(ngModel)]="temp_minimum_marks" tickInterval="1" min="0" max="100"></mat-slider>
+                <button mat-button class="col s6 indigo white-text" (click)="conducting_interview_handler(false)">Update
+                    Applicants</button>
+            </div>
+        </div>
+        <!--icon on the right!!-->
+        <div class="col s4 m1" [class.offset-m6]="!show_marks_update_form">
+            <button mat-icon-button class=" right" [matMenuTriggerFor]="menu">
+                <mat-icon>more_vert</mat-icon>
+            </button>
+        </div>
+
     </h1>
-    <br>
+    <!--warning and update form here! shown only when interviews are not conudcted!!-->
+    <div *ngIf="!conducting_interview">
+        <div class="row indigo lighten-5 pd-20 pointer valign-wrapper" *ngIf="!show_marks_update_form" (click)="show_marks_update_form = !show_marks_update_form">
+            <strong>NOTE </strong> - The Minimum cut-off for the list below is {{minimum_marks}} marks. Click here to update...
+        </div>
+    </div>
     <div class="mat-elevation-z8" *ngIf="dataSource.data.length > 0; else noData">
         <table mat-table [dataSource]="dataSource">
             <ng-container matColumnDef="name">
@@ -16,22 +39,30 @@
                 <th mat-header-cell *matHeaderCellDef>Roll No.</th>
                 <td mat-cell *matCellDef="let element"> {{element.pInfo.rollNo}} </td>
             </ng-container>
-            <ng-container matColumnDef="phone">
-                <th mat-header-cell *matHeaderCellDef>Contact Number</th>
-                <td mat-cell *matCellDef="let element"> {{element.pInfo.phone}} </td>
+
+            <ng-container matColumnDef="marks">
+                <th mat-header-cell *matHeaderCellDef>CGPA</th>
+                <td mat-cell *matCellDef="let element"> {{element.pInfo.marks}} </td>
             </ng-container>
+
             <ng-container matColumnDef="domain">
                 <th mat-header-cell *matHeaderCellDef>Domain</th>
                 <td mat-cell *matCellDef="let element"> {{element.pInfo.domain}} </td>
             </ng-container>
 
             <ng-container matColumnDef="interview">
-                <th mat-header-cell *matHeaderCellDef>Interview</th>
+                <th mat-header-cell *matHeaderCellDef>{{conducting_interview ? "Interview" : "Interview marks"}}</th>
                 <td mat-cell *matCellDef="let element">
-                    <span class="grey-text">
-                        <span *ngIf="!element.interview_attendence && !element.interview">Upcoming</span>
+                    <!--When interview is conducted!-->
+                    <span *ngIf="conducting_interview">
+                        <span class="grey-text">
+                            <span *ngIf="!element.interview_attendence && !element.interview">Upcoming</span>
                     <span *ngIf="element.interview && !element.interview_attendence" class="red-text">Absent</span>
                     <span *ngIf="element.interview && element.interview_attendence" class="indigo-text">Present</span>
+                    </span>
+                    </span>
+                    <span *ngIf="!conducting_interview">
+                        {{element.interview_marks}}
                     </span>
                 </td>
             </ng-container>
@@ -39,13 +70,20 @@
             <ng-container matColumnDef="update">
                 <th mat-header-cell *matHeaderCellDef>Update</th>
                 <td mat-cell *matCellDef="let element">
-                    <mat-icon (click)="Openform(element)" *ngIf="!element.interview" class="pointer grey-text text-darken-4">visibility</mat-icon>
-                    <span *ngIf="element.interview">
-                        <mat-icon (click)="Openform(element)" matTooltip="Interview Conducted"
-                            matTooltipPosition="right" class="pointer green-text">create</mat-icon>
-                    </span>
+                    <span *ngIf="conducting_interview">
+                        <mat-icon (click)="Openform(element)" *ngIf="!element.interview"
+                            class="pointer grey-text text-darken-4">visibility</mat-icon>
+                        <span *ngIf="element.interview">
+                            <mat-icon (click)="Openform(element)" matTooltip="Interview Conducted"
+                                matTooltipPosition="right" class="pointer green-text">create
+                            </mat-icon>
+                        </span>
                     <!--delete button shown here!!-->
                     <mat-icon class="red-text pdl-10 pointer" *ngIf="showDeleteButton" (click)="delete_application(element)">delete</mat-icon>
+                    </span>
+                    <span *ngIf="!conducting_interview">
+                        <mat-icon class="indigo-text">work</mat-icon>
+                    </span>
                 </td>
             </ng-container>
 
@@ -60,3 +98,19 @@
         </div>
     </ng-template>
 </div>
+
+
+<mat-menu #menu="matMenu">
+    <button (click)="show_marks_update_form = !show_marks_update_form" mat-menu-item>
+        <mat-icon>edit</mat-icon>
+        <span>Update Minimum marks</span>
+    </button>
+    <button mat-menu-item (click)="conducting_interview_handler(true)">
+        <mat-icon>visibility</mat-icon>
+        <span> {{conducting_interview ? "Assign Interns to Officer" : " Conduct Interviews"}}</span>
+    </button>
+    <button mat-menu-item (click)="showDeleteButton = !showDeleteButton">
+        <mat-icon class="red-text">delete</mat-icon>
+        <span>Show Delete Buttons</span>
+    </button>
+</mat-menu>

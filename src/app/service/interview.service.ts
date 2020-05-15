@@ -30,6 +30,13 @@ export class InterviewService {
         })
     }
 
+    get_applicants_as_per_marks(marks: number): Observable<any> {
+        const url = this._url + '/marks/'+ marks;
+        return this.http.get<any>(url, {
+            headers: this.headers
+        })
+    }
+
     remove_an_interview(id:String): Observable<any> {
         const url = this._url + '/' + id;
         return this.http.delete<any>(url,{
