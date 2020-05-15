@@ -3,13 +3,13 @@ import { MatDialog, MatPaginator, MatTableDataSource } from '@angular/material';
 import { InternViewInternComponent } from '../application/intern-view-intern/intern-view-intern.component';
 
 import { RegisterService } from '../.././../service/register.service';
-
+import { InterviewService } from "../../../service/interview.service";
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
-  selector: 'app-interview',
-  templateUrl: './interview.component.html',
-  styleUrls: ['./interview.component.css']
+    selector: 'app-interview',
+    templateUrl: './interview.component.html',
+    styleUrls: ['./interview.component.css']
 })
 export class InterviewComponent implements OnInit {
 
@@ -17,23 +17,22 @@ export class InterviewComponent implements OnInit {
     constructor(
         private dialog: MatDialog,
         private _registerService: RegisterService,
-        private _toast: ToastrService
+        private _toast: ToastrService,
+        private _interviewService:InterviewService
     ) { }
 
-    public fetchData: Array<any> = [];
     private loading: Boolean = false;
 
     displayedColumns: Array<string> = ['name', 'rollNo', 'phone', 'domain', 'interview', 'update'];
 
     @ViewChild(MatPaginator) paginator: MatPaginator;
-    dataSource = new MatTableDataSource(this.fetchData);
+    dataSource = new MatTableDataSource([]);
 
     ngOnInit() {
         this.loading = !this.loading;
-        this._registerService.showRegisterations().subscribe(
+        this._interviewService.get_all_upcoming_interviews().subscribe(
             res => {
-                this.fetchData = res.body;
-                this.dataSource.data = this.fetchData;
+                this.dataSource = new MatTableDataSource(res.body);
                 setTimeout(() => this.dataSource.paginator = this.paginator);
                 this.loading = !this.loading;
             },
@@ -45,23 +44,12 @@ export class InterviewComponent implements OnInit {
     }
 
     public Openform(data): void {
-        const dialogRef = this.dialog.open(InternViewInternComponent, {
+        this.dialog.open(InternViewInternComponent, {
             width: "98%",
             height: "98%",
             autoFocus: true,
             disableClose: true,
             data: data
-        });
-
-        dialogRef.afterClosed().subscribe(result => {
-            if (window.localStorage.getItem('interview')) {
-                if (window.localStorage.getItem('interview') === 'ok') {
-                    this._toast.success('Interview result uploaded', 'Success!');
-                } else {
-                    this._toast.error('Interview result cant be uploaded', 'BAD request!');
-                }
-            }
-            window.localStorage.removeItem('interview');
         });
     }
 
@@ -89,9 +77,5 @@ export class InterviewComponent implements OnInit {
                 this._toast.error('can\'t delete this application', 'Sorry!');
             });
         }
-    }
-
-    toggleButton() {
-        this.showDeleteButton = !this.showDeleteButton;
     }
 }

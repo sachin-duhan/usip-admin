@@ -1,15 +1,24 @@
 <app-spinner *ngIf="loading"></app-spinner>
+<!--simple display of the content here!!-->
 <div class="container">
+    <app-table *ngIf="!is_creating_updating && !loading" [title]="'List of All Officers'" [data]="dataSource.data" [displayedColumns]="displayedColumns" [display_val]="display_val"></app-table>
+</div>
+
+<button mat-fab (click)="is_creating_updating = !is_creating_updating" class="indigo white-text bottom_push">
+    <mat-icon>{{is_creating_updating ? "clear" : "edit"}}</mat-icon>
+</button>
+
+<!--ediiting and delete options are here!-->
+<div class="container" *ngIf="is_creating_updating">
     <h1 class="mat-h1">
         Officer Details
-        <sup id="chip" class="indigo white-text">{{ fetchData.length ? fetchData.length : 0 }}</sup>
+        <sup id="chip" class="indigo white-text">{{ dataSource.data.length ? dataSource.data.length : 0 }}</sup>
         <div class="right">
-            <button (click)="openAddOfficer(new)" mat-button class="grey-text text-darken-3 center">
-                    <span class="mat-h3">Add Officer</span></button>
+            <button mat-button (click)="show_delete_button = !show_delete_button">Show Delete Button</button>
+            <button (click)="openAddOfficer(new)" mat-button class="indigo white-text">Add Officer</button>
         </div>
     </h1>
-
-    <div class="mat-elevation-z8" *ngIf="fetchData.length > 0;else noData">
+    <div class="mat-elevation-z8" *ngIf="dataSource.data.length > 0;else noData">
         <table mat-table [dataSource]="dataSource">
             <ng-container matColumnDef="name">
                 <th mat-header-cell *matHeaderCellDef>Name</th>
@@ -31,11 +40,12 @@
                 <td mat-cell *matCellDef="let element"> {{element.email}} </td>
             </ng-container>
 
-            <ng-container matColumnDef="update">
-                <th mat-header-cell *matHeaderCellDef></th>
+            <ng-container matColumnDef="active">
+                <th mat-header-cell *matHeaderCellDef>Update</th>
                 <td mat-cell *matCellDef="let element">
-                    <mat-icon (click)="openAddOfficer(element)" class="blue-text pointer">edit</mat-icon>
-                    <mat-icon (click)="delete(element._id)" class="pdl-10 red-text pointer">delete</mat-icon>
+                    <mat-icon (click)="openAddOfficer(element)" *ngIf="!show_delete_button" class="grey-text text-darken-2 pointer">edit</mat-icon>
+                    <mat-icon *ngIf="show_delete_button" (click)="delete(element._id)" class="red-text pointer">
+                        delete</mat-icon>
                 </td>
             </ng-container>
 

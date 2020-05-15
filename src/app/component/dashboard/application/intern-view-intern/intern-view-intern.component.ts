@@ -2,64 +2,65 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 
-import { RegisterService } from '../../../../service/register.service';
-
+import { InterviewService } from "../../../../service/interview.service";
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
-  selector: 'app-intern-view-intern',
-  templateUrl: './intern-view-intern.component.html',
-  styleUrls: ['./intern-view-intern.component.css']
+    selector: 'app-intern-view-intern',
+    templateUrl: './intern-view-intern.component.html',
+    styleUrls: ['./intern-view-intern.component.css']
 })
 export class InternViewInternComponent implements OnInit {
 
-  constructor(private fb: FormBuilder,
-    @Inject(MAT_DIALOG_DATA) public data: any,
-    private _register: RegisterService,
-    private _toast: ToastrService,
-    public dialogRef: MatDialogRef<InternViewInternComponent>) { }
+    constructor(private fb: FormBuilder,
+        @Inject(MAT_DIALOG_DATA) public data: any,
+        private _interviewService: InterviewService,
+        private _toast: ToastrService,
+        public dialogRef: MatDialogRef<InternViewInternComponent>) { }
 
-  internForm = this.fb.group({
-    comment: [this.data.internview_comment],
-    marks: [this.data.internview_marks, Validators.max(100)],
-    isSelected: [this.data.isSelected],
-    interview_attendence:[this.data.interview_attendence]
-  });
-  private loading: Boolean = false;
-  public applicant = this.data;
-  ngOnInit() {}
+    internForm = this.fb.group({
+        comment: [this.data.internview_comment],
+        marks: [this.data.internview_marks, Validators.max(100)],
+        interview_attendence: [this.data.interview_attendence]
+    });
 
-  submitForm(): void {
-    this.loading = !this.loading;
-    const user = {
-      isSelected: this.internForm.get('isSelected').value,
-      comment: this.internForm.get('comment').value,
-      interview: true,
-      marks: this.internForm.get('marks').value,
-      interview_attendence:this.internForm.get('interview_attendence').value
-    };
-    this._register.selectIntern(user, this.applicant._id)
-      .subscribe(
-        res => {
-          console.log(res);
-          if (res.message === 'intern updated!') {
-            window.localStorage.setItem('interview', 'ok');
-          } else {
-            window.localStorage.removeItem('interview');
-            window.localStorage.setItem('interview', 'failed');
-          }
-          this.loading = !this.loading;
-          this.dialogRef.close();
-        }, err => {
-          console.log(err);
-          this._toast.error('Contact Developer!!', 'BUG!');
-          window.localStorage.setItem('interview', 'failed');
-          this.loading = !this.loading;
-          this.dialogRef.close();
-        }
-      );
-  }
-  close():void {
-    this.dialogRef.close();
-  }
+    private loading: Boolean = false;
+    public applicant = { ...this.data }; // copy of the original!!
+
+    ngOnInit() { }
+
+    submitForm(): void {
+        this.loading = !this.loading;
+        const user = {
+            interview_comment: this.internForm.get('comment').value,
+            interview: true,
+            interview_marks: this.internForm.get('marks').value,
+            interview_attendence: this.internForm.get('interview_attendence').value,
+            slot_details: this.applicant.slot_details,
+            venue_details: this.applicant.venue_details,
+            interview_date: this.applicant.interview_date
+        };
+        this._interviewService.update_status_of_applicants_interview(user, this.applicant._id)
+            .subscribe(res => this.handle_response(res, true),
+                err => this.handle_response(err, false)
+            );
+    }
+
+    close(): void {
+        this.dialogRef.close();
+    }
+
+
+    handle_response(res, error: Boolean) {
+        let msg = error ? "Error" : "Warning";
+        this.loading = !this.loading;
+        this.close();
+        if (res.success) setTimeout(() => {
+            this._toast.success(res.message, "Success");
+        }, 100);
+        else setTimeout(() => {
+            this._toast.warning(res.message, msg);
+        }, 100);
+    }
+
 }

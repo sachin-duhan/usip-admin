@@ -31,15 +31,17 @@
                             {{card.title}}
                         </mat-card-title>
                         <button mat-icon-button id="dashboard-right">
-                <mat-icon class="blue-text text-accent-3">apps</mat-icon>
-              </button>
+                            <mat-icon class="blue-text text-accent-3">apps</mat-icon>
+                        </button>
                     </mat-card-header>
                     <mat-card-content class="dashboard-card-content">
                         <table *ngIf="card.title == 'Interns Reports'" class="highlight table-margin pd-20">
                             <tbody *ngIf="internReport.length > 0;else noData">
                                 <tr *ngFor="let report of internReport;let i = index ">
-                                    <td *ngIf="i<5" class="truncate text-truncate">Dep. No : {{report.intern.depNo}}</td>
-                                    <td *ngIf="i<5">{{report.start|date:shortDate}} - {{report.end | date:shortDate}}</td>
+                                    <td *ngIf="i<5" class="truncate text-truncate">Dep. No : {{report.intern.depNo}}
+                                    </td>
+                                    <td *ngIf="i<5">{{report.start|date:shortDate}} - {{report.end | date:shortDate}}
+                                    </td>
                                     <td *ngIf="i<5">{{report.date | date:shortDate}}</td>
                                 </tr>
                             </tbody>
@@ -71,12 +73,12 @@
                         </table>
 
                         <table *ngIf="card.title == 'Officers'" class="highlight">
-                            <tbody *ngIf="officer.length > 0;else noData">
-                                <tr *ngFor="let officer of officer;let i = index">
-                                    <td *ngIf="i<6">{{i+1}}.</td>
-                                    <td *ngIf="i<6">{{officer.name}}</td>
-                                    <td *ngIf="i<6">{{officer.deptt}}</td>
-                                    <td *ngIf="i<6">{{officer.phone}}</td>
+                            <tbody *ngIf="officers.length > 0; else noData">
+                                <tr *ngFor="let officer of officers;let i = index">
+                                    <td *ngIf="i<5">{{i+1}}.</td>
+                                    <td *ngIf="i<5">{{officer.name}}</td>
+                                    <td *ngIf="i<5">{{officer.deptt}}</td>
+                                    <td *ngIf="i<5">{{officer.phone}}</td>
                                 </tr>
                             </tbody>
                         </table>

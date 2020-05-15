@@ -37,6 +37,13 @@ export class InterviewService {
         })
     }
 
+    update_status_of_applicants_interview(data, id): Observable<any> {
+        const url = this._url + '/'+id;
+        return this.http.put<any>(url, data, {
+            headers: this.headers
+        })
+    }
+
     update_interviews_in_bulk(data): Observable<any> {
         const url = this._url + '/update/bulk';
         return this.http.put<any>(url, data, {

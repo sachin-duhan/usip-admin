@@ -11,18 +11,21 @@ import { OfficerService } from '../../../service/officer.service';
 })
 export class OfficerComponent implements OnInit {
 
+    show_delete_button: Boolean = false;
+    loading: Boolean = false;
+    is_creating_updating: Boolean = false;
+
     constructor(
         private dialog: MatDialog,
         private _officer: OfficerService,
         private _toast: ToastrService
     ) { }
 
-    public fetchData: Array<any> = [];
-    private loading: Boolean = false;
 
-    displayedColumns: string[] = ['name', 'phone', 'email', 'deptt', 'update'];
+    displayedColumns: string[] = ['name', 'phone', 'email', 'deptt', 'active'];
+    display_val: Array<String> = ["Name", 'Phone', "Email", "Department", 'Officer Active'];
+    dataSource = new MatTableDataSource([]);
 
-    dataSource = new MatTableDataSource(this.fetchData);
     new = {
         name: '',
         email: '',
@@ -35,8 +38,7 @@ export class OfficerComponent implements OnInit {
         this.loading = !this.loading;
         this._officer.getOfficers().subscribe(
             res => {
-                this.fetchData = res.body;
-                this.dataSource = new MatTableDataSource(this.fetchData);
+                this.dataSource = new MatTableDataSource(res.body);
                 this.loading = !this.loading;
             },
             err => {
@@ -47,7 +49,7 @@ export class OfficerComponent implements OnInit {
     }
 
     openAddOfficer(data): void {
-        const dialogRef = this.dialog.open(AddOfficerComponent, {
+        this.dialog.open(AddOfficerComponent, {
             width: '60%',
             height: '80%',
             autoFocus: true,
@@ -56,27 +58,18 @@ export class OfficerComponent implements OnInit {
         });
     }
 
-    delete(data): void {
-        const r = confirm('Are you sure');
-        if (r) {
-            this.loading = !this.loading;
-            this._officer.deleteOfficer(data).subscribe(
-                res => {
-                    console.log(res);
-                    if (res.message === 'officer deleted!') {
-                        this._toast.success('Officer Deleted', 'OK!');
-                        this.loading = !this.loading;
-                    } else {
-                        this._toast.error('Officer cant be deleted', 'BAD request');
-                        this.loading = !this.loading;
-                    }
-                },
-                err => {
-                    console.log(err);
-                    this._toast.error('Officer cant be deleted', 'API error');
-                    this.loading = !this.loading;
-                }
-            );
-        }
+    delete(id): void {
+        const r = confirm('Are you sure? Officer will be deleted.');
+        if (!r) return;
+        this._officer.deleteOfficer(id).subscribe(
+            res => this.handle_response(res, true),
+            err => this.handle_response(err, false)
+        );
+    }
+
+    handle_response(res, error: Boolean) {
+        let msg = error ? "Error" : "Warning";
+        if (res.success) this._toast.success(res.message, "Success");
+        else this._toast.warning(res.message, msg);
     }
 }

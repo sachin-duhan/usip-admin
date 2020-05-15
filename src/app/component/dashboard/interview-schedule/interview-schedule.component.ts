@@ -13,6 +13,8 @@ import { InterviewService } from "../../../service/interview.service";
 export class InterviewScheduleComponent implements OnInit {
     loading: Boolean = false;
     show_form: Boolean = false;
+    show_applications_on_frontend: Array<any> = []; // this will be used to display values!!
+
     is_updating_scheduled_interviews: Boolean = false;
     is_creating_inteviews: Boolean = false;
 
@@ -24,7 +26,6 @@ export class InterviewScheduleComponent implements OnInit {
 
     /**data holder for display*/
     qualified_applications: Array<any> = [];
-    show_applications_on_frontend: Array<any> = []; // this will be used to display values!!
     /**end of data holder for display*/
 
     /**data for the table here!! */
@@ -84,7 +85,8 @@ export class InterviewScheduleComponent implements OnInit {
     update_interviews(data) {
         console.log('updating things!');
         console.log(data);
-        return;
+        // window.alert("just check this once in backend!");
+        // return;
         this._interviewService.update_interviews_in_bulk(data).subscribe(
             res => this.handle_response(res, true),
             err => this.handle_response(err, false)
@@ -118,9 +120,14 @@ export class InterviewScheduleComponent implements OnInit {
     }
 
     handle_response(res, error: Boolean) {
+        // console.log(res);
         let msg = error ? "Error" : "Warning";
         if (res.success) this._toast.success(res.message, "Success");
         else this._toast.warning(res.message, msg);
     }
 
+    is_applicant_have_Schedule(id): Boolean {
+        if (this.upcoming_interviews.find(el => el.pInfo == id)) return true;
+        return false;
+    }
 }

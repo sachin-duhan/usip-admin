@@ -23,11 +23,10 @@ export interface Card {
 
 export class DashComponent implements OnInit {
     private loading: Boolean = false;
-    private handler = new http_handler(null).handle_response;
-    // data for reports!!
+
     public internReport: Array<any> = [];
     public bankDetails: Array<any> = [];
-    public officer: Array<any> = [];
+    public officers: Array<any> = [];
     public applications: Array<any> = [];
     public notification: Array<any> = [];
 
@@ -40,7 +39,7 @@ export class DashComponent implements OnInit {
     ) { }
 
     /** Based on the screen size, switch from standard to one column per row */
-    public cards: any = [
+    public cards = [
         { title: 'Applications', cols: 2, rows: 1, url: '/admin/application' },
         { title: 'Interns Reports', cols: 1, rows: 1, url: '/admin/intern' },
         { title: 'Bank details', cols: 1, rows: 2, url: '/admin/intern' },
@@ -49,7 +48,7 @@ export class DashComponent implements OnInit {
     ];
 
     /** Based on the screen size, switch from standard to one column per row */
-    public sCards: any = [
+    public sCards = [
         {
             url: '/admin/application', icon: 'people', color: 'yellow accent-2 right',
             title: 'Applicants', count: 0, cols: '1', rows: '1',
@@ -73,17 +72,29 @@ export class DashComponent implements OnInit {
     ];
 
     ngOnInit() {
-
-        this.loading = !this.loading;
-        // interns only!!
-        this._registerService.showRegisterations().subscribe(
-            res => {
-                this.applications = res.body;
-                this.sCards[0].count = this.applications.length;
-                this.loading = !this.loading;
-            }, err => {
-                console.log(err);
-                this.loading = !this.loading;
-            });
+        this.get_all_applications();
+        this.get_all_officers();
     }
+
+    get_all_applications() {
+        this.loading = !this.loading;
+        this._registerService.showRegisterations().subscribe(
+            res => this.applications = this.handle_respose(res, 0),
+            err => this.handle_respose(err, 0));
+    }
+
+    get_all_officers() {
+        this.loading = !this.loading;
+        this._officerservice.getOfficers().subscribe(
+            res => this.officers = this.handle_respose(res, 3),
+            err => this.handle_respose(err, 3));
+    }
+
+    handle_respose(res, index: number) {
+        this.sCards[index].count = res.body ? res.body.length : 0;
+        this.loading = !this.loading;
+        if (res.success && Array.isArray(res.body)) return res.body;
+        return [];
+    }
+
 }

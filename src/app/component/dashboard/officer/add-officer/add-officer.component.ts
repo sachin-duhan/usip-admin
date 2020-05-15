@@ -11,6 +11,7 @@ import { OfficerService } from '../../../../service/officer.service';
 })
 export class AddOfficerComponent implements OnInit {
     loading: Boolean = false;
+
     constructor(
         private fb: FormBuilder,
         @Inject(MAT_DIALOG_DATA) public data: any,
@@ -53,12 +54,25 @@ export class AddOfficerComponent implements OnInit {
             err => {
                 console.log(err);
                 this.loading = !this.loading;
-                this._toast.error(err.error.message, 'Bad request');
+                this._toast.error(err.message, 'Bad request');
             }
         );
     }
 
     update_officer(officer) {
-        console.log(officer);
+        this._officerService.update_officer(officer, this.data._id).subscribe(
+            res => {
+                setTimeout(() => {
+                    this._toast.success(res.message, "Success");
+                }, 100);
+                this.loading = !this.loading;
+                this.dialogRef.close();
+            },
+            err => {
+                console.log(err);
+                this.loading = !this.loading;
+                this._toast.error(err.message, 'Error');
+            }
+        )
     }
 }
