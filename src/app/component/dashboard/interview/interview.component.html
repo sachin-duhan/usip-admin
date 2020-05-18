@@ -10,7 +10,7 @@
         <!--update form -->
         <div *ngIf="show_marks_update_form" class="col s8 m6 m pd-20 pointer">
             <div class="row" *ngIf="!conducting_interview">
-                <mat-slider thumbLabel class="col s6" [(ngModel)]="temp_minimum_marks" tickInterval="1" min="0" max="100"></mat-slider>
+                <mat-slider color="primary" thumbLabel class="col s6" [(ngModel)]="temp_minimum_marks" tickInterval="1" min="0" max="100"></mat-slider>
                 <button mat-button class="col s6 indigo white-text" (click)="update_marks()">Update Applicants</button>
             </div>
         </div>
@@ -20,12 +20,11 @@
                 <mat-icon>more_vert</mat-icon>
             </button>
         </div>
-
     </h1>
     <!--warning and update form here! shown only when interviews are not conudcted!!-->
     <div *ngIf="!conducting_interview">
-        <div class="row indigo lighten-5 pd-20 pointer valign-wrapper center" *ngIf="!show_marks_update_form">
-            <strong>NOTE </strong> - The Minimum cut-off for the list below is {{minimum_marks}} marks.
+        <div class="row indigo lighten-5 pd-20 pointer valign-wrapper center" *ngIf="!show_marks_update_form" (click)="show_marks_update_form = !show_marks_update_form">
+            <strong>NOTE </strong> - The Minimum cut-off for the list below is {{minimum_marks}} marks. Click here to update the minimum marks for the list below.
         </div>
     </div>
     <div class="mat-elevation-z8" *ngIf="dataSource.data.length > 0; else noData">
@@ -70,22 +69,22 @@
                 <th mat-header-cell *matHeaderCellDef>Update</th>
                 <td mat-cell *matCellDef="let element">
                     <span *ngIf="conducting_interview">
-                        <mat-icon (click)="Openform(element)" *ngIf="!element.interview"
+                        <mat-icon (click)="open_interview_modal(element)" *ngIf="!element.interview"
                             class="pointer grey-text text-darken-4">visibility</mat-icon>
                         <span *ngIf="element.interview">
-                            <mat-icon (click)="Openform(element)" matTooltip="Interview Conducted"
+                            <mat-icon (click)="open_interview_modal(element)" matTooltip="Interview Conducted"
                                 matTooltipPosition="right" class="pointer green-text">create
                             </mat-icon>
                         </span>
                     <!--delete button shown here!!-->
                     <mat-icon class="red-text pdl-10 pointer" *ngIf="showDeleteButton" (click)="delete_application(element)">delete</mat-icon>
                     </span>
-                    <span *ngIf="!conducting_interview">
+                    <!--making a new intern!-->
+                    <span *ngIf="!conducting_interview" class="pointer" (click)="make_new_intern_modal(element)">
                         <mat-icon class="indigo-text">work</mat-icon>
                     </span>
                 </td>
             </ng-container>
-
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         </table>
@@ -98,7 +97,7 @@
     </ng-template>
 </div>
 
-
+<!--menu for the top right option!!-->
 <mat-menu #menu="matMenu">
     <button (click)="show_marks_update_form = !show_marks_update_form" *ngIf="!conducting_interview" mat-menu-item>
         <mat-icon>edit</mat-icon>
@@ -110,6 +109,6 @@
     </button>
     <button mat-menu-item (click)="showDeleteButton = !showDeleteButton">
         <mat-icon class="red-text">delete</mat-icon>
-        <span>Show Delete Buttons</span>
+        <span>{{showDeleteButton ? "Hide Delete button" : "Show Delete Buttons"}}</span>
     </button>
 </mat-menu>

@@ -1,0 +1,111 @@
+<div class="container">
+    <div class="row">
+        <!--heading!-->
+        <div class="col s12 pd-20 grey lighten-4">
+            <h3 class="mat-h1 pdb-0 mgb-0 left">{{data.pInfo.name | uppercase}}</h3>
+            <mat-slide-toggle class="right" [(ngModel)]="show_interview_result" color="primary">
+                {{show_interview_result ? "Show Acedemic details" : "Show Interview Result"}}
+            </mat-slide-toggle>
+        </div>
+        <div class="col s12"><br></div>
+        <!--interview results or personal info the on this side!-->
+        <mat-card class="col s12 m6">
+            <div *ngIf="!show_interview_result">
+                <table class="highlight">
+                    <tbody>
+                        <tr>
+                            <td>Roll Number</td>
+                            <td>{{data.pInfo.rollNo}}</td>
+                        </tr>
+                        <tr>
+                            <td>CGPA</td>
+                            <td>{{data.pInfo.marks}}</td>
+                        </tr>
+                        <tr>
+                            <td>Branch</td>
+                            <td>{{data.pInfo.branch}}</td>
+                        </tr>
+                        <tr>
+                            <td>Domains</td>
+                            <td>{{data.pInfo.domain}}</td>
+                        </tr>
+                        <tr>
+                            <td>Email</td>
+                            <td>{{data.pInfo.email}}</td>
+                        </tr>
+                        <tr>
+                            <td>Mobile Number</td>
+                            <td>{{data.pInfo.phone}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p class="lead" style="font-size: 15px;">
+                    <strong>Experience - </strong> {{ data.pInfo.exp }}
+                </p>
+            </div>
+            <!-- interview details!!-->
+            <div *ngIf="show_interview_result">
+                <table class="highlight">
+                    <tbody>
+                        <tr>
+                            <td>Interview Conducted</td>
+                            <td>{{data.interview ? "Conducted" : "Not conducted"}}</td>
+                        </tr>
+                        <tr>
+                            <td>Interview Marks</td>
+                            <td>{{data.interview_marks}}</td>
+                        </tr>
+                        <tr>
+                            <td>Interview Date</td>
+                            <td>{{data.interview_date | date:shortDate}}</td>
+                        </tr>
+                        <tr>
+                            <td>Interview Venue</td>
+                            <td>{{data.venue_details}}</td>
+                        </tr>
+                        <tr>
+                            <td>Interview Slot</td>
+                            <td>{{data.slot_details}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p class="lead" style="font-size: 15px;">
+                    <strong>Experience - </strong> {{ data.interview_comment }}
+                </p>
+            </div>
+        </mat-card>
+        <!--for for the making new INTERN!-->
+        <div class="col s12 m6">
+            <form class="row center" (submit)="submitForm()" [formGroup]="make_new_intern_form">
+                <mat-form-field class="col s12">
+                    <mat-label>Depoloyment Number</mat-label>
+                    <input matInput required type="number" required formControlName="depNo">
+                </mat-form-field>
+                <mat-form-field class="col s12" appearance="outline">
+                    <mat-label>Reporting Officer</mat-label>
+                    <mat-select formControlName="repOfficer">
+                        <mat-option *ngFor="let item of all_officers" [value]="item._id">
+                            {{item.name}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field class="col s12">
+                    <mat-label>Choose a starting Date Internship</mat-label>
+                    <input matInput required formControlName="start" [matDatepicker]="picker">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+                <mat-form-field class="col s12">
+                    <mat-label>Choose a End Date of Internship</mat-label>
+                    <input matInput required formControlName="end" [matDatepicker]="picker2">
+                    <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                    <mat-datepicker #picker2></mat-datepicker>
+                </mat-form-field>
+                <button class="col s6" mat-button type="button" (click)="close()">Cancel</button>
+                <button [disabled]="!make_new_intern_form.valid" type="submit" class="col s6 indigo white-text" mat-button>
+                    Register New Intern
+                </button>
+            </form>
+        </div>
+    </div>
+</div>

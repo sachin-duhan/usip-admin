@@ -7,7 +7,7 @@
         </mat-toolbar>
         <div class="divider"></div>
         <mat-nav-list class="blue-grey-text text-darken-4">
-            <a mat-list-item *ngFor="let item of navigation" [routerLink]="item.url" routerLinkActive="black" class="white-text">
+            <a mat-list-item *ngFor="let item of navigation" class="white-text" [routerLink]="item.url" routerLinkActive="black mat-elevation-z8">
                 {{item.title}}
                 <div class="spacer"></div>
                 <mat-icon [class]="item.style"></mat-icon>

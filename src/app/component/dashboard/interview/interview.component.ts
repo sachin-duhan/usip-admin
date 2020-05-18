@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog, MatPaginator, MatTableDataSource } from '@angular/material';
 import { InternViewInternComponent } from '../application/intern-view-intern/intern-view-intern.component';
-
+import { MakingNewInternComponent } from "../../utility/making-new-intern/making-new-intern.component";
 import { RegisterService } from '../.././../service/register.service';
 import { InterviewService } from "../../../service/interview.service";
 import { ToastrService } from 'ngx-toastr';
@@ -53,11 +53,18 @@ export class InterviewComponent implements OnInit {
         );
     }
 
-    public Openform(data): void {
+    open_interview_modal(data): void {
         this.dialog.open(InternViewInternComponent, {
             width: "98%",
             height: "98%",
             autoFocus: true,
+            disableClose: true,
+            data: data
+        });
+    }
+
+    make_new_intern_modal(data): void {
+        this.dialog.open(MakingNewInternComponent, {
             disableClose: true,
             data: data
         });

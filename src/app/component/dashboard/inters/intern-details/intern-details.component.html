@@ -1,106 +1,103 @@
 <div class="row">
-  <app-spinner *ngIf="loading"></app-spinner>
-  <div class="pd-20 grey col s12 lighten-5">
-    <span class="mat-h1">{{ data.name | titlecase }}</span>
-    <mat-icon class="right green-text">how_to_reg</mat-icon>
-  </div>
-  <div class="col s12 m6">
-    <div class="mat-h2 pdt-20">
-      Personal Details
-      <mat-icon class="right" color="primary">keyboard_arrow_down</mat-icon>
+    <app-spinner *ngIf="loading"></app-spinner>
+    <div class="pd-20 grey col s12 lighten-5">
+        <span class="mat-h1">{{ data.name | titlecase }}</span>
+        <mat-icon class="right green-text">how_to_reg</mat-icon>
     </div>
-    <table class="highlight pdt-10">
-      <tbody>
-        <tr>
-          <td>Brnach</td>
-          <td>{{data.branch}}</td>
-        </tr>
-        <tr>
-          <td>Roll No.</td>
-          <td>{{data.rollNo}}</td>
-        </tr>
-        <tr>
-          <td>CGPA</td>
-          <td>{{data.marks}}</td>
-        </tr>
-      </tbody>
-    </table>
-    <!-- adding bank details -->
+    <div class="col s12 m6">
+        <div class="mat-h2 pdt-20">
+            Personal Details
+            <mat-icon class="right" color="primary">keyboard_arrow_down</mat-icon>
+        </div>
+        <table class="highlight pdt-10">
+            <tbody>
+                <tr>
+                    <td>Brnach</td>
+                    <td>{{data.branch}}</td>
+                </tr>
+                <tr>
+                    <td>Roll No.</td>
+                    <td>{{data.rollNo}}</td>
+                </tr>
+                <tr>
+                    <td>CGPA</td>
+                    <td>{{data.marks}}</td>
+                </tr>
+            </tbody>
+        </table>
+        <!-- adding bank details -->
 
-  </div>
-  <div class="col s12 m6">
-    <div class="mat-h2 pdt-20">
-      Experience
-      <mat-icon class="right" color="accent">keyboard_arrow_down</mat-icon>
     </div>
-    <table class="highlight">
-      <tbody>
-        <tr>
-          <td>Domains</td>
-          <td>{{data.domain}}</td>
-        </tr>
-        <tr>
-          <td>Phone</td>
-          <td>{{data.phone}}</td>
-        </tr>
-        <tr>
-          <td>Email</td>
-          <td>{{data.email}}</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-  <div class="col s12 pd-20">
-    <b>Experience : </b> {{data.exp}}
-    <br>
-    <b>Interview Marks :</b> {{data.interview_marks}}
-    <br>
-    <b>Remarks : </b> {{data.interview_comment}}
-  </div>
+    <div class="col s12 m6">
+        <div class="mat-h2 pdt-20">
+            Experience
+            <mat-icon class="right" color="accent">keyboard_arrow_down</mat-icon>
+        </div>
+        <table class="highlight">
+            <tbody>
+                <tr>
+                    <td>Domains</td>
+                    <td>{{data.domain}}</td>
+                </tr>
+                <tr>
+                    <td>Phone</td>
+                    <td>{{data.phone}}</td>
+                </tr>
+                <tr>
+                    <td>Email</td>
+                    <td>{{data.email}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="col s12 pd-20">
+        <b>Experience : </b> {{data.exp}}
+        <br>
+        <b>Interview Marks :</b> {{data.interview_marks}}
+        <br>
+        <b>Remarks : </b> {{data.interview_comment}}
+    </div>
 
-  <!-- adding an officer to an intern!! -->
-  <form #internForm="ngForm">
-    <div class="pd-20">
-        <div class="mat-h3">Internship Tenure</div>
-        <mat-form-field class="col s6 m4 l3">
-            <mat-label>Starting Date</mat-label>
-            <input matInput [matDatepicker]="picker" type="datetime" name="start" ngModel placeholder="5/06/2019" required>
-            <button mat-mini-fab type="button" matSuffix class="blue" (click)="picker.open()"><mat-icon>date_range</mat-icon></button>
-            <mat-datepicker #picker></mat-datepicker>
-        </mat-form-field>
+    <!-- adding an officer to an intern!! -->
+    <form #internForm="ngForm">
+        <div class="pd-20">
+            <div class="mat-h3">Internship Tenure</div>
+            <mat-form-field class="col s6 m4 l3">
+                <mat-label>Starting Date</mat-label>
+                <input matInput [matDatepicker]="picker" type="datetime" name="start" ngModel placeholder="5/06/2019" required>
+                <button mat-mini-fab type="button" matSuffix class="blue" (click)="picker.open()"><mat-icon>date_range</mat-icon></button>
+                <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
 
-        <mat-form-field class="col s6 m4 l3">
-            <mat-label>End Date</mat-label>
-            <input placeholder="5/07/2019" type="datetime" matInput [matDatepicker]="picker2" name="end" ngModel required>
-            <button mat-mini-fab matSuffix type="button" class="green" (click)="picker2.open()"><mat-icon>date_range</mat-icon></button>
-            <mat-datepicker #picker2></mat-datepicker>
-        </mat-form-field>
+            <mat-form-field class="col s6 m4 l3">
+                <mat-label>End Date</mat-label>
+                <input placeholder="5/07/2019" type="datetime" matInput [matDatepicker]="picker2" name="end" ngModel required>
+                <button mat-mini-fab matSuffix type="button" class="green" (click)="picker2.open()"><mat-icon>date_range</mat-icon></button>
+                <mat-datepicker #picker2></mat-datepicker>
+            </mat-form-field>
 
-      <mat-form-field class="col s12 m4 l6">
-        <mat-label>Deployment number</mat-label>
-        <input matInput placeholder="enter the number" required name="depNo" ngModel>
-      </mat-form-field>
+            <mat-form-field class="col s12 m4 l6">
+                <mat-label>Deployment number</mat-label>
+                <input matInput placeholder="enter the number" required name="depNo" ngModel>
+            </mat-form-field>
 
-      <mat-form-field class="col s12">
-        <mat-label>Select an officer</mat-label>
-        <mat-select placeholder="Officers" ngModel required name="Officer">
-          <mat-option *ngFor="let item of officers" [value]="item._id">
-            {{item.name}}
-            <span class="right grey-text">
+            <mat-form-field class="col s12">
+                <mat-label>Select an officer</mat-label>
+                <mat-select placeholder="Officers" ngModel required name="Officer">
+                    <mat-option *ngFor="let item of officers" [value]="item._id">
+                        {{item.name}}
+                        <span class="right grey-text">
               {{item.deptt}}
             </span>
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-      <mat-checkbox required="ture" class="col s12" >I have verified the fields.</mat-checkbox>
-      <div class="col s12 center-align center">
-        <button class="indigo darken-1 white-text" 
-        [disabled]="!internForm.valid" (click)="addOfficer(internForm.value)"
-         mat-raised-button>
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-checkbox required="ture" class="col s12">I have verified the fields.</mat-checkbox>
+            <div class="col s12 center-align center">
+                <button class="indigo darken-1 white-text" [disabled]="!internForm.valid" (click)="addOfficer(internForm.value)" mat-raised-button>
            Submit
         </button>
-      </div>
-
-    </div>
-  </form>
+            </div>
+        </div>
+    </form>
 </div>

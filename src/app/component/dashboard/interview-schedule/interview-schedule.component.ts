@@ -50,6 +50,10 @@ export class InterviewScheduleComponent implements OnInit {
                     el.rollNo = el.pInfo.rollNo;
                     el.marks = el.pInfo.marks;
                     el.domain = el.pInfo.domain;
+                    el.branch = el.pInfo.branch;
+                    el.phone = el.pInfo.phone;
+                    el.email = el.pInfo.email;
+                    el.pInfo = undefined;
                     el.interview_date = el.interview_date.substring(0, 10);
                     el.interview_date = el.interview_date.split('-').reverse().join('/');
                 });
