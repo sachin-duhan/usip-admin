@@ -63,9 +63,15 @@ export class InterviewComponent implements OnInit {
         });
     }
 
-    conducting_interview_handler(update: Boolean) {
+    update_marks() {
+        this.minimum_marks = this.temp_minimum_marks;
+        this.show_marks_update_form = !this.show_marks_update_form;
+        this.conducting_interview_handler(false);
+    }
+
+    conducting_interview_handler(update: Boolean) { // this boolean value is for the display chanage!! 
         this.qualified_applicants_above_set_marks = [];
-        if (this.conducting_interview) {
+        if (this.conducting_interview || !update) {
             this.all_upcoming_interviews.forEach(el => {
                 if (el.interview_marks >= this.minimum_marks)
                     this.qualified_applicants_above_set_marks.push(el);
@@ -73,8 +79,7 @@ export class InterviewComponent implements OnInit {
             this.dataSource = new MatTableDataSource(this.qualified_applicants_above_set_marks);
         }
         else this.dataSource = new MatTableDataSource(this.all_upcoming_interviews);
-        if (update)
-            this.conducting_interview = !this.conducting_interview;
+        if (update) this.conducting_interview = !this.conducting_interview; // show the change in the front-end!
     }
 
     delete_application(data): void {

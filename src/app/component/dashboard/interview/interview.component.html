@@ -4,15 +4,14 @@
     <h1 class="mat-h1 pdb-0 mgb-0 row" style="margin-bottom: 10px;">
         <!--title on the left-->
         <div class="col s12 m5">
-            Qualified Applications
+            {{conducting_interview ? "All Qualified Applications" : "Final Selection of Interns"}}
             <sup id="chip" class="indigo white-text">{{dataSource.data.length | number}}</sup>
         </div>
         <!--update form -->
         <div *ngIf="show_marks_update_form" class="col s8 m6 m pd-20 pointer">
             <div class="row" *ngIf="!conducting_interview">
                 <mat-slider thumbLabel class="col s6" [(ngModel)]="temp_minimum_marks" tickInterval="1" min="0" max="100"></mat-slider>
-                <button mat-button class="col s6 indigo white-text" (click)="conducting_interview_handler(false)">Update
-                    Applicants</button>
+                <button mat-button class="col s6 indigo white-text" (click)="update_marks()">Update Applicants</button>
             </div>
         </div>
         <!--icon on the right!!-->
@@ -25,8 +24,8 @@
     </h1>
     <!--warning and update form here! shown only when interviews are not conudcted!!-->
     <div *ngIf="!conducting_interview">
-        <div class="row indigo lighten-5 pd-20 pointer valign-wrapper" *ngIf="!show_marks_update_form" (click)="show_marks_update_form = !show_marks_update_form">
-            <strong>NOTE </strong> - The Minimum cut-off for the list below is {{minimum_marks}} marks. Click here to update...
+        <div class="row indigo lighten-5 pd-20 pointer valign-wrapper center" *ngIf="!show_marks_update_form">
+            <strong>NOTE </strong> - The Minimum cut-off for the list below is {{minimum_marks}} marks.
         </div>
     </div>
     <div class="mat-elevation-z8" *ngIf="dataSource.data.length > 0; else noData">
@@ -101,13 +100,13 @@
 
 
 <mat-menu #menu="matMenu">
-    <button (click)="show_marks_update_form = !show_marks_update_form" mat-menu-item>
+    <button (click)="show_marks_update_form = !show_marks_update_form" *ngIf="!conducting_interview" mat-menu-item>
         <mat-icon>edit</mat-icon>
         <span>Update Minimum marks</span>
     </button>
     <button mat-menu-item (click)="conducting_interview_handler(true)">
         <mat-icon>visibility</mat-icon>
-        <span> {{conducting_interview ? "Assign Interns to Officer" : " Conduct Interviews"}}</span>
+        <span> {{conducting_interview ? "Final Selection of Interns" : " Conduct Interviews"}}</span>
     </button>
     <button mat-menu-item (click)="showDeleteButton = !showDeleteButton">
         <mat-icon class="red-text">delete</mat-icon>
