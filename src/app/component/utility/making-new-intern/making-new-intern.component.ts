@@ -1,6 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { OfficerService } from '../../../service/officer.service';
+import { InternService } from "../../../service/intern.service";
 
 import { ToastrService } from 'ngx-toastr';
 import { FormBuilder } from '@angular/forms';
@@ -14,6 +15,7 @@ export class MakingNewInternComponent implements OnInit {
     constructor(
         @Inject(MAT_DIALOG_DATA) public data: any,
         private _officer: OfficerService,
+        private _internService: InternService,
         private fb: FormBuilder,
         private _toast: ToastrService,
         public dialogRef: MatDialogRef<MakingNewInternComponent>
@@ -38,18 +40,24 @@ export class MakingNewInternComponent implements OnInit {
 
     submitForm() {
         let form_data = {
+            pInfo: this.data.pInfo._id,
+            interview: this.data._id,
+            repOfficer: this.make_new_intern_form.get('repOfficer').value,
+            depNo: this.make_new_intern_form.get('depNo').value,
+            bankName: "Not filled",
+            bankAc: "Not Filled",
+            ifsc: 'Not Filled',
             start: this.make_new_intern_form.get('start').value,
             end: this.make_new_intern_form.get('end').value,
-            depNo: this.make_new_intern_form.get('depNo').value,
-            repOfficer: this.make_new_intern_form.get('repOfficer').value,
-            interview: this.data._id,
-            pInfo: this.data.pInfo._id
         };
-        console.log(form_data);
-        setTimeout(() => {
-            this._toast.success("Intern created successfully!!");
-        }, 200);
-        this.close();
+        this._internService.addIntern(form_data).subscribe(
+            res => {
+                setTimeout(() => {
+                    this._toast.success(res.message,"Success");
+                }, 200);
+                this.close();
+            }, err => this._toast.error(err.message, "Error")
+        )
     }
 
     close() {

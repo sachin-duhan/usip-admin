@@ -3,9 +3,9 @@
         <!--heading!-->
         <div class="col s12 pd-20 grey lighten-4">
             <h3 class="mat-h1 pdb-0 mgb-0 left">{{data.pInfo.name | uppercase}}</h3>
-            <mat-slide-toggle class="right" [(ngModel)]="show_interview_result" color="primary">
+            <button mat-button class="right indigo white-text" (click)="show_interview_result = !show_interview_result">
                 {{show_interview_result ? "Show Acedemic details" : "Show Interview Result"}}
-            </mat-slide-toggle>
+            </button>
         </div>
         <div class="col s12"><br></div>
         <!--interview results or personal info the on this side!-->
@@ -102,7 +102,7 @@
                     <mat-datepicker #picker2></mat-datepicker>
                 </mat-form-field>
                 <button class="col s6" mat-button type="button" (click)="close()">Cancel</button>
-                <button [disabled]="!make_new_intern_form.valid" type="submit" class="col s6 indigo white-text" mat-button>
+                <button [disabled]="!make_new_intern_form.valid" type="submit" class="col s6 red white-text" mat-button>
                     Register New Intern
                 </button>
             </form>
