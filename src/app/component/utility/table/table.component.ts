@@ -10,6 +10,7 @@ import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
 
 export class TableComponent implements OnInit {
 
+    show_search_input: Boolean = false;
     @Input() data: Array<any>;
     @Input() displayedColumns: Array<String>;
     @Input() display_val: Array<String>;
@@ -22,9 +23,13 @@ export class TableComponent implements OnInit {
     constructor() { }
 
     ngOnInit() {
-        setTimeout(()=>this.dataSource.data = this.data);
+        setTimeout(() => this.dataSource.data = this.data);
         setTimeout(() => this.dataSource.sort = this.sort);
         setTimeout(() => this.dataSource.paginator = this.paginator);
+    }
+
+    filter(filterValue: string) {
+        this.dataSource.filter = filterValue.trim().toLowerCase();
     }
 
     download() {

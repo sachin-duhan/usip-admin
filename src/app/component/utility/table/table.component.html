@@ -1,10 +1,23 @@
 <br>
 <h1 class="mat-h1 pdb-0 mgb-0 row">
-    {{title}}
-    <button mat-button class="right" (click)="download()">Download Excel File</button>
-    <span id="chip" class="indigo white-text">Total - {{data.length}}</span>
+    <div class="col s6">
+        {{title}}
+        <span id="chip" class="indigo white-text">Total - {{data.length}}</span>
+    </div>
+    <div class="col s6 right">
+        <div class="row">
+            <div class="col s6" [class.s10]="show_search_input">
+                <input class="input_class" *ngIf="show_search_input" (keyup)="filter($event.target.value)" placeholder="Search">
+            </div>
+            <div class="col s2">
+                <button mat-icon-button class="right" (click)="show_search_input = !show_search_input">
+                    <mat-icon>{{show_search_input ? "clear" : "search" }}</mat-icon>
+                </button>
+            </div>
+            <button mat-button class="col s4" *ngIf="!show_search_input" (click)="download()">Download Excel File</button>
+        </div>
+    </div>
 </h1>
-<br>
 <div class="mat-elevation-z8" *ngIf="data.length > 0; else noData">
     <table mat-table matSort [dataSource]="dataSource">
         <ng-container *ngFor="let item of display_val; let i=index" [matColumnDef]="displayedColumns[i]">
