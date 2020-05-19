@@ -8,14 +8,14 @@
             <sup id="chip" class="indigo white-text">{{dataSource.data.length | number}}</sup>
         </div>
         <!--update form -->
-        <div *ngIf="show_marks_update_form" class="col s8 m6 m pd-20 pointer">
+        <div *ngIf="show_marks_update_form" class="col s8 m6 pd-20 pointer" [class.m7]="show_marks_update_form && !conducting_interview">
             <div class="row" *ngIf="!conducting_interview">
-                <mat-slider color="primary" thumbLabel class="col s6" [(ngModel)]="temp_minimum_marks" tickInterval="1" min="0" max="100"></mat-slider>
-                <button mat-button class="col s6 indigo white-text" (click)="update_marks()">Update Applicants</button>
+                <button mat-button (click)="update_marks()" class="right"> Update Marks</button>
+                <mat-slider color="primary" thumbLabel class="col s6 right" [(ngModel)]="temp_minimum_marks" tickInterval="1" min="1" max="100"></mat-slider>
             </div>
         </div>
         <!--icon on the right!!-->
-        <div class="col s4 m1" [class.offset-m6]="!show_marks_update_form">
+        <div class="col s4 m1" *ngIf="!show_marks_update_form || conducting_interview" [class.offset-m6]="!show_marks_update_form">
             <button mat-icon-button class=" right" [matMenuTriggerFor]="menu">
                 <mat-icon>more_vert</mat-icon>
             </button>
