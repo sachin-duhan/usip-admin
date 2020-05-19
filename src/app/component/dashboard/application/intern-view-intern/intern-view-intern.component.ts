@@ -16,11 +16,12 @@ export class InternViewInternComponent implements OnInit {
         @Inject(MAT_DIALOG_DATA) public data: any,
         private _interviewService: InterviewService,
         private _toast: ToastrService,
-        public dialogRef: MatDialogRef<InternViewInternComponent>) { }
+        public dialogRef: MatDialogRef<InternViewInternComponent>
+    ) { }
 
     internForm = this.fb.group({
-        comment: [this.data.internview_comment],
-        marks: [this.data.internview_marks, Validators.max(100)],
+        comment: [this.data.interview_comment], // setting value
+        marks: [this.data.interview_marks, Validators.max(100)],
         interview_attendence: [this.data.interview_attendence]
     });
 
@@ -31,36 +32,36 @@ export class InternViewInternComponent implements OnInit {
 
     submitForm(): void {
         this.loading = !this.loading;
+        const marks = this.internForm.get('marks').value;
         const user = {
             interview_comment: this.internForm.get('comment').value,
             interview: true,
-            interview_marks: this.internForm.get('marks').value,
-            interview_attendence: this.internForm.get('interview_attendence').value,
+            interview_marks: marks,
+            interview_attendence: marks > 0 ? true : this.internForm.get('interview_attendence').value,
             slot_details: this.applicant.slot_details,
             venue_details: this.applicant.venue_details,
             interview_date: this.applicant.interview_date
         };
-        this._interviewService.update_status_of_applicants_interview(user, this.applicant._id)
-            .subscribe(res => this.handle_response(res, true),
-                err => this.handle_response(err, false)
-            );
+        this._interviewService.update_status_of_applicants_interview(user, this.applicant._id).subscribe(
+            res => this.handle_response(res, true),
+            err => this.handle_response(err, false)
+        );
     }
 
     close(): void {
         this.dialogRef.close();
     }
 
-
     handle_response(res, error: Boolean) {
         let msg = error ? "Error" : "Warning";
         this.loading = !this.loading;
-        this.close();
         if (res.success) setTimeout(() => {
             this._toast.success(res.message, "Success");
         }, 100);
         else setTimeout(() => {
             this._toast.warning(res.message, msg);
         }, 100);
+        this.close();
     }
 
 }

@@ -12,7 +12,7 @@ export class IntersComponent implements OnInit {
 
     constructor(private _internService: InternService,
         private _toast: ToastrService) { }
-    is_editing_interns:Boolean = false;
+    is_editing_interns: Boolean = false;
     loading: Boolean = false;
 
     displayedColumns: Array<String> = ['depNo', 'name', 'rollNo', 'officer', 'start', 'end'];
@@ -42,5 +42,9 @@ export class IntersComponent implements OnInit {
             },
             err => { this._toast.error(err.message, 'Something went wrong!'); this.loading = false; }
         );
+    }
+
+    mark_intern_inactive(id:String,index:number){
+        
     }
 }

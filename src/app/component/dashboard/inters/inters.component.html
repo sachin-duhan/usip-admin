@@ -16,9 +16,27 @@
                         Reporting Officer - {{item.officer | titlecase}} at {{item.oDeptt | uppercase}}
                     </mat-panel-description>
                 </mat-expansion-panel-header>
-                <p>Internship Tenure : {{item.start}} - {{item.end}}</p>
-                <button mat-button class="right red white-text">Discontinue Intern</button>
-                <button mat-button class="green white-text">Edit Details</button>
+                <div class="row">
+                    <div class="col s12 m6">
+                        <mat-list>
+                            <mat-list-item>Start Date - {{item.start}}</mat-list-item>
+                            <mat-list-item>End Date - {{item.end}} </mat-list-item>
+                            <mat-list-item>Reporting Officer - {{item.officer}} </mat-list-item>
+                            <mat-list-item>Reporting Department - {{item.oDeptt}} </mat-list-item>
+                        </mat-list>
+                    </div>
+                    <div class="col s12 m6">
+                        <mat-list>
+                            <mat-list-item>CGPA - {{item.pInfo.marks}}</mat-list-item>
+                            <mat-list-item>Phone - {{item.pInfo.phone}}</mat-list-item>
+                            <mat-list-item>Branch - {{item.pInfo.branch}} </mat-list-item>
+                            <mat-list-item>Domains - {{item.pInfo.domain}} </mat-list-item>
+                        </mat-list>
+                    </div>
+                </div>
+                <button class="white-text red" mat-button>Delete Intern & All records</button>
+                <button mat-button class="right indigo white-text" (click)="mark_intern_inactive(item._id,i)">
+                    Discontinue Intern</button>
             </mat-expansion-panel>
         </mat-accordion>
     </div>
