@@ -12,7 +12,7 @@ export class IntersComponent implements OnInit {
 
     constructor(private _internService: InternService,
         private _toast: ToastrService) { }
-
+    is_editing_interns:Boolean = false;
     loading: Boolean = false;
 
     displayedColumns: Array<String> = ['depNo', 'name', 'rollNo', 'officer', 'start', 'end'];

@@ -42,13 +42,13 @@
     <!--display of the notifications!!-->
     <mat-tab-group *ngIf="!creating_notification" class="pd-20 white" mat-align-tabs="center" mat-stretch-tabs>
         <mat-tab label="Public Notification">
-            <div class="pd-20 card medium">
+            <div class="pd-20 card medium" *ngIf="publicNotification.length > 0; else noData">
                 <table class="highlight">
                     <tbody>
                         <tr *ngFor="let item of publicNotification; let i=index" id="{{item._id}}">
                             <td>{{i+1}}. {{item.title}}</td>
                             <td>{{item.date | date:shortDate}}</td>
-                            <td class="pointer" (click)="deleteNotification(item._id)">
+                            <td class="pointer" (click)="deleteNotification(item._id,i,'public')">
                                 <mat-icon class="red-text pdt-10">delete</mat-icon>
                             </td>
                         </tr>
@@ -57,13 +57,13 @@
             </div>
         </mat-tab>
         <mat-tab label="Private Notifications">
-            <div class="pd-20 card medium">
+            <div class="pd-20 card medium" *ngIf="intern_notifications.length > 0; else noData">
                 <table class="highlight">
                     <tbody>
-                        <tr *ngFor="let item of privateNotification; let i=index">
+                        <tr *ngFor="let item of intern_notifications; let i=index">
                             <td>{{i+1}}. {{item.title}}</td>
                             <td>{{item.date | date:shortDate}}</td>
-                            <td class="pointer" (click)="deleteNotification(item._id)">
+                            <td class="pointer" (click)="deleteNotification(item._id,i,'intern')">
                                 <mat-icon class="red-text pdt-10">delete</mat-icon>
                             </td>
                         </tr>
@@ -73,3 +73,10 @@
         </mat-tab>
     </mat-tab-group>
 </div>
+
+<ng-template #noData>
+    <div class="white center pd-20">
+        <br><br>
+        <h5 class="mat-h1">No Notifications found!!</h5>
+    </div>
+</ng-template>

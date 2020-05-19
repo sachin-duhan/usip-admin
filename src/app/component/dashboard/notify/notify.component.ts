@@ -3,10 +3,6 @@ import { FormBuilder } from '@angular/forms';
 
 import { NotifyService } from '../../../service/notify.service';
 import { ToastrService } from 'ngx-toastr';
-import { MatBottomSheet, MatDialog } from '@angular/material';
-
-import { NewApplicationComponent } from '../application/new-application/new-application.component';
-import { BankDetailsComponent } from '../../dashboard/inters/bank-details/bank-details.component';
 
 @Component({
     selector: 'app-notify',
@@ -23,8 +19,8 @@ export class NotifyComponent implements OnInit {
 
     public applicationAllow: Boolean = true;
     public showSettings: Boolean = false;
-    public publicNotification: any = [];
-    public privateNotification: any = [];
+    public publicNotification: Array<any> = [];
+    public intern_notifications: Array<any> = [];
     private loading: Boolean = false;
 
 
@@ -36,18 +32,17 @@ export class NotifyComponent implements OnInit {
 
         // getting the private notification
         this._notificationService.internNotification().subscribe(res => {
-            this.privateNotification = res.notifications;
+            this.intern_notifications = res.body ? res.body : [];
             this.loading != this.loading;
         }, err => {
             console.log(err);
             this.loading != this.loading;
-            this._toast.error(err.error.message, 'No intern notification!');
         });
 
         // getting the public notification
         this._notificationService.publicNotification().subscribe(
             res => {
-                this.publicNotification = res.body;
+                this.publicNotification = res.body ? res.body : [];
                 this.loading != this.loading;
             }, err => {
                 console.log(err);
@@ -92,20 +87,16 @@ export class NotifyComponent implements OnInit {
         this.input_msg = this.fileData.name;
     }
 
-    deleteNotification(data): void {
-        console.log(data);
-        var alert = confirm("Do you want to delete the application!");
-        if (alert) {
-            this._notificationService.deleteNoti(data).subscribe(
-                res => {
-                    console.log(res);
-                    this._toast.success('Notification deleted successfully', 'Done');
-                    document.getElementById(data).classList.add('hidden');
-                }, err => {
-                    console.log(err);
-                    this._toast.error(err.message, "BAD REQUEST");
-                }
-            );
-        }
+    deleteNotification(id: String, index: number, type): void {
+        // console.log(data);
+        var flag = confirm("Do you want to delete the application!");
+        if (!flag) return;
+        this._notificationService.deleteNoti(id).subscribe(
+            res => {
+                this._toast.success(res.message, 'Success');
+                if (type == 'intern') this.intern_notifications.splice(index, 1);
+                else this.publicNotification.splice(index, 1);
+            }, err => this._toast.error(err.message, "Error")
+        );
     }
 }

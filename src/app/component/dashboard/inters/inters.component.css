@@ -1,25 +1,6 @@
-table {
-    width: 100%;
-}
-
-thead tr td {
-    border-radius: 0px;
-}
-
-tbody tr:focus,
-tbody tr:active {
-    outline: none;
-}
-
 .bottom_push {
     position: fixed;
     bottom: 30px;
     right: 30px;
-    z-index: 121;
-}
-
-.mat-h2 {
-    padding-bottom: 15px;
-    font-size: 25px;
-    font-weight: 450;
+    z-index: 122;
 }

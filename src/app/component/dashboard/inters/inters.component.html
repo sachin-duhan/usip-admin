@@ -1,4 +1,26 @@
-<app-spinner *ngIf="loading"></app-spinner>
+<button mat-fab (click)="is_editing_interns = !is_editing_interns" class="indigo pointer bottom_push white-text">
+    <mat-icon>{{is_editing_interns ? "clear" : "edit"}}</mat-icon>
+</button>
 <div class="container" *ngIf="!loading">
-    <app-table [title]="'List of All Interns'" [data]="all_interns" [displayedColumns]="displayedColumns" [display_val]="display_val"></app-table>
+    <app-table *ngIf="!is_editing_interns" [title]="'List of All Interns'" [data]="all_interns" [displayedColumns]="displayedColumns" [display_val]="display_val"></app-table>
+    <div class="row" *ngIf="is_editing_interns">
+        <h2 class="col s12 mat-h2">Editing Interns <span id="chip" class="indigo white-text right">
+                Total - {{all_interns.length}}</span></h2>
+        <mat-accordion class="col s12">
+            <mat-expansion-panel *ngFor="let item of all_interns; let i=index">
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        <strong>{{item.depNo}}. {{item.name | uppercase}} - {{item.rollNo}}</strong>
+                    </mat-panel-title>
+                    <mat-panel-description>
+                        Reporting Officer - {{item.officer | titlecase}} at {{item.oDeptt | uppercase}}
+                    </mat-panel-description>
+                </mat-expansion-panel-header>
+                <p>Internship Tenure : {{item.start}} - {{item.end}}</p>
+                <button mat-button class="right red white-text">Discontinue Intern</button>
+                <button mat-button class="green white-text">Edit Details</button>
+            </mat-expansion-panel>
+        </mat-accordion>
+    </div>
 </div>
+<app-spinner *ngIf="loading"></app-spinner>
