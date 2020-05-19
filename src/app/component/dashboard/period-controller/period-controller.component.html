@@ -1,3 +1,16 @@
-<p>
-  period-controller works!
-</p>
+<!--main container ends here!-->
+<div>
+    <button mat-fab class="indigo darken-3 white-text" (click)="showSettings = !showSettings">
+            <mat-icon class="white-text scale-transition">settings</mat-icon>
+        </button>
+    <div *ngIf="showSettings" class="setting-buttons-div1">
+        <button class="indigo white-text scale-transition scale-in" (click)="updateApplication()" mat-mini-fab matTooltip="Allow Intern Applications" matTooltipPosition="left">
+                <mat-icon class="small-font">description</mat-icon>
+            </button>
+    </div>
+    <div *ngIf="showSettings" class="setting-buttons-div2">
+        <button mat-mini-fab (click)="updateBank()" class="indigo white-text scale-transition scale-in" matTooltip="Allow Bank Details" matTooltipPosition="left">
+                <mat-icon class="small-font">account_balance</mat-icon>
+            </button>
+    </div>
+</div>

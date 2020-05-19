@@ -1,74 +1,78 @@
 .radio-group {
-  display: inline-flex;
-  flex-direction: column;
+    display: inline-flex;
+    flex-direction: column;
 }
 
 .radio-button {
-  margin: 0px 5px;
+    margin: 0px 5px;
 }
 
 mat-radio-group {
-  margin-bottom: 8%;
+    margin-bottom: 8%;
 }
 
 .setting-buttons-div1 {
-  position: fixed;
-  bottom: 80px;
-  right: 8px;
+    position: fixed;
+    bottom: 80px;
+    right: 8px;
 }
 
 .setting-buttons-div2 {
-  position: fixed;
-  bottom: 8px;
-  right: 80px;
+    position: fixed;
+    bottom: 8px;
+    right: 80px;
 }
 
 .small-font {
-  font-size: 18px;
-}
-
-mat-icon {
-  font-size: 25px;
+    font-size: 18px;
 }
 
 .push_bottom-right {
-  text-align: center;
-  position: fixed;
-  bottom: 0px;
-  transition: 600ms;
-  transition-timing-function: cubic-bezier(0.075, 0.82, 0.165, 1);
-  transition-delay: 100ms;
-  right: 0px;
+    text-align: center;
+    position: fixed;
+    bottom: 0px;
+    transition: 600ms;
+    transition-timing-function: cubic-bezier(0.075, 0.82, 0.165, 1);
+    transition-delay: 100ms;
+    right: 0px;
 }
 
 .push_bottom-right button {
-  position: absolute;
-  bottom: 30px;
-  right: 30px;
-}
-
-mat-form-field mat-icon {
-  font-size: 30px;
-  margin-right: 10px;
-  transform: translateX(-5px);
-  transform: translateY(-10px);
+    position: absolute;
+    bottom: 30px;
+    right: 30px;
 }
 
 .card {
-  box-shadow: none;
+    box-shadow: none;
 }
 
 .white {
-  background-color: rgba(255, 255, 255, 0.5);
-}
-
-input,
-input:focus,
-input:hover {
-  border-bottom: none;
-  border: none;
+    background-color: rgba(255, 255, 255, 0.5);
 }
 
 .hide {
-  display: none;
+    display: none;
+}
+
+.hidden {
+    display: none;
+}
+
+.input-file-label {
+    padding: 20px;
+    border: dashed 1px rgb(184, 184, 184);
+    cursor: pointer;
+    width: 100%;
+    font-size: 22px;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+.pull-right {
+    float: right;
+}
+
+.pr-2 {
+    padding-right: 10px;
 }
