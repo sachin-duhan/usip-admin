@@ -1,10 +1,45 @@
-<div class="container">
+<app-spinner *ngIf="loading"></app-spinner>
+<div class="container" *ngIf="!loading">
     <h4 class="mat-h1">
         Notification
         <button mat-button class="right" (click)="creating_notification = !creating_notification">
             {{creating_notification ? "View all Notifications" : "Create Notification"}}</button>
     </h4>
-    <app-spinner *ngIf="loading"></app-spinner>
+    <mat-card *ngIf="creating_notification" class="white grey-text text-darken-4">
+        <form class="row" (submit)="submitForm()" [formGroup]="notificationForm">
+            <mat-form-field class="col s12">
+                <mat-label>Notification title</mat-label>
+                <input matInput placeholder="USIP Applications allowed" required formControlName="title">
+            </mat-form-field>
+
+            <mat-form-field class="col s12">
+                <mat-label>Description of Notification</mat-label>
+                <input matInput placeholder="Applications for 20 available position are invited under standard norm. Deadline - 12 May 2020." required formControlName="description">
+            </mat-form-field>
+
+            <div class="col m12 l12 s12">
+                <mat-radio-group color="primary" formControlName="public" class="left" required>
+                    <mat-label>Type of Notification : </mat-label>
+                    <mat-radio-button class="radio-button" color="accent" value="false">
+                        Intern
+                    </mat-radio-button>
+                    <mat-radio-button value="true" color="primary" class="radio-button">
+                        Public
+                    </mat-radio-button>
+                </mat-radio-group>
+            </div>
+            <div class="col s12"><br></div>
+
+            <label class="input-file-label col s12">
+                <span><i class="fa fa-file-photo-o pr-2"></i>{{input_msg}}</span>
+                <input class="form-control-file hidden" type="file" (change)="onFileSelected($event)" required>
+            </label>
+            <div class="col s12"><br></div>
+            <button [disabled]="!notificationForm.valid" type="submit" class="col s4 m3 l3 red white-text right" mat-button>Submit</button>
+        </form>
+    </mat-card>
+
+    <!--display of the notifications!!-->
     <mat-tab-group *ngIf="!creating_notification" class="pd-20 white" mat-align-tabs="center" mat-stretch-tabs>
         <mat-tab label="Public Notification">
             <div class="pd-20 card medium">
@@ -37,37 +72,4 @@
             </div>
         </mat-tab>
     </mat-tab-group>
-    <mat-card *ngIf="creating_notification" class="white grey-text text-darken-4">
-        <form class="row" (submit)="submitForm()" [formGroup]="notificationForm">
-            <mat-form-field class="col s12">
-                <mat-label>Notification title</mat-label>
-                <input matInput placeholder="USIP Applications allowed" required formControlName="title">
-            </mat-form-field>
-
-            <mat-form-field class="col s12">
-                <mat-label>Description of Notification</mat-label>
-                <input matInput placeholder="Applications for 20 available position are invited under standard norm. Deadline - 12 May 2020." required formControlName="description">
-            </mat-form-field>
-
-            <label class="input-file-label col s12">
-                <span><i class="fa fa-file-photo-o pr-2"></i>{{input_msg}}</span>
-                <input class="form-control-file hidden" type="file" (change)="onFileSelected($event)" required>
-            </label>
-
-            <div class="col s12">
-                <br><br>
-            </div>
-            <div class="col m12 l12 s12 pdb-0 mgb-0">
-                <mat-radio-group color="primary" formControlName="public" class="left" required>
-                    <mat-radio-button class="radio-button" color="accent" value="false">
-                        Intern
-                    </mat-radio-button>
-                    <mat-radio-button value="true" color="primary" class="radio-button">
-                        Public
-                    </mat-radio-button>
-                </mat-radio-group>
-            </div>
-            <button [disabled]="!notificationForm.valid" type="submit" class="col s4 m3 l3 red white-text right" mat-button>Submit</button>
-        </form>
-    </mat-card>
 </div>

@@ -68,15 +68,16 @@ export class NotifyComponent implements OnInit {
             visiblity: this.notificationForm.get('public').value,
             description: this.notificationForm.get('description').value,
         };
-        if (!this.fileData) return;
+        // if (!this.fileData) {
+        //     this._toast.warning("Kindly choose a file", "Warning");
+        //     return;
+        // }
         let form = new FormData();
         form.append('title', data.title);
         form.append('description', data.description);
         form.append('visiblity', data.description);
         form.append('image', this.fileData, this.fileData.name);
 
-        console.log(form);
-        return;
         this._notificationService.postNotification(form).subscribe(
             res => {
                 this._toast.success(res.message, "success");
@@ -99,7 +100,7 @@ export class NotifyComponent implements OnInit {
                 res => {
                     console.log(res);
                     this._toast.success('Notification deleted successfully', 'Done');
-                    document.getElementById(data).classList.add('hide');
+                    document.getElementById(data).classList.add('hidden');
                 }, err => {
                     console.log(err);
                     this._toast.error(err.message, "BAD REQUEST");
