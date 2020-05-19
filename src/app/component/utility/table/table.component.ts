@@ -36,4 +36,8 @@ export class TableComponent implements OnInit {
         let cvsService = new DownloadCSVService();
         cvsService.exportToCsv(`${this.title}.csv`, this.data);
     }
+
+    ngOnDestroy() {
+        this.dataSource.disconnect();
+    }
 }

@@ -187,6 +187,7 @@ import { MakingNewInternComponent } from './component/utility/making-new-intern/
         InternDetailsComponent,
         NewApplicationComponent,
         BankDetailsComponent,
+        BankDetailsFormComponent,
         MakingNewInternComponent
     ]
 })

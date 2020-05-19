@@ -43,9 +43,8 @@ export class InterviewScheduleComponent implements OnInit {
         this.loading = true;
         this._interviewService.get_all_upcoming_interviews().subscribe(
             res => {
-                this.upcoming_interviews = res.body;
                 // processing data for proper display in table!!
-                this.upcoming_interviews.forEach(el => {
+                res.body.forEach(el => {
                     el.name = el.pInfo.name;
                     el.rollNo = el.pInfo.rollNo;
                     el.marks = el.pInfo.marks;
@@ -57,6 +56,7 @@ export class InterviewScheduleComponent implements OnInit {
                     el.interview_date = el.interview_date.substring(0, 10);
                     el.interview_date = el.interview_date.split('-').reverse().join('/');
                 });
+                this.upcoming_interviews = res.body;
                 this.loading = false;
             }
         )

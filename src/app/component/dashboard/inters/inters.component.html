@@ -1,4 +1,5 @@
-<div class="container pd-20 row">
-    <app-spinner *ngIf="loading"></app-spinner>
+<app-spinner *ngIf="loading"></app-spinner>
+<div class="container pd-20 row" *ngIf="!loading">
     <h2 class="pdb-0 mgb-0 mat-h2">USIP Current Interns</h2>
+    <app-table [title]="'List of All Interns'" [data]="all_interns" [displayedColumns]="displayedColumns" [display_val]="display_val"></app-table>
 </div>
