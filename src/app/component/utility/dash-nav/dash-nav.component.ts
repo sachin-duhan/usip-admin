@@ -20,16 +20,16 @@ export class DashNavComponent {
 
     navigation = [
         { url: '/admin/dashboard', title: "Dashboard", style: "blue-text text-accent-2  fa fa-dashboard" },
-        { url: '/admin/intern', title: "Interns", style: "purple-text fa fa-user-o" },
+        { url: '/admin/period', title: "New Internship", style: "blue-text fa fa-clock-o" },
+        { url: '/admin/intern', title: "USIP Interns", style: "purple-text fa fa-user-o" },
         { url: '/admin/report', title: "Report", style: "yellow-text text-accent-2 fa fa-file-picture-o", icon: "description" },
-        { url: '/admin/bank', title: "Account Details", style: "blue-text text-accent-3 fa fa-money" },
         { url: '/admin/application', title: "Application", style: "teal-text fa fa-users" },
         { url: '/admin/interview', title: "Interview", style: "orange-text fa fa-laptop" },
         { url: '/admin/schedule', title: "Interview Schedule", style: "pink-text fa fa-calendar" },
         { url: '/admin/tasks', title: "Intern Tasks", style: "yellow-text fa fa-flash" },
-        { url: '/admin/period', title: "New Internship", style: "blue-text fa fa-clock-o" },
         { url: '/admin/restricted', title: "Intern Credentials", style: "teal-text fa fa-lock" },
         { url: '/admin/officer', title: "Officer", style: "green-text text-accent-3 fa fa-university" },
+        { url: '/admin/bank', title: "Bank Account Details", style: "blue-text text-accent-3 fa fa-money" },
     ]
 
     logout(): void {

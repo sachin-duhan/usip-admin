@@ -1,56 +1,61 @@
 <app-spinner *ngIf="loading"></app-spinner>
 <div class="container" *ngIf="!loading">
-    <h1 class="mat-h1">Bank Details
-        <sup id="chip" class="indigo white-text">{{bank_details.data.length ? bank_details.data.length : 0}}</sup>
+    <h1 class="mat-h1">{{updating_bank_details ? "Bank Details" : ""}}
+        <mat-slide-toggle class="right" [(ngModel)]="updating_bank_details" color="primary">
+            <span class="black-text">Update Details</span>
+        </mat-slide-toggle>
     </h1>
+    <!--showing data only!!-->
+    <app-table *ngIf="!updating_bank_details" [title]="'Bank Details of Interns'" [data]="bank_details.data" [displayedColumns]="vals" [display_val]="display_vals"></app-table>
+    <!--UPDATE DETAILS-->
+    <div *ngIf="updating_bank_details">
+        <div class="mat-elevation-z8 mg-10 col s12 white" *ngIf="bank_details.data.length> 0;else noData">
+            <table mat-table matSort [dataSource]="bank_details">
+                <ng-container matColumnDef="depNo">
+                    <th mat-header-cell *matHeaderCellDef>Deployemnt No.</th>
+                    <td mat-cell *matCellDef="let element"> {{element.depNo}} </td>
+                </ng-container>
 
-    <div class="mat-elevation-z8 mg-10 col s12 white" *ngIf="bank_details.data.length> 0;else noData">
-        <table mat-table matSort [dataSource]="bank_details">
-            <ng-container matColumnDef="depNo">
-                <th mat-header-cell *matHeaderCellDef>Deployemnt No.</th>
-                <td mat-cell *matCellDef="let element"> {{element.depNo}} </td>
-            </ng-container>
+                <ng-container matColumnDef="name">
+                    <th mat-header-cell *matHeaderCellDef>Name</th>
+                    <td mat-cell *matCellDef="let element"> {{element.pInfo.name | titlecase}} </td>
+                </ng-container>
 
-            <ng-container matColumnDef="name">
-                <th mat-header-cell *matHeaderCellDef>Name</th>
-                <td mat-cell *matCellDef="let element"> {{element.pInfo.name | titlecase}} </td>
-            </ng-container>
+                <ng-container matColumnDef="bankAc">
+                    <th mat-header-cell *matHeaderCellDef>Bank Account</th>
+                    <td mat-cell *matCellDef="let element"> {{element.bankAc}} </td>
+                </ng-container>
 
-            <ng-container matColumnDef="bankAc">
-                <th mat-header-cell *matHeaderCellDef>Bank Account</th>
-                <td mat-cell *matCellDef="let element"> {{element.bankAc}} </td>
-            </ng-container>
+                <ng-container matColumnDef="bankName">
+                    <th mat-header-cell *matHeaderCellDef>Bank Name</th>
+                    <td mat-cell *matCellDef="let element"> {{element.bankName}} </td>
+                </ng-container>
 
-            <ng-container matColumnDef="bankName">
-                <th mat-header-cell *matHeaderCellDef>Bank Name</th>
-                <td mat-cell *matCellDef="let element"> {{element.bankName}} </td>
-            </ng-container>
+                <ng-container matColumnDef="ifsc">
+                    <th mat-header-cell *matHeaderCellDef>IFSC</th>
+                    <td mat-cell *matCellDef="let element">{{element.ifsc}}</td>
+                </ng-container>
 
-            <ng-container matColumnDef="ifsc">
-                <th mat-header-cell *matHeaderCellDef>IFSC</th>
-                <td mat-cell *matCellDef="let element">{{element.ifsc}}</td>
-            </ng-container>
+                <ng-container matColumnDef="end">
+                    <th mat-header-cell *matHeaderCellDef>End of Tenure</th>
+                    <td mat-cell *matCellDef="let element">{{ element.end }}</td>
+                </ng-container>
 
-            <ng-container matColumnDef="end">
-                <th mat-header-cell *matHeaderCellDef>End of Tenure</th>
-                <td mat-cell *matCellDef="let element">{{ element.end | date:shortDate }}</td>
-            </ng-container>
+                <ng-container matColumnDef="update">
+                    <th mat-header-cell *matHeaderCellDef></th>
+                    <td mat-cell *matCellDef="let element">
+                        <mat-icon (click)="updateBankDetails(element)" class="pointer">edit</mat-icon>
+                    </td>
+                </ng-container>
 
-            <ng-container matColumnDef="update">
-                <th mat-header-cell *matHeaderCellDef></th>
-                <td mat-cell *matCellDef="let element">
-                    <mat-icon (click)="updateBankDetails(element)" class="pointer">edit</mat-icon>
-                </td>
-            </ng-container>
-
-            <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
-        </table>
-    </div>
-    <ng-template #noData>
-        <div class="pd-20 white center">
-            <h5 class="pd-20">No Bank Details found!</h5>
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
         </div>
-    </ng-template>
-
+        <ng-template #noData>
+            <div class="pd-20 white center">
+                <h5 class="pd-20">No Bank Details found!</h5>
+            </div>
+        </ng-template>
+    </div>
 </div>

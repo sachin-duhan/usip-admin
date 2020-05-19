@@ -14,14 +14,27 @@ export class BankComponent implements OnInit {
         private _dialog: MatDialog,
         private _toast: ToastrService) { }
 
-    displayedColumns2: string[] = ['depNo', 'name', 'bankName', 'bankAc', 'ifsc', 'end', 'update'];
+    updating_bank_details: Boolean = false;
+    displayedColumns: string[] = ['depNo', 'name', 'bankName', 'bankAc', 'ifsc', 'end', 'update'];
     bank_details = new MatTableDataSource([]);
 
-    ngOnInit() { this.get_all_intern_bank_details(); }
+    vals: Array<String> = ['depNo', 'name', 'bankName', 'bankAc', 'ifsc', 'start', 'end'];
+    display_vals: Array<String> = ['Deployment No', 'Name', 'Bank Name', 'Account number', 'IFSC Code', 'Internship start', 'Internship end'];
+    ngOnInit() { this.get_all_intern_bank_details() }
 
     get_all_intern_bank_details() {
         this.loading = true;
         this._internService.showRegisterIntern().subscribe(res => {
+            res.body.forEach(el => {
+                el.name = el.pInfo.name;
+                el.rollNo = el.pInfo.rollNo;
+                el.officer = el.repOfficer.name;
+                el.oDeptt = el.repOfficer.deptt;
+                el.start = el.start.substring(0, 10);
+                el.start = el.start.split('-').reverse().join('/');
+                el.end = el.end.substring(0, 10);
+                el.end = el.end.split('-').reverse().join('/');
+            });
             this.bank_details = new MatTableDataSource(res.body);
             this.loading = false;
         }, err => this._toast.error(err.message, "Error"));
