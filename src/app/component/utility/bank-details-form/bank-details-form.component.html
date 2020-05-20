@@ -31,7 +31,8 @@
                         <mat-label>Email</mat-label>
                         <input type="email" name="email" [(ngModel)]="data.email" disabled matInput placeholder="abc123@gmail.com" required>
                     </mat-form-field>
-                    <button mat-raised-button type="button" (click)="updateDetails()" class="col mg-20 s12 m8 offset-m2 white-text red">Submit</button>
+                    <button mat-button type="button" [mat-dialog-close]="data" cdkFocusInitial class="col s6 mg-20">Cancel</button>
+                    <button mat-raised-button type="button" (click)="updateDetails()" class="col mg-20 s6 white-text red">Submit</button>
                 </div>
             </div>
         </div>

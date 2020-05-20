@@ -1,5 +1,5 @@
 import { Component, Inject, OnDestroy } from '@angular/core';
-import { MAT_DIALOG_DATA } from '@angular/material';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { InternService } from "../../../service/intern.service";
 import { ToastrService } from "ngx-toastr";
 @Component({
@@ -11,6 +11,7 @@ export class BankDetailsFormComponent {
 
     constructor(@Inject(MAT_DIALOG_DATA) public data: any,
         private _bankService: InternService,
+        public dialogRef: MatDialogRef<BankDetailsFormComponent>,
         private _toast: ToastrService) { }
 
     ngOnInit() { }
@@ -25,7 +26,10 @@ export class BankDetailsFormComponent {
     handle_response(res, error: Boolean) {
         console.log(res);
         let msg = error ? "Error" : "Warning";
-        if (res.success) this._toast.success(res.message, "Success");
-        else this._toast.warning(res.message, msg);
+        setTimeout(() => {
+            if (res.success) this._toast.success(res.message, "Success");
+            else this._toast.warning(res.message, msg);
+        }, 100);
+        this.dialogRef.close();
     }
 }
