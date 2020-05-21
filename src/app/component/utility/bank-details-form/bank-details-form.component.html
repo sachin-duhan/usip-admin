@@ -9,19 +9,19 @@
                 <div class="row">
                     <mat-form-field class="col s12 m12">
                         <mat-label>Bank Name</mat-label>
-                        <input type="text" name="bankName" formControlName="bankName" matInput placeholder="State Bank of India" required>
+                        <input type="text" name="bankName" formControlName="bankName" matInput placeholder="State Bank of India">
                     </mat-form-field>
                     <mat-form-field class="col s12 m8">
                         <mat-label>Bank Account Number</mat-label>
-                        <input type="text" name="bankAc" formControlName="bankAc" matInput placeholder="account number" required>
+                        <input type="text" name="bankAc" formControlName="bankAc" matInput placeholder="account number">
                     </mat-form-field>
                     <mat-form-field class="col s12 m4">
                         <mat-label>IFSC code</mat-label>
-                        <input type="text" matInput name="ifsc" formControlName="ifsc" placeholder="SBIN0010442" required>
+                        <input type="text" matInput name="ifsc" formControlName="ifsc" placeholder="SBIN0010442">
                     </mat-form-field>
                     <mat-form-field class="col s12 m12">
                         <mat-label>Contact Number</mat-label>
-                        <input type="number" name="phone" formControlName="phone" disabled matInput placeholder="8586821051" required>
+                        <input type="number" name="phone" formControlName="phone" matInput placeholder="8586821051">
                     </mat-form-field>
                 </div>
             </div>
@@ -29,10 +29,10 @@
                 <div class="row">
                     <mat-form-field class="col s12 m12">
                         <mat-label>Email</mat-label>
-                        <input type="email" name="email" formControlName="email" disabled matInput placeholder="abc123@gmail.com" required>
+                        <input type="email" name="email" formControlName="email" matInput placeholder="abc123@gmail.com">
                     </mat-form-field>
-                    <button mat-button type="button" [mat-dialog-close]="data" cdkFocusInitial class="col s6 mg-20">Cancel</button>
-                    <button mat-raised-button type="submit" class="col mg-20 s6 white-text red">Submit</button>
+                    <button mat-button type="button" [mat-dialog-close]="data" cdkFocusInitial class="col s6">Cancel</button>
+                    <button mat-raised-button type="submit" class="col s6 white-text red">Submit</button>
                 </div>
             </div>
         </div>

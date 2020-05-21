@@ -25,7 +25,6 @@ export class BankComponent implements OnInit {
     get_all_intern_bank_details() {
         this.loading = true;
         this._internService.showRegisterIntern().subscribe(res => {
-            console.log(res);
             res.body.forEach(el => {
                 el.name = el.pInfo.name;
                 el.rollNo = el.pInfo.rollNo;

@@ -1,8 +1,9 @@
-import { Component, Inject, OnDestroy } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { InternService } from "../../../service/intern.service";
 import { ToastrService } from "ngx-toastr";
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
+
 @Component({
     selector: 'app-bank-details-form',
     templateUrl: './bank-details-form.component.html',
@@ -19,23 +20,21 @@ export class BankDetailsFormComponent {
     ngOnInit() { }
 
     bankForm = this.fb.group({
-        bankName: [this.data.bankName],
-        bankAc: [this.data.bankAc],
-        ifsc: [this.data.ifsc],
-        email: [this.data.email],
-        phone: [this.data.phone],
+        bankName: [this.data.bankName,Validators.required],
+        bankAc: [this.data.bankAc, Validators.required],
+        ifsc: [this.data.ifsc, Validators.required],
+        email: [this.data.email, Validators.required],
+        phone: [this.data.phone, Validators.required],
     });
 
     updateDetails() {
-        console.log(this.bankForm.value);
-        this._bankService.update_intern_bank_details(this.data._id, this.data).subscribe(
+        this._bankService.update_intern_bank_details(this.data._id, this.bankForm.value).subscribe(
             res => this.handle_response(res, true),
             err => this.handle_response(err, false)
         )
     }
 
     handle_response(res, error: Boolean) {
-        console.log(res);
         let msg = error ? "Error" : "Warning";
         setTimeout(() => {
             if (res.success) this._toast.success(res.message, "Success");
