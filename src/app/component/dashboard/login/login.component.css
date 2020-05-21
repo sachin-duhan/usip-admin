@@ -1,0 +1,8 @@
+thead th {
+    font-weight: 500;
+}
+
+thead th,
+table tr td {
+    padding-left: 20px;
+}

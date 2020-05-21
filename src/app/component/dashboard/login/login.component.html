@@ -1,50 +1,31 @@
+<app-spinner *ngIf="loading"></app-spinner>
 <div class="container">
     <h1 class="mat-h1">USIP Intern Access
-        <button mat-button class="right" (click)="toggle()">Delete Intern</button>
+        <button mat-button class="right" (click)="toggle()">{{showDeleteButton ? "Hide Delete button" : "Delete Intern"}}</button>
     </h1>
-    <div class="mat-elevation-z8 mg-10 col s12 white" *ngIf="dataSource2.length > 0;else noData">
-        <table mat-table matSort [dataSource]="dataSource2">
-            <ng-container matColumnDef="depNo">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header>Deployemnt No.</th>
-                <td mat-cell *matCellDef="let element"> {{element.depNo}} </td>
-            </ng-container>
-
-            <ng-container matColumnDef="name">
-                <th mat-header-cell *matHeaderCellDef>Name</th>
-                <td mat-cell *matCellDef="let element">{{element.pInfo.name}}</td>
-            </ng-container>
-
-            <ng-container matColumnDef="rollNo">
-                <th mat-header-cell *matHeaderCellDef>Bank Details</th>
-                <td mat-cell *matCellDef="let element">
-                    <span *ngIf="element.bankAc != element.pInfo._id" class="green-text">Done</span>
-                    <span *ngIf="element.bankAc === element.pInfo._id" class="red-text">Not filled</span>
-                </td>
-            </ng-container>
-
-            <ng-container matColumnDef="officer">
-                <th mat-header-cell *matHeaderCellDef>Reporting Officer</th>
-                <td mat-cell *matCellDef="let element"> {{element.repOfficer.name | titlecase}} </td>
-            </ng-container>
-
-            <ng-container matColumnDef="end">
-                <th mat-header-cell *matHeaderCellDef>End of Tenure</th>
-                <td mat-cell *matCellDef="let element">{{ element.end | date:shortDate }}</td>
-            </ng-container>
-
-            <ng-container matColumnDef="update">
-                <th mat-header-cell *matHeaderCellDef></th>
-                <td mat-cell *matCellDef="let element">
-                    <mat-icon class="pointer" (click)="allowAccess(element)">input</mat-icon>
+    <table class="table highlight mat-elevation-z8 mg-10 col s12 white" *ngIf="!loading">
+        <thead>
+            <th>Deployment Number</th>
+            <th>Name</th>
+            <th>Roll Number</th>
+            <th>Reporting Officer</th>
+            <th>End of Tenure</th>
+            <th>Update</th>
+        </thead>
+        <tbody *ngIf="all_interns.length > 0; else noData">
+            <tr *ngFor="let element of all_interns;let i = index">
+                <td style="padding-left: 10px;">{{element.depNo}} </td>
+                <td>{{element.pInfo.name}}</td>
+                <td>{{element.pInfo.rollNo}}</td>
+                <td>{{element.repOfficer.name | titlecase}} </td>
+                <td>{{ element.end | date:shortDate }}</td>
+                <td>
+                    <mat-icon class="pointer" *ngIf="!showDeleteButton" (click)="allowAccess(element)">input</mat-icon>
                     <mat-icon class="red-text pointer" *ngIf="showDeleteButton" (click)="deleteIntern(element.userDetails)">delete</mat-icon>
                 </td>
-            </ng-container>
-
-            <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
-        </table>
-        <mat-paginator [pageSizeOptions]="[10,20,50,100]" showFirstLastButtons></mat-paginator>
-    </div>
+            </tr>
+        </tbody>
+    </table>
     <ng-template #noData>
         <div class="white pd-20 center">
             <h5 class="pd-20">No Records Found!!</h5>
