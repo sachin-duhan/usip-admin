@@ -1,33 +1,32 @@
-<div class="lighten-5">
-    <section class="login-back">
-        <app-spinner *ngIf="loading"></app-spinner>
-        <div class="container row valign-wrapper center-align">
-            <br><br><br>
-            <mat-card class="card background-shade shadow-lg col s12 l6 m8 center offset-l3 offset-m2">
-                <mat-card-title>
-                    <h3>Admin Login</h3>
-                </mat-card-title>
-                <!-- <mat-card-subtitle>This is access is only for the qualified interns</mat-card-subtitle> -->
-                <mat-card-content>
-                    <form class="row pd-20 center" (submit)="submit()" [formGroup]="loginForm">
-                        <mat-form-field appearance="outline" class="col m10 offset-m1 s12">
-                            <mat-label>Enter Username</mat-label>
-                            <mat-icon matPrefix class="blue-text text-accent-2">person</mat-icon>
-                            <input matInput formControlName="userName" placeholder="Username" type="text" required />
-                        </mat-form-field>
+<section class="row pdb-0 mgb-0">
+    <div class="col hide-on-small-only m6 indigo lighten-5 card background"></div>
+    <div class="col m6 card valign-wrapper center-align">
+        <mat-card style="box-shadow: none; border-radius: 0;">
+            <mat-card-title>
+                <h4 class="blue-grey-text text-darken-2 font">Welcome, to USIP</h4>
+            </mat-card-title>
+            <mat-card-content>
+                <form class="row pd-20 center" (submit)="submit()" [formGroup]="loginForm">
+                    <mat-form-field class="col m10 offset-m1 s12">
+                        <mat-label>Username</mat-label>
+                        <mat-icon matPrefix class="indigo-text">person</mat-icon>
+                        <input matInput formControlName="userName" placeholder="Username" type="text" required />
+                    </mat-form-field>
 
-                        <mat-form-field appearance="outline" class="col m10 offset-m1 s12">
-                            <mat-label>Enter Password</mat-label>
-                            <mat-icon matPrefix class="blue-text text-accent-2">vpn_key</mat-icon>
-                            <input matInput formControlName="password" placeholder="Password" [type]="hide ? 'password' : 'text'" required>
-                            <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}
-                            </mat-icon>
-                        </mat-form-field>
+                    <mat-form-field class="col m10 offset-m1 s12">
+                        <mat-label>Password</mat-label>
+                        <mat-icon matPrefix class="indigo-text">vpn_key</mat-icon>
+                        <input matInput formControlName="password" placeholder="Password" [type]="hide ? 'password' : 'text'" required>
+                        <mat-icon matSuffix class="grey-text" (click)="hide = !hide">
+                            {{hide ? 'visibility_off' : 'visibility'}}
+                        </mat-icon>
+                    </mat-form-field>
 
-                        <button type="submit" class="indigo darken-1 white-text col s4 offset-s4" mat-button [disabled]="!loginForm.valid">Login</button>
-                    </form>
-                </mat-card-content>
-            </mat-card>
-        </div>
-    </section>
-</div>
+                    <button type="submit" class="indigo darken-1 white-text col s4 offset-s4" [class.lighten-4]="loading" mat-button [disabled]="!loginForm.valid">
+                        {{loading ? "Loading.." : "Login"}}
+                    </button>
+                </form>
+            </mat-card-content>
+        </mat-card>
+    </div>
+</section>

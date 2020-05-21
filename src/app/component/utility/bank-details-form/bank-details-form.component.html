@@ -3,25 +3,25 @@
     <mat-icon class="right blue-text text-darken-1">account_balance_wallet</mat-icon>
 </div>
 <div class="pd-20">
-    <form>
+    <form (submit)="updateDetails()" [formGroup]="bankForm">
         <div class="row">
             <div class="col l6 m6 s12">
                 <div class="row">
                     <mat-form-field class="col s12 m12">
                         <mat-label>Bank Name</mat-label>
-                        <input type="text" name="bankName" [(ngModel)]="data.bankName" matInput placeholder="State Bank of India" required>
+                        <input type="text" name="bankName" formControlName="bankName" matInput placeholder="State Bank of India" required>
                     </mat-form-field>
                     <mat-form-field class="col s12 m8">
                         <mat-label>Bank Account Number</mat-label>
-                        <input type="text" name="bankAc" [(ngModel)]="data.bankAc" matInput placeholder="account number" required>
+                        <input type="text" name="bankAc" formControlName="bankAc" matInput placeholder="account number" required>
                     </mat-form-field>
                     <mat-form-field class="col s12 m4">
                         <mat-label>IFSC code</mat-label>
-                        <input type="text" matInput name="ifsc" [(ngModel)]="data.ifsc" placeholder="SBIN0010442" required>
+                        <input type="text" matInput name="ifsc" formControlName="ifsc" placeholder="SBIN0010442" required>
                     </mat-form-field>
                     <mat-form-field class="col s12 m12">
                         <mat-label>Contact Number</mat-label>
-                        <input type="number" name="phone" [(ngModel)]="data.phone" disabled matInput placeholder="8586821051" required>
+                        <input type="number" name="phone" formControlName="phone" disabled matInput placeholder="8586821051" required>
                     </mat-form-field>
                 </div>
             </div>
@@ -29,10 +29,10 @@
                 <div class="row">
                     <mat-form-field class="col s12 m12">
                         <mat-label>Email</mat-label>
-                        <input type="email" name="email" [(ngModel)]="data.email" disabled matInput placeholder="abc123@gmail.com" required>
+                        <input type="email" name="email" formControlName="email" disabled matInput placeholder="abc123@gmail.com" required>
                     </mat-form-field>
                     <button mat-button type="button" [mat-dialog-close]="data" cdkFocusInitial class="col s6 mg-20">Cancel</button>
-                    <button mat-raised-button type="button" (click)="updateDetails()" class="col mg-20 s6 white-text red">Submit</button>
+                    <button mat-raised-button type="submit" class="col mg-20 s6 white-text red">Submit</button>
                 </div>
             </div>
         </div>

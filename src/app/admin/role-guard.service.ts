@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, Router, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
-import { LoginService } from './service/login.service';
+import { LoginService } from '../service/login.service';
 import * as jwt_decode from 'jwt-decode';
 @Injectable({
   providedIn: 'root'
 })
-export class AuthGuard implements CanActivate {
+export class RoleGuardService implements CanActivate {
 
   constructor(private _authService: LoginService,
     private _router: Router) { }
@@ -18,15 +18,15 @@ export class AuthGuard implements CanActivate {
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     if (this._authService.loggedIn()) {
-      if (!this.checkAdmin()) {
-        return true;
+      if(!this.checkAdmin()){
+        this._router.navigate(['/'], {
+          queryParams: {
+            return: state.url
+          }
+        });
+        return false;
       }
-      this._router.navigate(['/'], {
-        queryParams: {
-          return: state.url
-        }
-      });
-      return false;
+      return true;
     } else {
       this._router.navigate(['/login'], {
         queryParams: {
@@ -37,3 +37,4 @@ export class AuthGuard implements CanActivate {
     }
   }
 }
+

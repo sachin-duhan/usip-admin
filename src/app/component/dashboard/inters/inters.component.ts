@@ -44,7 +44,7 @@ export class IntersComponent implements OnInit {
         );
     }
 
-    mark_intern_inactive(id:String,index:number){
-        
+    mark_intern_inactive(id: String, index: number) {
+        window.alert('isko likhna h abi!!');
     }
 }
