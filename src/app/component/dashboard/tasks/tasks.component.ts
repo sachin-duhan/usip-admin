@@ -11,8 +11,8 @@ export class TasksComponent implements OnInit {
     constructor(private _tasksService: TasksService) { }
     /** data for the table! */
     all_tasks: Array<any> = [];
-    displayedColumns: Array<String> = ['name', 'officer', 'title', 'date'];
-    display_val: Array<String> = ["Name", "Officer", "Task Details", "Assigned On"];
+    displayedColumns: Array<String> = ['officer', 'name', 'title', 'date', "is_completed"];
+    display_val: Array<String> = ["Officer", "Name", "Task Details", "Assigned On", "Completed"];
 
     loading: Boolean = false;
 

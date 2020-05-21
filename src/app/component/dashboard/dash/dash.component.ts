@@ -6,15 +6,6 @@ import { NotifyService } from '../../../service/notify.service';
 import { OfficerService } from '../../../service/officer.service';
 import { ReportService } from '../../../service/report.service';
 
-import { http_handler } from "../../../helper/HTTP_handler";
-
-export interface Card {
-    title: String;
-    cols: Number;
-    rows: Number;
-    data: Object;
-}
-
 @Component({
     selector: 'app-dash',
     templateUrl: './dash.component.html',
@@ -97,4 +88,11 @@ export class DashComponent implements OnInit {
         return [];
     }
 
+}
+
+export interface Card {
+    title: String;
+    cols: Number;
+    rows: Number;
+    data: Object;
 }
