@@ -96,6 +96,13 @@ export class InternService {
         });
     }
 
+    mark_improvement_resolved(id: String, data): Observable<any> {
+        const url = environment.apiBaseURL + '/bug/' + id;
+        return this.http.put<any>(url, data, {
+            headers: this.headers
+        });
+    }
+
     // adding any kind of bug
     delete_improvement(id): Observable<any> {
         const url = environment.apiBaseURL + '/bug/' + id;

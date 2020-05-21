@@ -1,21 +1,41 @@
 <div class="container">
     <h1 class="mat-h1">Feedback & Suggestions
-        <sup id="chip" class="indigo white-text">{{bugs.length}}</sup>
+        <sup id="chip" class="indigo white-text">{{bugs.length ? bugs.length : 0}}</sup>
     </h1>
-    <div *ngIf="bugs.length > 0;else noData">
-        <div class="row">
-            <div class="col s12" *ngFor="let bug of bugs" id="{{bug._id}}">
-                <div class="white mg-10">
-                    <h3 class="mat-h2">{{bug.title}} <span class="right"><mat-icon (click)="delete(bug._id)" class="pointer red-text">delete</mat-icon></span></h3>
-                    <p class="right grey-text">{{bug.date | date:shortDate}}</p>
-                    <p class="grey-text text-darken-3">{{bug.description}}</p>
+    <mat-accordion *ngIf="bugs.length > 0;else noData">
+        <mat-expansion-panel *ngFor="let item of bugs;let i=index">
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    <mat-icon class="grey-text">
+                        {{item.isResolved ? "check_circle" : "error_outline"}}
+                    </mat-icon>
+                    <span style="padding-left: 10px;">{{item.title}}</span>
+                </mat-panel-title>
+                <mat-panel-description>
+                    {{item.pInfo.pInfo.name}} - {{item.pInfo.pInfo.rollNo}}
+                </mat-panel-description>
+            </mat-expansion-panel-header>
+            <div class="row">
+                <p class="col s12">
+                    <strong>Description - </strong> {{item.description}}
+                    <span id="chip" class="indigo white-text right">
+                        Status : {{item.isResolved ? "Resolved" : "Not Resolved"}}</span>
+                </p>
+                <div class="col s12">
+                    <p class="indigo-text">Updated on - {{item.updatedAt | date:shortDate}}</p>
+                    <p class="grey-text">Registered on - {{item.createdAt | date:shortDate}}</p>
+                </div>
+                <div class="col s12">
+                    <button mat-button (click)="mark_resolved(item)" class="right">Mark Resolved</button>
+                    <button mat-button (click)="delete(item._id,i)" class="red white-text right">
+                        Delete Suggestion</button>
                 </div>
             </div>
-        </div>
-    </div>
-    <ng-template #noData>
-        <div class="pd-20 white center">
-            <h5 class="pd-20">No suggestions and requests found!</h5>
-        </div>
-    </ng-template>
+        </mat-expansion-panel>
+    </mat-accordion>
 </div>
+<ng-template #noData>
+    <div class="pd-20 white center">
+        <h5 class="pd-20">No suggestions or Feedback found!</h5>
+    </div>
+</ng-template>

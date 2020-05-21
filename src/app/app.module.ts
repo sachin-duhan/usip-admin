@@ -10,7 +10,7 @@ import { FormsModule } from '@angular/forms';
 
 // toast message:
 import { ToastrModule } from 'ngx-toastr';
-
+    
 // lazy loading!
 import { AdminModule } from "../app/admin/admin.module";
 import { AppRoutingModule } from './app-routing.module';
@@ -25,7 +25,6 @@ import * as Material from '@angular/material';
 
 import { LoginService } from './service/login.service';
 import { RoleGuardService } from './admin/role-guard.service';
-import { MatFormField } from '@angular/material';
 
 @NgModule({
     declarations: [
