@@ -12,19 +12,6 @@ import { ToastrService } from 'ngx-toastr';
 export class LoginService {
   constructor(private http: HttpClient) { }
 
-/********************************************
-
-=> base url -> '/user'
-
-* GET    /signup = intern having login access!
-* POST   /signup = creating a intern access!
-* DELETE /:id = removing an intern
-* GET    /:id = info of a particular intern
-* POST   /login = login to dashboard
-* PUT    /password = updating password!
-
-********************************************/
-
   private _url = environment.apiBaseURL + '/user';
 
   public headers = new HttpHeaders({
@@ -39,6 +26,11 @@ export class LoginService {
       headers:this.headers
     })
   }
+    // admin/password/: id
+    update_password_by_admin(id, data): Observable<any> {
+        const url = this._url + '/admin/password/' + id;
+        return this.http.put<any>(url, data, { headers: this.headers });
+    }
 
   //getting the access
   postData(data): Observable<any> {

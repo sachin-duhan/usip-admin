@@ -6,3 +6,9 @@ thead th,
 table tr td {
     padding-left: 20px;
 }
+
+.my_input {
+    border: none;
+    border-bottom: 1px solid grey;
+    width: 100px;
+}

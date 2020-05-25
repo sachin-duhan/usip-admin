@@ -6,6 +6,9 @@
             <mat-slide-toggle [(ngModel)]="show_interns_with_access" color="primary">
                 <span class="black-text">See Interns With accesss</span>
             </mat-slide-toggle>
+            <button mat-button *ngIf="show_interns_with_access" (click)="showDeleteButton = !showDeleteButton">
+                {{showDeleteButton ? "Hide" : "Show"}} Delete Button
+            </button>
         </div>
     </h1>
     <!--NEWLY MADE INTERNS ARE HERE!!-->
@@ -46,15 +49,30 @@
                 <td>{{element.userDetails.pInfo.name}}</td>
                 <td>{{element.userDetails.pInfo.rollNo}}</td>
                 <td>{{ element.userDetails.end | date:shortDate }}</td>
-                <td>
-                    <mat-icon class="red-text pointer" (click)="deleteIntern(element.userDetails)">delete </mat-icon>
+                <td class="valign-wrapper">
+                    <input type="text" *ngIf="i == show_update_input_index" class="my_input" [(ngModel)]="updating_password_value">
+                    <button mat-icon-button>
+                        <!-- button for view password input feild!-->
+                        <mat-icon class="pointer" (click)="show_update_input_index = i"
+                            *ngIf="!showDeleteButton && show_update_input_index != i">
+                            edit
+                        </mat-icon>
+                        <!--update button click when password is entered!-->
+                        <mat-icon class="pointer" (click)="update_password(element._id)"
+                            *ngIf="!showDeleteButton && show_update_input_index == i">
+                            done </mat-icon>
+                        <!--delete button-->
+                        <mat-icon class="red-text pointer" *ngIf="showDeleteButton"
+                            (click)="deleteIntern(element._id,i)">
+                            delete </mat-icon>
+                    </button>
                 </td>
             </tr>
         </tbody>
     </table>
-    <ng-template #noData>
-        <div class="white pd-20 center">
-            <h5 class="pd-20">No Records Found!!</h5>
-        </div>
-    </ng-template>
 </div>
+<ng-template #noData>
+    <div class="white pd-20 center">
+        <h5 class="pd-20">No Records Found!!</h5>
+    </div>
+</ng-template>

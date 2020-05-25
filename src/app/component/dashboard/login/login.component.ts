@@ -14,6 +14,9 @@ import { LoginService } from '../../../service/login.service';
 export class AccessComponent implements OnInit {
     loading: Boolean = false;
     show_interns_with_access: Boolean = true;
+    showDeleteButton: Boolean = false;
+    updating_password_value: String = '';
+    show_update_input_index: number = -1;
     constructor(
         private _internService: InternService,
         private _toast: ToastrService,
@@ -35,7 +38,6 @@ export class AccessComponent implements OnInit {
         this.loading = true;
         this._login.getData().subscribe(res => {
             this.interns_with_Access = res.body;
-            console.log(res);
             this.loading = false;
         })
     }
@@ -44,22 +46,39 @@ export class AccessComponent implements OnInit {
         const intern = {
             userName: data.pInfo.email,
             adminAccessGiven: false,
-            password: data._id,
+            password: "usip_intern",
             userDetails: data._id
         }
-        console.log(data);
-        return;
-        this._login.makeLoginCredentials(intern).subscribe(res => {
-            this._toast.success('Login credentials given to given!', 'Sucsess');
-        }, err => {
-            this._toast.error(err.error.message, 'Failed');
-            console.log(err);
-        });
+        this._login.makeLoginCredentials(intern)
+            .subscribe(res => this.handle_response(res, true),
+                err => this.handle_response(err, false));
     }
 
-    deleteIntern(data) {
-        this._login.deleteIntern(data).subscribe(
-            res => this._toast.success(res.messgae, 'Success')
-            , err => this._toast.error(err.messgae, 'Failed'));
+    update_password(id) {
+        this.updating_password_value.trim();
+        this.show_update_input_index = -1;
+        this.updating_password_value = '';
+        if (!this.updating_password_value || this.updating_password_value == '') {
+            this._toast.warning("Enter a valid password", "Not Updated!");
+            return;
+        }
+        let httpData = { newPassword: this.updating_password_value }
+        this._login.update_password_by_admin(id, httpData)
+            .subscribe(res => this.handle_response(res, true),
+                err => this.handle_response(err, false));
     }
+
+    deleteIntern(id, index: number) {
+        this._login.deleteIntern(id).subscribe(res => {
+            this.handle_response(res, true);
+            this.interns_with_Access.splice(index, 1);
+        }, err => this.handle_response(err, false));
+    }
+
+    handle_response(res, error: Boolean) {
+        let msg = error ? "Error" : "Warning";
+        if (res.success) this._toast.success(res.message, "Success");
+        else this._toast.warning(res.message, msg);
+    }
+
 }
