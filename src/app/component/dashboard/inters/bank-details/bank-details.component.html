@@ -1,40 +1,40 @@
-<div class="pd-20 grey lighten-5">
-  <span class="heading">Bank Details</span>
-  <span class="right">
-    <mat-icon class="indigo-text">account_balance_wallet</mat-icon>
-  </span>
+<div class="pd-20 indigo lighten-5">
+    <span class="mat-h2">Bank Details</span>
+    <mat-icon class="indigo-text right">account_balance_wallet</mat-icon>
 </div>
-<div class="center">
-  <img src="/assets/laptop.png" alt="bla bla" width="200px" height="auto">
-  <img class="rotate" src="/assets/laptop.png" alt="bla bla" width="200px" height="auto">
-</div>
-<table class="highlight">
-  <tbody>
-    <tr>
-      <td>Status</td>
-      <td>{{open}}</td>
-    </tr>
-    <tr>
-      <td>Start Date</td>
-      <td>{{bankDetails.Start | date:shortDate}}</td>
-    </tr>
-    <tr>
-      <td>End Date</td>
-      <td>{{bankDetails.end | date:shortDate}}</td>
-    </tr>
-  </tbody>
+<p class="lead" style="font-size: 15px;">
+    {{open ? bankDetails.details : "Allow USIP interns to fill in or update their bank details"}}.
+</p>
+<table *ngIf="bankDetails" class="highlight">
+    <tbody>
+        <tr>
+            <td>Allowed</td>
+            <td>{{open}}</td>
+        </tr>
+        <tr>
+            <td>Start Date</td>
+            <td>{{bankDetails.start | date:shortDate}}</td>
+        </tr>
+        <tr>
+            <td>End Date</td>
+            <td>{{bankDetails.end | date:shortDate}}</td>
+        </tr>
+    </tbody>
 </table>
+<h6 class="row center" *ngIf="!bankDetails">No previous records found!</h6>
 <div class="row">
-  <button mat-button class="red col s12 white-text" *ngIf="open"
-    (click)="closeBank(bankDetails._id)">Close Application</button>
-  <mat-form-field class="col s12" *ngIf="!open">
-    <mat-label>Ending Date</mat-label>
-    <input matInput [matDatepicker]="picker" [(ngModel)]="date" placeholder="5/06/2019" required>
-    <button mat-button id="margin-left" type="button" matSuffix (click)="picker.open()">
-      <mat-icon>date_range</mat-icon>
+    <mat-form-field class="col s12" *ngIf="!open">
+        <mat-label>Ending Date</mat-label>
+        <input matInput [matDatepicker]="picker" [(ngModel)]="date" placeholder="5/06/2019" required>
+        <button mat-button id="margin-left" type="button" matSuffix (click)="picker.open()">
+            <mat-icon>date_range</mat-icon>
+        </button>
+        <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+    <button mat-button class="col s12 m5" (click)="close()">cancel</button>
+    <button mat-button class="red col s12 m7 white-text" *ngIf="open" (click)="closeBank(bankDetails._id)">Close
+        Application</button>
+    <button mat-button class="col s12 m7 green white-text" *ngIf="!open" (click)="openApplication()">
+        {{open ? "Disallow" : "Allow"}} Filling bank Details
     </button>
-    <mat-datepicker #picker></mat-datepicker>
-  </mat-form-field>
-  <button mat-button class="col s12 green white-text" *ngIf="!open"
-    (click)="openApplication(date)">Open Application</button>
 </div>

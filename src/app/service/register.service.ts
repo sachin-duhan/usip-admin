@@ -48,9 +48,7 @@ export class RegisterService {
         const url = this._urlRegsiter + '/' + data;
         return this.http.get<any>(url, {
             headers: this.headers
-        }).pipe(
-            retry(2)
-        );
+        }).pipe(retry(2));
     }
 
     qualify_applications(data: Array<String>): Observable<any> {
@@ -93,30 +91,35 @@ export class RegisterService {
         const url = this._urlRegsiter + '/qualify/' + id;
         return this.http.put<any>(url, data, {
             headers: this.headers,
-        }).pipe(
-            retry(2)
-        );
+        });
     }
 
     // allow application
-    OpenApplication(data, input): Observable<any> {
-        const url = environment.apiBaseURL + '/allow/' + input;
+    OpenApplication(data, bank_or_application): Observable<any> {
+        const url = environment.apiBaseURL + '/allow/' + bank_or_application;
         return this.http.post<any>(url, data, {
             headers: this.headers
         });
     }
 
     // close  the application
-    CloseApplication(data, input): Observable<any> {
-        const url = environment.apiBaseURL + '/allow/' + input;
+    CloseApplication(data, bank_or_application): Observable<any> {
+        const url = environment.apiBaseURL + '/allow/' + bank_or_application;
         return this.http.put<any>(url, data, {
             headers: this.headers
         });
     }
 
     // get status
-    applicationStatus(input): Observable<any> {
-        const url = environment.apiBaseURL + '/allow/' + input;
+    applicationStatus(bank_or_application): Observable<any> {
+        const url = environment.apiBaseURL + '/allow/' + bank_or_application;
+        return this.http.get<any>(url, {
+            headers: this.headers
+        });
+    }
+
+    get_all_bank_or_applications(bank_or_application): Observable<any> {
+        const url = environment.apiBaseURL + '/allow/' + bank_or_application + '/all';
         return this.http.get<any>(url, {
             headers: this.headers
         });

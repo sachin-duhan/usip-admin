@@ -15,14 +15,14 @@ export class PeriodControllerComponent implements OnInit {
         private sheet: MatBottomSheet,
     ) { }
 
-    ngOnInit() {
-    }
+    ngOnInit() { }
+
     showSettings: Boolean = true;
     updateBank(): void {
         this.showSettings = !this.showSettings;
         this.dialog.open(BankDetailsComponent, {
-            width: '40%',
-            height: '80%'
+            width: "40%",
+            disableClose: true
         });
     }
 

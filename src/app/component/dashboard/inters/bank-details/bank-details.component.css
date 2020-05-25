@@ -1,9 +1,4 @@
-.heading{
-    font-size: 18px;
-}
-table,button{
-    margin:8px 0px;
-}
-.rotate{
-    transform: rotateY(-180deg);
+table,
+button {
+    margin: 8px 0px;
 }
