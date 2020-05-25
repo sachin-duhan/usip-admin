@@ -27,7 +27,7 @@ export class DashNavComponent {
         { url: '/admin/interview', title: "Interview", style: "orange-text fa fa-laptop" },
         { url: '/admin/schedule', title: "Interview Schedule", style: "pink-text fa fa-calendar" },
         { url: '/admin/tasks', title: "Intern Tasks", style: "yellow-text fa fa-flash" },
-        { url: '/admin/restricted', title: "Intern Credentials", style: "teal-text fa fa-lock" },
+        { url: '/admin/restricted', title: "Login Access", style: "teal-text fa fa-lock" },
         { url: '/admin/officer', title: "Officer", style: "green-text text-accent-3 fa fa-university" },
         { url: '/admin/bank', title: "Bank Account Details", style: "blue-text text-accent-3 fa fa-money" },
     ]

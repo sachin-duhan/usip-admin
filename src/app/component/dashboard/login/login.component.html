@@ -1,9 +1,15 @@
 <app-spinner *ngIf="loading"></app-spinner>
 <div class="container">
-    <h1 class="mat-h1">USIP Intern Access
-        <button mat-button class="right" (click)="toggle()">{{showDeleteButton ? "Hide Delete button" : "Delete Intern"}}</button>
+    <h1 class="mat-h1">
+        {{show_interns_with_access ? "Intern with Login Access" : "Making Login credentials"}}
+        <div class="right valign-wrapper">
+            <mat-slide-toggle [(ngModel)]="show_interns_with_access" color="primary">
+                <span class="black-text">See Interns With accesss</span>
+            </mat-slide-toggle>
+        </div>
     </h1>
-    <table class="table highlight mat-elevation-z8 mg-10 col s12 white" *ngIf="!loading">
+    <!--NEWLY MADE INTERNS ARE HERE!!-->
+    <table *ngIf="!show_interns_with_access && !loading" class="table highlight mat-elevation-z8 mg-10 col s12 white">
         <thead>
             <th>Deployment Number</th>
             <th>Name</th>
@@ -20,8 +26,28 @@
                 <td>{{element.repOfficer.name | titlecase}} </td>
                 <td>{{ element.end | date:shortDate }}</td>
                 <td>
-                    <mat-icon class="pointer" *ngIf="!showDeleteButton" (click)="allowAccess(element)">input</mat-icon>
-                    <mat-icon class="red-text pointer" *ngIf="showDeleteButton" (click)="deleteIntern(element.userDetails)">delete</mat-icon>
+                    <mat-icon class="pointer" (click)="allowAccess(element)">input</mat-icon>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <table *ngIf="show_interns_with_access && !loading" class="table highlight mat-elevation-z8 mg-10 col s12 white">
+        <thead *ngIf="interns_with_Access.length > 0">
+            <th>Deployment Number</th>
+            <th>Name</th>
+            <th>Roll Number</th>
+            <th>End of Tenure</th>
+            <th>Update</th>
+        </thead>
+        <tbody *ngIf="interns_with_Access.length > 0; else noData">
+            <tr *ngFor="let element of interns_with_Access;let i = index">
+                <td style="padding-left: 10px;">{{element.userDetails.depNo}} </td>
+                <td>{{element.userDetails.pInfo.name}}</td>
+                <td>{{element.userDetails.pInfo.rollNo}}</td>
+                <td>{{ element.userDetails.end | date:shortDate }}</td>
+                <td>
+                    <mat-icon class="red-text pointer" (click)="deleteIntern(element.userDetails)">delete </mat-icon>
                 </td>
             </tr>
         </tbody>

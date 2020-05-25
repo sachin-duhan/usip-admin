@@ -13,7 +13,7 @@ import { LoginService } from '../../../service/login.service';
 
 export class AccessComponent implements OnInit {
     loading: Boolean = false;
-    private showDeleteButton: Boolean = false;
+    show_interns_with_access: Boolean = true;
     constructor(
         private _internService: InternService,
         private _toast: ToastrService,
@@ -21,14 +21,24 @@ export class AccessComponent implements OnInit {
     ) { }
 
     all_interns: Array<any> = [];
+    interns_with_Access: Array<any> = [];
     ngOnInit() {
         this.loading = true;
         this._internService.showRegisterIntern().subscribe(
             res => { this.all_interns = res.body; this.loading = false; },
             err => this._toast.error(err.message, 'Error!')
         );
+        this.get_all_interns_with_accesss();
     }
 
+    get_all_interns_with_accesss() {
+        this.loading = true;
+        this._login.getData().subscribe(res => {
+            this.interns_with_Access = res.body;
+            console.log(res);
+            this.loading = false;
+        })
+    }
     // making login credentials
     allowAccess(data) {
         const intern = {
@@ -48,16 +58,8 @@ export class AccessComponent implements OnInit {
     }
 
     deleteIntern(data) {
-        this._login.deleteIntern(data).subscribe(res => {
-            console.log(res);
-            this._toast.success(res.messgae, 'Success');
-        }, err => {
-            this._toast.error(err.error.messgae, 'Failed');
-            console.log(err);
-        });
-    }
-
-    toggle(): void {
-        this.showDeleteButton = !this.showDeleteButton;
+        this._login.deleteIntern(data).subscribe(
+            res => this._toast.success(res.messgae, 'Success')
+            , err => this._toast.error(err.messgae, 'Failed'));
     }
 }

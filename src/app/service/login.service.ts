@@ -47,9 +47,9 @@ export class LoginService {
   }
 
   //admin 
-  getData(): Observable<Login[]> {
+  getData(): Observable<any> {
     const url = this._url + '/signup';
-    return this.http.get<Login[]>(url,{headers: this.headers});
+    return this.http.get<any>(url,{headers: this.headers});
   }
 
   editPassword(id,data): Observable<any> {
