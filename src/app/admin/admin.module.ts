@@ -36,7 +36,6 @@ import { BankDetailsFormComponent } from "../component/utility/bank-details-form
 import { InterviewComponent } from '../component/dashboard/interview/interview.component';
 import { TasksComponent } from '../component/dashboard/tasks/tasks.component';
 import { PeriodControllerComponent } from '../component/dashboard/period-controller/period-controller.component';
-import { DomainComponent } from '../component/dashboard/domain/domain.component';
 import { InterviewScheduleComponent } from '../component/dashboard/interview-schedule/interview-schedule.component';
 import { TableComponent } from '../component/utility/table/table.component';
 import { MakingNewInternComponent } from '../component/utility/making-new-intern/making-new-intern.component';
@@ -65,7 +64,6 @@ import { MakingNewInternComponent } from '../component/utility/making-new-intern
         InterviewComponent,
         TasksComponent,
         PeriodControllerComponent,
-        DomainComponent,
         InterviewScheduleComponent,
         TableComponent,
         MakingNewInternComponent,
