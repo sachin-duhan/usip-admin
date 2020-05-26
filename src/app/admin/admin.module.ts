@@ -116,7 +116,6 @@ import { MakingNewInternComponent } from '../component/utility/making-new-intern
         InternModalComponent,
         InternDetailsComponent,
         NewApplicationComponent,
-        BankDetailsComponent,
         BankDetailsFormComponent,
         MakingNewInternComponent
     ]

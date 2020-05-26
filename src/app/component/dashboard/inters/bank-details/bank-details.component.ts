@@ -1,18 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { RegisterService } from '../../../../service/register.service';
 import { ToastrService } from 'ngx-toastr';
-import { MatDialogRef } from '@angular/material';
+
 @Component({
     selector: 'app-bank-details',
     templateUrl: './bank-details.component.html',
     styleUrls: ['./bank-details.component.css']
 })
+
 export class BankDetailsComponent implements OnInit {
     public date;
     constructor(
         private _register: RegisterService,
-        private _toast: ToastrService,
-        private dialogRef: MatDialogRef<BankDetailsComponent>
+        private _toast: ToastrService
     ) { }
 
     public loading: Boolean = false;
@@ -33,10 +33,7 @@ export class BankDetailsComponent implements OnInit {
 
     closeBank(id): void {
         this._register.CloseApplication({ id: id }, 'bank').subscribe(res => {
-            setTimeout(() => {
-                this._toast.success(res.message, 'Done');
-                this.dialogRef.close();
-            }, 100);
+            this._toast.success(res.message, 'Done');
         }, err => this._toast.error(err.message, 'BAD request'));
     }
 
@@ -46,14 +43,7 @@ export class BankDetailsComponent implements OnInit {
             return;
         }
         this._register.OpenApplication({ end: this.date }, 'bank').subscribe(res => {
-            setTimeout(() => {
-                this._toast.success(res.message, 'Congratulations');
-                this.dialogRef.close();
-            }, 100);
+            this._toast.success(res.message, 'Congratulations');
         }, err => { this._toast.error(err.message, 'Error'); console.log(err) });
-    }
-
-    close() {
-        this.dialogRef.close();
     }
 }

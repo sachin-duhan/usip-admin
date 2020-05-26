@@ -1,8 +1,12 @@
 <div class="row pd-20">
-    <button mat-button class="indigo white-text col s6" (click)="updateApplication()">
-        Update Application status
-    </button>
-    <button mat-button (click)="updateBank()" class="col s6 indigo white-text">
-        Allow Intern Update bank details
-    </button>
+    <div class="col s12">
+        <h4 class="mat-h2 left">{{show_applications ? "Application" : "Bank Details"}} Status</h4>
+        <button mat-button (click)="show_applications = !show_applications" class="right indigo white-text">
+            {{!show_applications ? "show application" : "show bank details"}}
+        </button>
+    </div>
+    <div class="col s12 white">
+        <app-new-application *ngIf="show_applications" class="mg-20 white"></app-new-application>
+        <app-bank-details *ngIf="!show_applications" class="mg-20 white"></app-bank-details>
+    </div>
 </div>

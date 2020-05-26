@@ -31,7 +31,7 @@
         </button>
         <mat-datepicker #picker></mat-datepicker>
     </mat-form-field>
-    <button mat-button class="col s12 m5" (click)="close()">cancel</button>
+    <div class="col m5"></div>
     <button mat-button class="red col s12 m7 white-text" *ngIf="open" (click)="closeBank(bankDetails._id)">Close
         Application</button>
     <button mat-button class="col s12 m7 green white-text" *ngIf="!open" (click)="openApplication()">
