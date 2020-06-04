@@ -24,7 +24,6 @@ import { ReportComponent } from '../component/dashboard/report/report.component'
 import { OfficerComponent } from '../component/dashboard/officer/officer.component';
 import { AddOfficerComponent } from '../component/dashboard/officer/add-officer/add-officer.component';
 import { InternViewInternComponent } from '../component/dashboard/application/intern-view-intern/intern-view-intern.component';
-import { InternModalComponent } from '../component/dashboard/report/intern-modal/intern-modal.component';
 import { InternDetailsComponent } from '../component/dashboard/inters/intern-details/intern-details.component';
 import { NewApplicationComponent } from '../component/dashboard/application/new-application/new-application.component';
 import { BankDetailsComponent } from '../component/dashboard/inters/bank-details/bank-details.component';
@@ -54,7 +53,6 @@ import { MakingNewInternComponent } from '../component/utility/making-new-intern
         OfficerComponent,
         AddOfficerComponent,
         InternViewInternComponent,
-        InternModalComponent,
         SpinnerComponent,
         InternDetailsComponent,
         NewApplicationComponent,
@@ -113,7 +111,6 @@ import { MakingNewInternComponent } from '../component/utility/making-new-intern
     entryComponents: [
         AddOfficerComponent,
         InternViewInternComponent,
-        InternModalComponent,
         InternDetailsComponent,
         NewApplicationComponent,
         BankDetailsFormComponent,
