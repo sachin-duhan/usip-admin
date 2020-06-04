@@ -12,6 +12,7 @@ import { ToastrService } from 'ngx-toastr';
 export class NotifyComponent implements OnInit {
 
     creating_notification: Boolean = false;
+    is_image_input_required: Boolean = false;
     constructor(private fb: FormBuilder,
         private _notificationService: NotifyService,
         private _toast: ToastrService,
@@ -25,7 +26,7 @@ export class NotifyComponent implements OnInit {
 
 
     private fileData: File = null;
-    public input_msg = "Choose a File for Notification";
+    input_msg: string = "Choose a File for Notification";
 
     ngOnInit() {
         this.loading != this.loading;
@@ -71,32 +72,35 @@ export class NotifyComponent implements OnInit {
         form.append('title', data.title);
         form.append('description', data.description);
         form.append('visiblity', data.description);
-        form.append('image', this.fileData, this.fileData.name);
+        if (this.is_image_input_required && this.fileData)
+            form.append('image', this.fileData, this.fileData.name);
 
         this._notificationService.postNotification(form).subscribe(
-            res => {
-                this._toast.success(res.message, "success");
-                this.notificationForm.reset();
-                this.notificationForm.markAsUntouched();
-            },
+            res => this.handle_notification_response(res, false, undefined, -1),
             err => this._toast.error(err.message, 'Error'));
     }
 
-    onFileSelected(event) {
-        this.fileData = <File>event.target.files[0];
+    onFileSelected($event) {
+        this.fileData = <File>$event.target.files[0];
         this.input_msg = this.fileData.name;
     }
 
     deleteNotification(id: String, index: number, type): void {
-        // console.log(data);
         var flag = confirm("Do you want to delete the application!");
         if (!flag) return;
         this._notificationService.deleteNoti(id).subscribe(
-            res => {
-                this._toast.success(res.message, 'Success');
-                if (type == 'intern') this.intern_notifications.splice(index, 1);
-                else this.publicNotification.splice(index, 1);
-            }, err => this._toast.error(err.message, "Error")
+            res => this.handle_notification_response(res, true, type, index),
+            err => this._toast.error(err.message, "Error")
         );
+    }
+
+    handle_notification_response(res, update, update_val, index) {
+        this._toast.success(res.message, "success");
+        this.notificationForm.reset();
+        this.notificationForm.markAsUntouched();
+        if (update) {
+            if (update_val == 'intern') this.intern_notifications.splice(index, 1);
+            else this.publicNotification.splice(index, 1);
+        }
     }
 }

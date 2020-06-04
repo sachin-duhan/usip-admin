@@ -65,7 +65,7 @@ export class NewApplicationComponent implements OnInit {
 
     addDomain(data): void {
         this._resgisterService.createDomain({ title: data }).subscribe(
-            res => this._toast.success(res.message, 'Done'),
+            res => { this._toast.success(res.message, 'Done'), this.domains.push(res.body); },
             err => this._toast.error(err.message, 'Error'));
     }
 

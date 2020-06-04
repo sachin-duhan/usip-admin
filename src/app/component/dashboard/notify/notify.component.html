@@ -6,6 +6,8 @@
             {{creating_notification ? "View all Notifications" : "Create Notification"}}</button>
     </h4>
     <mat-card *ngIf="creating_notification" class="white grey-text text-darken-4">
+        <mat-slide-toggle class="right" color="primary" [(ngModel)]="is_image_input_required">Upload File with notification
+        </mat-slide-toggle>
         <form class="row" (submit)="submitForm()" [formGroup]="notificationForm">
             <mat-form-field class="col s12">
                 <mat-label>Notification title</mat-label>
@@ -17,20 +19,15 @@
                 <input matInput placeholder="Applications for 20 available position are invited under standard norm. Deadline - 12 May 2020." required formControlName="description">
             </mat-form-field>
 
-            <div class="col m12 l12 s12">
+            <div class="col s8">
                 <mat-radio-group color="primary" formControlName="public" class="left" required>
                     <mat-label>Type of Notification : </mat-label>
-                    <mat-radio-button class="radio-button" color="accent" value="false">
-                        Intern
-                    </mat-radio-button>
-                    <mat-radio-button value="true" color="primary" class="radio-button">
-                        Public
-                    </mat-radio-button>
+                    <mat-radio-button class="radio-button" color="accent" value="false">Intern</mat-radio-button>
+                    <mat-radio-button value="true" color="primary" class="radio-button"> Public </mat-radio-button>
                 </mat-radio-group>
             </div>
             <div class="col s12"><br></div>
-
-            <label class="input-file-label col s12">
+            <label class="input-file-label col s12" [class.hidden]="!is_image_input_required">
                 <span><i class="fa fa-file-photo-o pr-2"></i>{{input_msg}}</span>
                 <input class="form-control-file hidden" type="file" (change)="onFileSelected($event)" required>
             </label>
