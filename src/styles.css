@@ -13,11 +13,11 @@ body {
 }
 
 mat-list-option[aria-selected="true"] {
-    background: rgb(68, 241, 24);
+    background: rgb(59, 187, 27);
 }
 
 ::-webkit-scrollbar {
-    width: 8px;
+    width: 5px;
 }
 
 ::-webkit-scrollbar-track {

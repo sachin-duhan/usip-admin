@@ -1,2 +1,4 @@
 <app-spinner *ngIf="loading"></app-spinner>
-<app-table class="conatiner" *ngIf="!loading" [title]="'All Tasks'" [data]="all_tasks" [displayedColumns]="displayedColumns" [display_val]="display_val"></app-table>
+<div class="container">
+    <app-table *ngIf="!loading" [title]="'All Tasks'" [data]="all_tasks" [displayedColumns]="displayedColumns" [display_val]="display_val"></app-table>
+</div>
