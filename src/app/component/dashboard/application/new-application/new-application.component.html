@@ -1,13 +1,14 @@
 <app-spinner *ngIf="loading"></app-spinner>
 
-<div class="pd-20 indigo lighten-5">
-    <h5 class="mat-h2 mgb-0 pdb-0">{{ isOpen ? "" : "Not"}} Accepting USIP Applications</h5>
+<div *ngIf="!loading">
+    <div class="pd-20 indigo lighten-5">
+        <h5 class="mat-h2 mgb-0 pdb-0">{{ isOpen ? "" : "Not"}} Accepting USIP Applications</h5>
+    </div>
+    <p class="lead" *ngIf="isOpen && application">{{application.details}}</p>
+    <br>
 </div>
-<p class="lead" *ngIf="isOpen && application">{{application.details}}</p>
-<br>
-
 <!--application is not open and we are opening it NOW!!-->
-<div class="row">
+<div class="row" *ngIf="!loading">
     <div class="col s12 m6" *ngIf="!isOpen">
         <mat-form-field class="col s12">
             <mat-label>Application closing Date</mat-label>

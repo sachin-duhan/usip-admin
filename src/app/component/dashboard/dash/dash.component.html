@@ -1,5 +1,5 @@
 <app-spinner *ngIf="loading"></app-spinner>
-<div>
+<div *ngIf="!loading">
     <div class="grid-container" id="dash-content">
         <mat-grid-list cols="4" rowHeight="160px">
             <mat-grid-tile *ngFor="let box of sCards" [colspan]="box.cols" [rowspan]="box.rows">

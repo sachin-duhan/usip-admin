@@ -1,5 +1,5 @@
-<div class="row">
-    <app-spinner *ngIf="loading"></app-spinner>
+<app-spinner *ngIf="loading"></app-spinner>
+<div class="row" *ngIf="!loading">
     <div class="pd-20 grey col s12 lighten-5">
         <span class="mat-h1">{{ data.name | titlecase }}</span>
         <mat-icon class="right green-text">how_to_reg</mat-icon>
@@ -65,14 +65,18 @@
             <mat-form-field class="col s6 m4 l3">
                 <mat-label>Starting Date</mat-label>
                 <input matInput [matDatepicker]="picker" type="datetime" name="start" ngModel placeholder="5/06/2019" required>
-                <button mat-mini-fab type="button" matSuffix class="blue" (click)="picker.open()"><mat-icon>date_range</mat-icon></button>
+                <button mat-mini-fab type="button" matSuffix class="blue" (click)="picker.open()">
+                    <mat-icon>date_range</mat-icon>
+                </button>
                 <mat-datepicker #picker></mat-datepicker>
             </mat-form-field>
 
             <mat-form-field class="col s6 m4 l3">
                 <mat-label>End Date</mat-label>
                 <input placeholder="5/07/2019" type="datetime" matInput [matDatepicker]="picker2" name="end" ngModel required>
-                <button mat-mini-fab matSuffix type="button" class="green" (click)="picker2.open()"><mat-icon>date_range</mat-icon></button>
+                <button mat-mini-fab matSuffix type="button" class="green" (click)="picker2.open()">
+                    <mat-icon>date_range</mat-icon>
+                </button>
                 <mat-datepicker #picker2></mat-datepicker>
             </mat-form-field>
 
@@ -87,16 +91,16 @@
                     <mat-option *ngFor="let item of officers" [value]="item._id">
                         {{item.name}}
                         <span class="right grey-text">
-              {{item.deptt}}
-            </span>
+                            {{item.deptt}}
+                        </span>
                     </mat-option>
                 </mat-select>
             </mat-form-field>
             <mat-checkbox required="ture" class="col s12">I have verified the fields.</mat-checkbox>
             <div class="col s12 center-align center">
                 <button class="indigo darken-1 white-text" [disabled]="!internForm.valid" (click)="addOfficer(internForm.value)" mat-raised-button>
-           Submit
-        </button>
+                    Submit
+                </button>
             </div>
         </div>
     </form>
