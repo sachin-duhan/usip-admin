@@ -64,20 +64,19 @@ export class NotifyComponent implements OnInit {
             visiblity: this.notificationForm.get('public').value,
             description: this.notificationForm.get('description').value,
         };
-        // if (!this.fileData) {
-        //     this._toast.warning("Kindly choose a file", "Warning");
-        //     return;
-        // }
-        let form = new FormData();
-        form.append('title', data.title);
-        form.append('description', data.description);
-        form.append('visiblity', data.description);
+        var form = new FormData();
         if (this.is_image_input_required && this.fileData)
             form.append('image', this.fileData, this.fileData.name);
+        form.append('title', data.title);
+        form.append('description', data.description);
+        form.append('visiblity', data.visiblity);
+        form.append('is_imgae', this.is_image_input_required ? 'true' : 'false');
+        console.log(form);
+        console.log(data);
 
-        this._notificationService.postNotification(form).subscribe(
+        this._notificationService.postNotification(data).subscribe(
             res => this.handle_notification_response(res, false, undefined, -1),
-            err => this._toast.error(err.message, 'Error'));
+            err => { this._toast.error(err.message, 'Error'); console.log(err) });
     }
 
     onFileSelected($event) {
@@ -96,8 +95,8 @@ export class NotifyComponent implements OnInit {
 
     handle_notification_response(res, update, update_val, index) {
         this._toast.success(res.message, "success");
-        this.notificationForm.reset();
         this.notificationForm.markAsUntouched();
+        this.notificationForm.reset();
         if (update) {
             if (update_val == 'intern') this.intern_notifications.splice(index, 1);
             else this.publicNotification.splice(index, 1);
