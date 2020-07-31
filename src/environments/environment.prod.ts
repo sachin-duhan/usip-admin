@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiBaseURL: 'http://localhost:4000',
+    apiBaseURL: 'https://usipdtuapi-2020.herokuapp.com',
 };
