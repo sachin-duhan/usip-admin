@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-    apiBaseURL:'https://usipdtuapi-2020.herokuapp.com',
+    // apiBaseURL: 'http://localhost:4000',
+    apiBaseURL: 'https://usipdtuapi-2020.herokuapp.com',
 };
 
 /*

@@ -1,11 +1,11 @@
 <mat-sidenav-container class="sidenav-container blue-grey lighten-5 background-laptop-white">
     <mat-sidenav #drawer class="sidenav background-color white-text" fixedInViewport="true" [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'" [mode]="(isHandset$ | async) ? 'over' : 'side'" [opened]="!(isHandset$ | async)">
-
-        <mat-toolbar id="sidenav-menu" class="white-text">Menu
+        <mat-toolbar id="sidenav-menu" class="white-text">
+            USIP ADMIN
             <div class="spacer"></div>
             <mat-icon color="accent">dashboard</mat-icon>
         </mat-toolbar>
-        <div class="divider"></div>
+        <!-- <div class="divider"></div> -->
         <mat-nav-list class="blue-grey-text text-darken-4">
             <a mat-list-item *ngFor="let item of navigation" class="white-text" [routerLink]="item.url" routerLinkActive="black mat-elevation-z8">
                 {{item.title}}
@@ -14,8 +14,7 @@
             </a>
         </mat-nav-list>
     </mat-sidenav>
-
-    <mat-sidenav-content>
+    <mat-sidenav-content style="min-height: 100vh;">
         <mat-toolbar color="primary" class="transparent blue-grey-text text-darken-4">
             <span class="pointer" routerLink="/admin/dashboard">Welcome to Dashboard</span>
             <div class="spacer"></div>

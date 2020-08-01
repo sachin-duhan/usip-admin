@@ -64,6 +64,7 @@ export class NotifyComponent implements OnInit {
             visiblity: this.notificationForm.get('public').value,
             description: this.notificationForm.get('description').value,
         };
+        console.log(data);
         var form = new FormData();
         if (this.is_image_input_required && this.fileData)
             form.append('image', this.fileData, this.fileData.name);
@@ -71,7 +72,6 @@ export class NotifyComponent implements OnInit {
         form.append('description', data.description);
         form.append('visiblity', data.visiblity);
         form.append('is_imgae', this.is_image_input_required ? 'true' : 'false');
-
         this._notificationService.postNotification(form).subscribe(
             res => this.handle_notification_response(res, false, undefined, -1),
             err => { this._toast.error(err.message, 'Error'); console.log(err) });

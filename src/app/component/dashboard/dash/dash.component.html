@@ -38,24 +38,24 @@
                         <table *ngIf="card.title == 'Interns Reports'" class="highlight table-margin pd-20">
                             <tbody *ngIf="internReport.length > 0;else noData">
                                 <tr *ngFor="let report of internReport;let i = index ">
-                                    <td *ngIf="i<5" class="truncate text-truncate">Dep. No : {{report.intern.depNo}}
+                                    <td class="truncate text-truncate">Dep. No : {{report.intern.depNo}}
                                     </td>
-                                    <td *ngIf="i<5">{{report.start|date:shortDate}} - {{report.end | date:shortDate}}
+                                    <td>{{report.start|date:shortDate}} - {{report.end | date:shortDate}}
                                     </td>
-                                    <td *ngIf="i<5">{{report.date | date:shortDate}}</td>
+                                    <td>{{report.date | date:shortDate}}</td>
                                 </tr>
                             </tbody>
                         </table>
                         <table *ngIf="card.title == 'Applications'" class="highlight">
                             <tbody *ngIf="applications.length > 0;else noData">
                                 <tr *ngFor="let application of applications; let i=index">
-                                    <td *ngIf="i<5">{{i+1}}.</td>
-                                    <td *ngIf="i<5">{{application.name | titlecase}}</td>
-                                    <td *ngIf="i<5">{{application.rollNo | uppercase}}</td>
-                                    <td *ngIf="i<5">{{application.branch | uppercase}}</td>
-                                    <td *ngIf="i<5">{{application.domain}}</td>
-                                    <td *ngIf="i<5">{{application.phone}}</td>
-                                    <td *ngIf="i<5" class="grey-text">{{application.date | date:shortDate}}</td>
+                                    <td>{{i+1}}.</td>
+                                    <td>{{application.name | titlecase}}</td>
+                                    <td>{{application.rollNo | uppercase}}</td>
+                                    <td>{{application.branch | uppercase}}</td>
+                                    <td>{{application.domain}}</td>
+                                    <td>{{application.phone}}</td>
+                                    <td class="grey-text">{{application.date | date:shortDate}}</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -63,10 +63,10 @@
                         <table *ngIf="card.title == 'Bank details'" class="highlight">
                             <tbody *ngIf="bankDetails.length > 0;else noData">
                                 <tr *ngFor="let bank of bankDetails; let i=index">
-                                    <td *ngIf="i<12">{{bank.depNo}}.</td>
-                                    <td *ngIf="i<12">{{bank.pInfo.name | titlecase}}</td>
-                                    <td *ngIf="i<12">{{bank.pInfo.phone}}</td>
-                                    <td *ngIf="i<12">{{bank.bankAc | uppercase}}</td>
+                                    <td>{{bank.depNo}}.</td>
+                                    <td>{{bank.pInfo.name | titlecase}}</td>
+                                    <td>{{bank.pInfo.phone}}</td>
+                                    <td>{{bank.bankAc | uppercase}}</td>
                                 </tr>
                             </tbody>
 
@@ -75,10 +75,10 @@
                         <table *ngIf="card.title == 'Officers'" class="highlight">
                             <tbody *ngIf="officers.length > 0; else noData">
                                 <tr *ngFor="let officer of officers;let i = index">
-                                    <td *ngIf="i<5">{{i+1}}.</td>
-                                    <td *ngIf="i<5">{{officer.name}}</td>
-                                    <td *ngIf="i<5">{{officer.deptt}}</td>
-                                    <td *ngIf="i<5">{{officer.phone}}</td>
+                                    <td>{{i+1}}.</td>
+                                    <td>{{officer.name}}</td>
+                                    <td>{{officer.deptt}}</td>
+                                    <td>{{officer.phone}}</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -86,10 +86,10 @@
                         <table *ngIf="card.title == 'Notification'" class="highlight">
                             <tbody *ngIf="notification.length > 0;else noData">
                                 <tr *ngFor="let noti of notification; let i=index">
-                                    <td *ngIf="i<3">{{i+1}}.</td>
-                                    <td *ngIf="i<3">{{noti.title | lowercase}}</td>
-                                    <td *ngIf="i<3 && noti.visiblity">Public</td>
-                                    <td *ngIf="i<3" class="grey-text">{{noti.date | date:shortDate}}</td>
+                                    <td>{{i+1}}.</td>
+                                    <td>{{noti.title | lowercase}}</td>
+                                    <td *ngIf="noti.visiblity">Public</td>
+                                    <td class="grey-text">{{noti.date | date:shortDate}}</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -106,5 +106,4 @@
             </mat-grid-tile>
         </mat-grid-list>
     </div>
-    <!--all content above this only!-->
 </div>
