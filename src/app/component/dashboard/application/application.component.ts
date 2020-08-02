@@ -11,8 +11,8 @@ import { ToastrService } from 'ngx-toastr';
 
 export class ApplicationComponent implements OnInit {
 
-    show_table: Boolean = false;
-    private loading: Boolean = false;
+    show_table: boolean = false;
+    public loading: boolean = false;
 
     constructor(private _registerService: RegisterService, private _toast: ToastrService) { }
 

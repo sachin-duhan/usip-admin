@@ -25,7 +25,7 @@ export class InternViewInternComponent implements OnInit {
         interview_attendence: [this.data.interview_attendence]
     });
 
-    private loading: Boolean = false;
+    public loading: boolean = false;
     public applicant = { ...this.data }; // copy of the original!!
 
     ngOnInit() { }

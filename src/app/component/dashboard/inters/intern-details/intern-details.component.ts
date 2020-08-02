@@ -19,7 +19,7 @@ export class InternDetailsComponent implements OnInit {
   ) { }
 
   public officers = []; 
-  private loading: Boolean = false;
+  loading: Boolean = false;
 
   ngOnInit() {
     this.loading = !this.loading;

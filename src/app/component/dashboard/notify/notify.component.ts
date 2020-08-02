@@ -22,10 +22,8 @@ export class NotifyComponent implements OnInit {
     public showSettings: Boolean = false;
     public publicNotification: Array<any> = [];
     public intern_notifications: Array<any> = [];
-    private loading: Boolean = false;
-
-
-    private fileData: File = null;
+    public loading: Boolean = false;
+    public fileData: File = null;
     input_msg: string = "Choose a File for Notification";
 
     ngOnInit() {

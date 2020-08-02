@@ -26,10 +26,9 @@ export class InterviewComponent implements OnInit {
         private _interviewService: InterviewService
     ) { }
 
-    private loading: Boolean = false;
+    loading: Boolean = false;
 
     displayedColumns: Array<string> = ['name', 'rollNo', 'marks', 'domain', 'interview', 'update'];
-
 
     qualified_applicants_above_set_marks: Array<any> = [];
     all_upcoming_interviews: Array<any> = [];
