@@ -32,7 +32,7 @@
                 <input class="form-control-file hidden" type="file" (change)="onFileSelected($event)" required>
             </label>
             <div class="col s12"><br></div>
-            <button [disabled]="!notificationForm.valid" type="submit" class="col s4 m3 l3 red white-text right" mat-button>Submit</button>
+            <button [disabled]="!notificationForm.valid || loading" type="submit" class="col s4 m3 l3 red white-text right" mat-button>Submit</button>
         </form>
     </mat-card>
 
@@ -40,32 +40,28 @@
     <mat-tab-group *ngIf="!creating_notification" class="pd-20 white" mat-align-tabs="center" mat-stretch-tabs>
         <mat-tab label="Intern Notifications">
             <div class="pd-20 card medium" *ngIf="intern_notifications.length > 0; else noData">
-                <table class="highlight">
-                    <tbody>
-                        <tr *ngFor="let item of intern_notifications; let i=index">
-                            <td>{{i+1}}. {{item.title}}</td>
-                            <td>{{item.date | date:shortDate}}</td>
-                            <td class="pointer" (click)="deleteNotification(item._id,i,'intern')">
-                                <mat-icon class="red-text pdt-10">delete</mat-icon>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div *ngFor="let item of intern_notifications; let i=index" class="pdb-20">
+                    <h6>{{item.title}}</h6>
+                    <p class="grey-text text-darken-3">{{item.description}}</p>
+                    <div class="row">
+                        <span class="left">Date - <strong>{{item.date | date: 'medium'}}</strong></span>
+                        <button mat-button (click)="deleteNotification(item._id,i,'intern')" class="pd-20 red white-text right">
+                            Delete Intern Notification</button>
+                    </div>
+                </div>
             </div>
         </mat-tab>
         <mat-tab label="Public Notification">
             <div class="pd-20 card medium" *ngIf="publicNotification.length > 0; else noData">
-                <table class="highlight">
-                    <tbody>
-                        <tr *ngFor="let item of publicNotification; let i=index" id="{{item._id}}">
-                            <td>{{i+1}}. {{item.title}}</td>
-                            <td>{{item.date | date:shortDate}}</td>
-                            <td class="pointer" (click)="deleteNotification(item._id,i,'public')">
-                                <mat-icon class="red-text pdt-10">delete</mat-icon>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div *ngFor="let item of publicNotification; let i=index" class="pdb-20">
+                    <h6>{{item.title}}</h6>
+                    <p class="grey-text text-darken-3">{{item.description}}</p>
+                    <div class="row">
+                        <span class="left">Date - <strong>{{item.date | date: 'medium'}}</strong></span>
+                        <button mat-button (click)="deleteNotification(item._id,i,'public')" class="pd-20 red white-text right">
+                            Delete Public Notification</button>
+                    </div>
+                </div>
             </div>
         </mat-tab>
     </mat-tab-group>

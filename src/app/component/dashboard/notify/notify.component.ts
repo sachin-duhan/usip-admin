@@ -28,20 +28,16 @@ export class NotifyComponent implements OnInit {
 
     ngOnInit() {
         this.loading != this.loading;
-
-        // getting the private notification
         this._notificationService.internNotification().subscribe(res => {
-            this.intern_notifications = res.body ? res.body : [];
+            this.intern_notifications = res.body;
             this.loading != this.loading;
         }, err => {
             console.log(err);
             this.loading != this.loading;
         });
-
-        // getting the public notification
         this._notificationService.publicNotification().subscribe(
             res => {
-                this.publicNotification = res.body ? res.body : [];
+                this.publicNotification = res.body;
                 this.loading != this.loading;
             }, err => {
                 console.log(err);
@@ -57,22 +53,22 @@ export class NotifyComponent implements OnInit {
     });
 
     submitForm(): void {
+        if (this.is_image_input_required && !this.fileData) {
+            this._toast.warning("Image is required but not specified", "OOPS");
+            return;
+        }
+
         const data = {
             title: this.notificationForm.get('title').value,
             visiblity: this.notificationForm.get('public').value,
             description: this.notificationForm.get('description').value,
+            is_image: 'false'
         };
-        console.log(data);
-        var form = new FormData();
-        if (this.is_image_input_required && this.fileData)
-            form.append('image', this.fileData, this.fileData.name);
-        form.append('title', data.title);
-        form.append('description', data.description);
-        form.append('visiblity', data.visiblity);
-        form.append('is_imgae', this.is_image_input_required ? 'true' : 'false');
-        this._notificationService.postNotification(form).subscribe(
-            res => this.handle_notification_response(res, false, undefined, -1),
+
+        this._notificationService.postNotification(data).subscribe(
+            res => this.handle_notification_response(res, false, undefined, -1,true),
             err => { this._toast.error(err.message, 'Error'); console.log(err) });
+
     }
 
     onFileSelected($event) {
@@ -84,15 +80,22 @@ export class NotifyComponent implements OnInit {
         var flag = confirm("Do you want to delete the application!");
         if (!flag) return;
         this._notificationService.deleteNoti(id).subscribe(
-            res => this.handle_notification_response(res, true, type, index),
+            res => this.handle_notification_response(res, true, type, index,false),
             err => this._toast.error(err.message, "Error")
         );
     }
 
-    handle_notification_response(res, update, update_val, index) {
+    handle_notification_response(res, update, update_val, index, insert) {
+        if(insert){
+            const notification = res.body;
+            if(notification.visiblity) this.publicNotification.unshift(notification);
+            else this.intern_notifications.unshift(notification);
+            this.creating_notification = false;
+        }
         this._toast.success(res.message, "success");
-        this.notificationForm.markAsUntouched();
         this.notificationForm.reset();
+        this.notificationForm.markAsUntouched();
+        this.notificationForm.markAsPristine();
         if (update) {
             if (update_val == 'intern') this.intern_notifications.splice(index, 1);
             else this.publicNotification.splice(index, 1);

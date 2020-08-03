@@ -38,10 +38,8 @@
                         <table *ngIf="card.title == 'Interns Reports'" class="highlight table-margin pd-20">
                             <tbody *ngIf="internReport.length > 0;else noData">
                                 <tr *ngFor="let report of internReport;let i = index ">
-                                    <td class="truncate text-truncate">Dep. No : {{report.intern.depNo}}
-                                    </td>
-                                    <td>{{report.start|date:shortDate}} - {{report.end | date:shortDate}}
-                                    </td>
+                                    <td class="truncate text-truncate">Dep. No : {{report.intern.depNo}}</td>
+                                    <td>{{report.start|date:shortDate}} - {{report.end | date:shortDate}}</td>
                                     <td>{{report.date | date:shortDate}}</td>
                                 </tr>
                             </tbody>
@@ -55,7 +53,7 @@
                                     <td>{{application.branch | uppercase}}</td>
                                     <td>{{application.domain}}</td>
                                     <td>{{application.phone}}</td>
-                                    <td class="grey-text">{{application.date | date:shortDate}}</td>
+                                    <td class="grey-text">{{application.date | date:'medium'}}</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -88,8 +86,8 @@
                                 <tr *ngFor="let noti of notification; let i=index">
                                     <td>{{i+1}}.</td>
                                     <td>{{noti.title | lowercase}}</td>
-                                    <td *ngIf="noti.visiblity">Public</td>
-                                    <td class="grey-text">{{noti.date | date:shortDate}}</td>
+                                    <td>{{noti.visiblity ? "Public Notification" : "Intern Notification"}}</td>
+                                    <td class="grey-text">{{noti.date | date:'shortDate'}}</td>
                                 </tr>
                             </tbody>
                         </table>

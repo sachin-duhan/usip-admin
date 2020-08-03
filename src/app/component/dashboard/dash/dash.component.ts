@@ -51,6 +51,7 @@ export class DashComponent implements OnInit {
     ngOnInit() {
         this.loading = true;
         this.loginService.get_dashboard_data().subscribe(data => {
+            console.log(data);
             // mae sure that index of the card is same! as that of title of card!
             this.sCards[0].count = data.body.count.application;
             this.sCards[1].count = data.body.count.intern;
